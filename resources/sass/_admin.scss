@@ -1,0 +1,24 @@
+.admin {
+    position: relative;
+    display: flex;
+
+    .sidebar {
+        position: relative;
+        width: 350px;
+        height: 100vh;
+        background: #070371;
+    }
+
+    .header {
+        position: relative;
+        width: 100%;
+        height: 7vh;
+        background: green;
+    }
+
+    .router-container {
+        padding: 5px;
+        margin: 0;
+        height: calc(100vh - 7vh);
+    }
+}

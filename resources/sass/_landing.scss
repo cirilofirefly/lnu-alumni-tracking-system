@@ -1,0 +1,119 @@
+$navbar-height : 7vh;
+
+.landing {
+
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(252, 255, 91, 0.5), rgba(72, 115, 255, 0.5)), url('../images/lnu.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    .navbar {
+        position: relative;
+        width: 100%;
+        height: $navbar-height;
+        padding: 5px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        .nav-item {
+            font-size: 20px;
+            margin: 0 1rem;
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+
+            &::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                transform: scaleX(0);
+                height: 1.5px;
+                bottom: 0;
+                left: 0;
+                background-color: #fff;
+                transform-origin: bottom right;
+                transition: transform 0.5s ease-out;
+            }
+
+            &:hover::after {
+                transform: scaleX(1);
+                transform-origin: bottom left;
+            }
+        }
+
+    }
+    
+    .landing-content {
+        width: 100%;
+        height: calc(100vh - $navbar-height);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .logo {
+            margin-bottom: 2rem;
+            content:url('../images/logo.png');
+        }
+
+        .title-header {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 1rem;
+
+            p, h1, h3 {
+                padding: 0;
+                margin: 0;
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+
+            p {
+               font-size: 24px; 
+            }
+
+            h1 {
+                font-size: 64px;
+            }
+
+            h3 {
+                font-size: 32px;
+            }
+        }
+
+        .btn2 {
+            width: 150px !important;
+            font-size: 18px;
+            margin: 10px 0 80px 0;
+        }
+                
+        .arrow {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-image: url('../images/arrow-up.png');
+            background-size: contain;
+        }
+
+        .bounce {
+            animation: bounce 2s infinite;
+         }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+    }
+}

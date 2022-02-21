@@ -1,0 +1,99 @@
+$navbar-height: 7vh;
+$signin-main-width : 50%;
+.signin {
+
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('../images/lnu3.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
+    .navbar {
+        position: relative;
+        width: 100%;
+        height: $navbar-height;
+        padding: 5px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        
+        .nav-item {
+            font-size: 20px;
+            margin: 0 1rem;
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+
+            &::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                transform: scaleX(0);
+                height: 1.5px;
+                bottom: 0;
+                left: 0;
+                background-color: #fff;
+                transform-origin: bottom right;
+                transition: transform 0.5s ease-out;
+            }
+
+            &:hover::after {
+                transform: scaleX(1);
+                transform-origin: bottom left;
+            }
+        }
+    }
+
+    .signin-content {
+        width: 100%;
+        height: calc(100vh - $navbar-height);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+
+        .signin-main {
+            position: relative;
+            display: flex;
+            width: $signin-main-width;
+            height: 650px;
+            background: #fff;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            border-radius: 5px;
+
+            .signin-info {
+                .logo {
+                    width: 150px;
+                    height: 150px;
+                    content:url('../images/logo.png');
+                }
+                width: $signin-main-width;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+            }
+            .signin-form {
+                width: $signin-main-width;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+  
+    }
+
+    .btn-signin {
+        letter-spacing: 2px;
+        font-size: 18px;
+    }
+}
+    
