@@ -29,6 +29,7 @@ class CreateStudentEmployeeInfosTable extends Migration
             $table->string("sp_buss_address")->nullable();
             $table->string("sp_fax_no")->nullable();
             $table->string("sp_email")->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -30,6 +30,7 @@ class CreateStudentBasicInfosTable extends Migration
             $table->string("religion");
             $table->string("gender");
             $table->string("civil_status");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

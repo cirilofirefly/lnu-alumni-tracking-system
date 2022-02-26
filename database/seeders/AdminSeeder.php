@@ -17,7 +17,7 @@ class AdminSeeder extends Seeder
     {
         $admin_info = AdminInfo::create([
             'first_name' => 'Rile Austin',
-            'last_name' => 'Pedero',
+            'last_name' => 'Picardal',
             'email' => 'rap@email.com',
             'contact_number' => '09123456789'
         ]);

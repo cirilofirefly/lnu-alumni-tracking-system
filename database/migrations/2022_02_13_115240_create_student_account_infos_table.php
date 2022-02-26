@@ -17,12 +17,13 @@ class CreateStudentAccountInfosTable extends Migration
             $table->id();
             $table->string("username")->unique();
             $table->string("password");
-            $table->boolean("account_status")->default(0);
+            $table->boolean("account_status")->default(false);
             $table->string("educational_attainment");
             $table->string("year_graduate");
             $table->string("college");
             $table->string("program");
             $table->string("degree_level");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

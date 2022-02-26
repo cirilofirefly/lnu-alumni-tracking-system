@@ -28,6 +28,7 @@ class CreateStudentEducationInfosTable extends Migration
             $table->string("pgs")->nullable();
             $table->string("pgs_year")->nullable();
             $table->string("pgs_course")->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

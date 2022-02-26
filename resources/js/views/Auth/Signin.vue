@@ -99,8 +99,12 @@ export default {
         if (response.status == 200) {
           this.$toast.success("Successfully logged in.");
           this.$router.push("/admin");
+        } else {
+          this.$toast.error(response.data.error);
         }
-      } else {
+      }
+
+      if (!this.isAdmin) {
         const response = await this.$store.dispatch(
           "STUDENT_AUTH/LOGIN",
           this.credentials

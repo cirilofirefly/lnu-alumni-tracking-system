@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -47,7 +48,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth('admin')->user());
+        return response()->json(['user' => Admin::with('admin_info')->where('id', auth('admin')->user()->id)->first()]);
     }
 
     protected function respondWithToken($token)

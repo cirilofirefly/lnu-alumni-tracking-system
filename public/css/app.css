@@ -1,5 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Poppins);
 @charset "UTF-8";
+.modal-backdrop {
+  opacity: 0.5;
+}
+
 @font-face {
   font-family: "bootstrap-icons";
   src: url(/fonts/vendor/bootstrap-icons/bootstrap-icons.woff2?1f592ce3089115f4c842c4b77b782206) format("woff2"), url(/fonts/vendor/bootstrap-icons/bootstrap-icons.woff?4e80a14a205e5b6212ffc52fcd390fbb) format("woff");
@@ -18313,22 +18317,107 @@ textarea.form-control-lg {
 
 .admin {
   position: relative;
-  display: flex;
+  margin: 0;
+  padding: 0;
 }
 .admin .sidebar {
-  position: relative;
+  position: fixed;
   width: 350px;
   height: 100vh;
-  background: #070371;
+  padding: 0;
+  margin: 0;
+  background: #1b16b8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.admin .sidebar .logo {
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.admin .sidebar .logo .logo-text {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #fff;
+}
+.admin .sidebar .nav-links {
+  height: 100%;
+  width: 100%;
+  padding: 20px 0 0 0;
+  list-style: none;
+}
+.admin .sidebar .nav-links .nav-item {
+  padding: 10px;
+  margin: 2px 0;
+  cursor: pointer;
+}
+.admin .sidebar .nav-links .nav-item:hover {
+  background: #0f0a91;
+  transition: all 0.2s ease-in;
+}
+.admin .sidebar .nav-links .nav-item .main {
+  display: flex;
+  align-items: center;
+}
+.admin .sidebar .nav-links .nav-item .main .nav-link {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.admin .sidebar .nav-links .nav-item .main .nav-link #icon {
+  color: #fff !important;
+  font-size: 20px;
+}
+.admin .sidebar .nav-links .nav-item .main .nav-link span {
+  margin-left: 1rem;
+  color: #fff;
+  font-size: 18px;
+}
+.admin .sidebar .nav-links .nav-item .sub-menu {
+  padding: 6px 6px 14px 50px;
+  list-style: none;
+  transition: all 1.2s ease;
+}
+.admin .sidebar .nav-links .nav-item .sub-menu .sub-item {
+  margin: 10px 0;
+}
+.admin .sidebar .nav-links .nav-item .sub-menu .sub-item .sub-link {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 5px 0;
+}
+.admin .sidebar .nav-links .nav-item .sub-menu .sub-item .sub-link span {
+  margin-left: 10px;
 }
 .admin .header {
-  position: relative;
-  width: 100%;
   height: 7vh;
-  background: green;
+  width: calc(100% - 350px);
+  margin-left: 350px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  align-items: center;
+}
+.admin .header .user-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.admin .header .user-info span {
+  font-size: 18px;
+  margin-right: 5px;
 }
 .admin .router-container {
-  padding: 5px;
-  margin: 0;
-  height: 93vh;
+  margin-left: 350px;
+  margin-top: 20px;
+  height: 90vh;
+  width: calc(100% - 350px);
 }

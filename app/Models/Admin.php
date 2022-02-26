@@ -13,6 +13,15 @@ class Admin extends Authenticatable implements JWTSubject
 
     protected $guarded = [];
 
+
+    protected $hidden = [
+        'password'
+    ];
+
+    public function admin_info() {
+        return $this->hasOne(AdminInfo::class, 'id','admin_info_id');
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

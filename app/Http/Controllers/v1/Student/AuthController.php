@@ -130,6 +130,16 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
+    {
+        return response()->json(auth('student')->user()->admin_info_id);
+    }
+
     protected function respondWithToken($token)
     {
         return response()->json([

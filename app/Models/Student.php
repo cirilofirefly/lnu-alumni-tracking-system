@@ -11,4 +11,13 @@ class Student extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    public function student_account_info() {
+        return $this->hasOne(StudentAccountInfo::class, 'id', 'student_account_info_id');
+    }
+
+    public function student_basic_info() {
+        return $this->hasOne(StudentBasicInfo::class, 'id', 'student_basic_info_id');
+    }
+
 }

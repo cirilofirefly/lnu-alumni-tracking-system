@@ -4,7 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\v1\Admin\ {
-    AuthController as AdminAuthController
+    AlumniAccountController,
+    AuthController as AdminAuthController,
+    CategoryController as AdminCategoryController,
+    EventController as AdminEventController
 };
 
 use App\Http\Controllers\v1\Student\ {
@@ -43,4 +46,19 @@ Route::group([
         Route::post('me', [StudentAuthController::class, 'me']);
     });
 
+});
+
+
+
+Route::group(['middleware' => 'api'], function (){
+
+    Route::group(['prefix' => 'admin'], function () {
+        Route::put('approve-alumni/{id}', [AlumniAccountController::class, 'approveAccount']);
+        Route::put('disapprove-alumni/{id}', [AlumniAccountController::class, 'disapproveAccount']);
+        Route::get('alumnae', [AlumniAccountController::class, 'index']);
+        Route::apiResource('events', AdminEventController::class)->except('show');
+        Route::get('categories', [AdminCategoryController::class, 'index']);
+    });
+
+    
 });

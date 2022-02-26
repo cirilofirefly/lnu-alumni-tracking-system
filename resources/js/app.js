@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './views/App.vue'
 import router from './router'
 import store from './store'
+import { BootstrapVue } from 'bootstrap-vue'
 
 
 import Toast from "vue-toastification";
@@ -22,6 +23,8 @@ const options = {
 };
 
 Vue.use(Toast, options);
+Vue.use(BootstrapVue)
+
 
 new Vue({
     router,

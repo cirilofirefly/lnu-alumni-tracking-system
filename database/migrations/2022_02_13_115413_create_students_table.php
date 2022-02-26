@@ -22,6 +22,7 @@ class CreateStudentsTable extends Migration
             $table->string("id_image");
             $table->string("tor_file");
             $table->boolean("accept_term")->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
