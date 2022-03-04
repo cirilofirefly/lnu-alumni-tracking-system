@@ -47,14 +47,22 @@
                     </option>
                   </select>
                 </div>
-                <div class="form-group mb-3 col-md-12">
-                  <label for="username">Year Graduate</label>
-                  <input
-                    v-model="account.year_graduate"
-                    id="username"
-                    class="form-control"
-                    type="month"
-                  />
+                <div class="form-group mb-2 col-md-12">
+                  <label for="edu-att">Year Graduate</label>
+                  <select
+                    class="form-select"
+                    v-model="account.batch_id"
+                    aria-label="Default select example"
+                  >
+                    <option :value="null">-- Select Option --</option>
+                    <option
+                      v-for="batch in batches"
+                      :key="batch.id"
+                      :value="batch.id"
+                    >
+                      {{ `${batch.batch} - ${batch.batch + 1}` }}
+                    </option>
+                  </select>
                 </div>
                 <div class="form-group mb-2 col-md-12">
                   <label for="edu-att">College</label>
@@ -576,7 +584,7 @@ export default {
         alumni_type: null,
         accept_term: false,
         educational_attainment: null,
-        year_graduate: null,
+        batch_id: null,
         college: null,
         program: null,
         degree_level: null,
@@ -584,6 +592,11 @@ export default {
       },
       form_status: 0,
     };
+  },
+  computed: {
+    batches() {
+      return this.$store.getters["UTILS_BATCH/GET_BATCHES"];
+    },
   },
   methods: {
     async signup() {
@@ -615,7 +628,7 @@ export default {
         "educational_attainment",
         this.account.educational_attainment
       );
-      formData.append("year_graduate", this.account.year_graduate);
+      formData.append("batch_id", this.account.batch_id);
       formData.append("college", this.account.college);
       formData.append("program", this.account.program);
       formData.append("degree_level", this.account.degree_level);
@@ -641,6 +654,9 @@ export default {
     handlePDFFile(event) {
       this.account.pdf = event.target.files[0];
     },
+  },
+  async mounted() {
+    await this.$store.dispatch("UTILS_BATCH/FETCH_BATCHES");
   },
 };
 </script>

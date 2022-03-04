@@ -124,6 +124,8 @@ $header-height: 7vh;
   
     .router-container {
       margin-left: $sidebar-width;
+      background: rgb(255,237,25);
+      background: linear-gradient(339deg, rgba(255,237,25,1) 29%, rgba(255,255,255,1) 80%);      
       margin-top: 20px;
       height: 90vh;
       width: calc(100% - $sidebar-width);

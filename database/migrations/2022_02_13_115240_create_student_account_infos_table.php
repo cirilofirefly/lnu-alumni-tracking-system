@@ -19,7 +19,7 @@ class CreateStudentAccountInfosTable extends Migration
             $table->string("password");
             $table->boolean("account_status")->default(false);
             $table->string("educational_attainment");
-            $table->string("year_graduate");
+            $table->foreignId("batch_id")->nullable()->constrained();
             $table->string("college");
             $table->string("program");
             $table->string("degree_level");

@@ -18,15 +18,14 @@
           >
         </div>
       </li>
-      <li class="nav-item">
-        <div class="main">
+      <li class="nav-item" >
+        <div class="main" @click.prevent="showSubMenu">
           <div class="nav-link">
             <box-icon class="icon" color="#fff" name="user-circle"></box-icon>
             <span class="p-0"> Alumni Management </span>
           </div>
           <box-icon
-            @click.prevent="showSubMenu"
-            name="chevron-down"
+            :name=" toggled ? 'chevron-up' : 'chevron-down'"
             class="icon"
             type="solid"
             color="#fff"
@@ -58,10 +57,7 @@
             >
           </li>
           <li class="sub-item">
-            <router-link
-              class="sub-link"
-              :to="{ name: 'admin.alumni.records' }"
-            >
+            <router-link class="sub-link" :to="{ name: 'admin.alumni.batch' }">
               <box-icon color="#fff" name="history"></box-icon>
               <span>Batch </span></router-link
             >

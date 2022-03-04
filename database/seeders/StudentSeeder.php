@@ -26,7 +26,7 @@ class StudentSeeder extends Seeder
             'password' => bcrypt('rileaustin'),
             'account_status' => false,
             'educational_attainment' => '',
-            'year_graduate' => '',
+            'batch_id' => 1,
             'college' => '',
             'program' => '',
             'degree_level' => ''

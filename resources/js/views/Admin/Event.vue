@@ -6,9 +6,13 @@
           Event Management
         </h1>
       </div>
-      <div class="col-12 mt-3 shadow p-3">
+      <div class="col-12 mt-3 shadow p-3 bg-light">
         <div class="mb-5 mt-2">
-          <button class="btn btn-success mx-2" v-b-modal.modal-add>
+          <button
+            class="btn btn-success mx-2"
+            @click="resetInput"
+            v-b-modal.modal-add
+          >
             <i class="bi bi-plus"></i> Add Event
           </button>
           <button class="btn btn-success">
@@ -22,23 +26,15 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Category</th>
-                <th scope="col">Description</th>
                 <th scope="col" class="text-center">Content</th>
                 <th scope="col" class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Sample Event</td>
-                <td>Enrollment</td>
-                <td>
-                  {{
-                    sampletext.length > 10
-                      ? `${sampletext.substring(0, 10)}...`
-                      : sampletext
-                  }}
-                </td>
+              <tr v-for="(event, index) in events" :key="index">
+                <th scope="row">{{ index + 1 }}</th>
+                <td>{{ event.name }}</td>
+                <td>{{ event.category.category }}</td>
                 <td class="text-center">
                   <button style="width: 100px" class="btn btn-success mx-2">
                     <i class="bi bi-eye-fill"></i> View
@@ -49,15 +45,17 @@
                     style="width: 100px"
                     class="btn btn-primary mx-2"
                     @click.prevent="
-                    id = 1;
-                    $bvModal.show('modal-update')"
+                      id = event.id;
+                      eventInfo = { ...event };
+                      $bvModal.show('modal-update');
+                    "
                   >
                     <i class="bi bi-pencil-square"></i> Edit</button
                   ><button
                     style="width: 100px"
                     class="btn btn-danger mx-2"
                     @click.prevent="
-                      id = 1;
+                      id = event.id;
                       $bvModal.show('modal-delete');
                     "
                   >
@@ -68,10 +66,14 @@
             </tbody>
           </table>
 
+          <p><strong>Total Entries: </strong> {{ events.length }}</p>
+
           <b-modal
             id="modal-add"
             size="lg"
             centered
+            @cancel="resetInput()"
+            @ok.prevent="storeEvent"
             title="Add Event"
             ok-title="Add Event"
           >
@@ -81,6 +83,7 @@
                   <div class="form-floating mb-3">
                     <input
                       type="text"
+                      v-model="eventInfo.name"
                       class="form-control"
                       id="event-name"
                       placeholder="Event Name"
@@ -88,18 +91,25 @@
                     <label for="event-name">Event Name</label>
                   </div>
                   <div class="mb-3">
+                    <label for="category">Category</label>
                     <select
+                      v-model="eventInfo.category_id"
+                      id="category"
                       class="form-select"
                       aria-label=".form-select-lg example"
                     >
                       <option :value="null">-- Select an option --</option>
-                      <option v-for="category in categories" :key="category.id">
-                        {{ category.name }}
+                      <option
+                        :value="category.id"
+                        v-for="category in categories"
+                        :key="category.id"
+                      >
+                        {{ category.category }}
                       </option>
                     </select>
                   </div>
                   <div>
-                    <vue-editor v-model="content" />
+                    <vue-editor v-model="eventInfo.content" />
                   </div>
                 </div>
               </div>
@@ -111,7 +121,12 @@
             size="lg"
             centered
             title="Update Event"
+            @cancel="
+              id = null;
+              resetInput();
+            "
             ok-title="Update Event"
+            @ok="updateEvent"
             ok-variant="warning"
           >
             <div class="container-fluid">
@@ -121,6 +136,7 @@
                     <input
                       type="text"
                       class="form-control"
+                      v-model="eventInfo.name"
                       id="event-name"
                       placeholder="Event Name"
                     />
@@ -130,15 +146,20 @@
                     <select
                       class="form-select"
                       aria-label=".form-select-lg example"
+                      v-model="eventInfo.category_id"
                     >
                       <option :value="null">-- Select an option --</option>
-                      <option v-for="category in categories" :key="category.id">
-                        {{ category.name }}
+                      <option
+                        :value="category.id"
+                        v-for="category in categories"
+                        :key="category.id"
+                      >
+                        {{ category.category }}
                       </option>
                     </select>
                   </div>
                   <div>
-                    <vue-editor v-model="content" />
+                    <vue-editor v-model="eventInfo.content" />
                   </div>
                 </div>
               </div>
@@ -150,6 +171,8 @@
             title="Delete Event"
             ok-variant="danger"
             ok-title="Delete"
+            @ok="deleteEvent"
+            @cancel="id = null"
           >
             <div class="container-fluid">
               <div class="row">
@@ -173,16 +196,74 @@ export default {
   data() {
     return {
       sampletext: "sample text that the length is greater than 5 kape kape",
-      categories: [
-        { id: 1, name: "Announcement" },
-        { id: 2, name: "Enrollment" },
-        { id: 3, name: "Job Hiring" },
-      ],
       id: null,
+      eventInfo: {
+        name: "",
+        content: "",
+        category_id: null,
+      },
     };
+  },
+  computed: {
+    categories() {
+      return this.$store.getters["ADMIN_CATEGORIES/GET_CATEGORIES"];
+    },
+    events() {
+      return this.$store.getters["ADMIN_EVENT/GET_EVENTS"];
+    },
+  },
+  methods: {
+    async storeEvent() {
+      
+      const response = await this.$store.dispatch(
+        "ADMIN_EVENT/STORE_EVENT",
+        this.eventInfo
+      );
+
+      if (response.status == 200) {
+        this.$bvModal.hide("modal-add");
+        this.$toast.success(response.data.message);
+        await this.$store.dispatch("ADMIN_EVENT/FETCH_EVENTS");
+      }
+      if (response.status == 500) {
+        this.$toast.error(response.data.error);
+      }
+    },
+    async updateEvent() {
+      const response = await this.$store.dispatch("ADMIN_EVENT/UPDATE_EVENT", {
+        id: this.id,
+        data: this.eventInfo,
+      });
+
+      if (response.status == 200) {
+        this.$bvModal.hide("modal-update");
+        this.$toast.success(response.data.message);
+        await this.$store.dispatch("ADMIN_EVENT/FETCH_EVENTS");
+      }
+    },
+    async deleteEvent() {
+      const response = await this.$store.dispatch(
+        "ADMIN_EVENT/DELETE_EVENT",
+        this.id
+      );
+
+      if (response.status == 200) {
+        this.$bvModal.hide("modal-update");
+        this.$toast.success(response.data.message);
+        await this.$store.dispatch("ADMIN_EVENT/FETCH_EVENTS");
+      }
+    },
+    resetInput() {
+      this.eventInfo = {
+        name: "",
+        content: "",
+        category_id: null,
+      };
+    },
+  },
+  async mounted() {
+    await this.$store.dispatch("ADMIN_CATEGORIES/FETCH_CATEGORIES");
+    await this.$store.dispatch("ADMIN_EVENT/FETCH_EVENTS");
   },
 };
 </script>
-
-<style>
-</style>

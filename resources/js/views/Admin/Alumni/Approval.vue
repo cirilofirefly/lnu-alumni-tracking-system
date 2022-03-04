@@ -2,10 +2,15 @@
   <div class="container-fluid">
     <div class="row p-5">
       <div class="col-12">
-        <h2>Alumni Request</h2>
+        <h1
+          class="text-uppercase fw-bold"
+          style="letter-spacing: 3px"
+        >
+          Alumni Request
+        </h1>
       </div>
-      <div class="col-12">
-        <table class="table table-bordered mt-4">
+      <div class="col-12 mt-3 shadow p-3 bg-light">
+        <table class="table table-striped mt-4">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -151,7 +156,9 @@
                 <div class="col-12 mt-3">
                   <h6>
                     Birthday:
-                    <strong>{{ alumni.student_basic_info.birthdate | setDate }} </strong>
+                    <strong
+                      >{{ alumni.student_basic_info.birthdate | setDate }}
+                    </strong>
                   </h6>
                   <h6>
                     Birthplace:

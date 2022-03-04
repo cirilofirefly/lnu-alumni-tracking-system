@@ -6,9 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\v1\Admin\ {
     AlumniAccountController,
     AuthController as AdminAuthController,
+    BatchController as AdminBatchController,
     CategoryController as AdminCategoryController,
     EventController as AdminEventController
 };
+use App\Http\Controllers\v1\BatchController;
 
 use App\Http\Controllers\v1\Student\ {
     AuthController as StudentAuthController
@@ -57,8 +59,10 @@ Route::group(['middleware' => 'api'], function (){
         Route::put('disapprove-alumni/{id}', [AlumniAccountController::class, 'disapproveAccount']);
         Route::get('alumnae', [AlumniAccountController::class, 'index']);
         Route::apiResource('events', AdminEventController::class)->except('show');
+        Route::apiResource('batches', AdminBatchController::class)->only(['index', 'store', 'destroy']);
         Route::get('categories', [AdminCategoryController::class, 'index']);
     });
-
-    
 });
+
+
+Route::get('batches', [BatchController::class, 'index']);

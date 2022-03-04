@@ -55,7 +55,7 @@ class AuthController extends Controller
             'religion' => 'required',
             'civil_status' => 'required',
             'educational_attainment' => 'required',
-            'year_graduate' => 'required',
+            'batch_id' => 'required',
             'college' => 'required',
             'program' => 'required',
             'degree_level' => 'required',
@@ -72,7 +72,7 @@ class AuthController extends Controller
                 'password' => bcrypt($request->password),
                 'account_status' => true,
                 'educational_attainment' => $request->educational_attainment,
-                'year_graduate' => $request->year_graduate,
+                'batch_id' => $request->batch_id,
                 'college' => $request->college,
                 'program' => $request->program,
                 'degree_level' => $request->degree_level
@@ -108,7 +108,7 @@ class AuthController extends Controller
             $id_image_name = $id_image->getClientOriginalExtension();
             $id_image_name = $request->student_number . '.' . $id_image_name;
             $id_image->move(public_path('/alumni/files/images/ids'), $id_image_name);
-            $id_image_path = '/alumni/files/images/ids/' . $id_image;
+            $id_image_path = '/alumni/files/images/ids/' . $id_image_name;
 
             Student::create([
                 'student_account_info_id' => $student_account_info->id,

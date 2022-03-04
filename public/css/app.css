@@ -18417,6 +18417,8 @@ textarea.form-control-lg {
 }
 .admin .router-container {
   margin-left: 350px;
+  background: #ffed19;
+  background: linear-gradient(339deg, #ffed19 29%, white 80%);
   margin-top: 20px;
   height: 90vh;
   width: calc(100% - 350px);
