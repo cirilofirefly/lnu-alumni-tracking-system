@@ -5,7 +5,8 @@ const ADMIN = "admin"
 export default {
     namespaced: true,
     state: {
-        alumnae: {}
+        alumnae: {},
+        alumnae_count: 0
     },
 
     mutations: {
@@ -13,10 +14,15 @@ export default {
             state.alumnae = alumnae
         },
 
+        SET_ALUMNAE_COUNT: (state, alumnae_count) => {
+            state.alumnae_count = alumnae_count
+        },
+
     },
 
     getters: {
         GET_ALUMNAE: (state) => state.alumnae,
+        GET_ALUMNAE_COUNT: (state) => state.alumnae_count
     },
     actions: {
         APPROVE_ALUMNI: async ({ commit }, id) => {
@@ -45,6 +51,7 @@ export default {
             const res = await axios.get(`${ADMIN}/alumnae?token=${localStorage.getItem('access_token')}`)
                 .then((response) => {
                     commit('SET_ALUMNAE', response.data)
+                    commit('SET_ALUMNAE_COUNT', response.data.length)
                     return response;
                 })
                 .catch((error) => {

@@ -5,15 +5,20 @@ const ADMIN = "admin"
 export default {
     namespaced: true,
     state: {
-        batches: {}
+        batches: {},
+        batches_count: 0
     },
     getters: {
         GET_BATCHES: (state) => state.batches,
+        GET_BATCHES_COUNT: (state) => state.batches_count,
 
     },
     mutations: {
         SET_BATCHES: (state, batches) => {
             state.batches = batches
+        },
+        SET_BATCHES_COUNT: (state, batches_count) => {
+            state.batches_count = batches_count
         },
 
     },
@@ -22,6 +27,7 @@ export default {
             const res = await axios.get(`${ADMIN}/batches?token=${localStorage.getItem('access_token')}`)
                 .then((response) => {
                     commit("SET_BATCHES", response.data);
+                    commit("SET_BATCHES_COUNT", response.data.length);
                     return response;
                 })
                 .catch((error) => {

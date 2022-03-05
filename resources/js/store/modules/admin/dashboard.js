@@ -1,28 +1,37 @@
 import axios from '../../../axios'
 
-const AUTH = "auth/admin"
+const AUTH = "admin"
 
 export default {
     namespaced: true,
     state: {
-
+        total_alumni: {
+            labels: [],
+            data: []
+        }
     },
     getters: {
-        GET_ADMIN_TOKEN: (state) => state.token,
+        GET_ALUMNI_ACOUNT_BY_BATCH: (state) => state.total_alumni,
 
     },
     mutations: {
-        SET_ADMIN_TOKEN: (state, token) => {
-
+        SET_ALUMNI_ACOUNT_BY_BATCH: (state, total_alumni) => {
+            state.total_alumni = {
+                labels: [],
+                data: []
+            }
+            total_alumni.forEach(batch => {
+                state.total_alumni.labels.push(`${batch.batch} - ${batch.batch + 1}`)
+                state.total_alumni.data.push(batch.student_account_infos_count)
+            });
         },
 
     },
     actions: {
-        LOGOUT: async ({ commit }) => {
-            const res = await axios.post(`${AUTH}/logout?token=${localStorage.getItem('access_token')}`)
+        TOTAL_ALUMNI: async ({ commit }) => {
+            const res = await axios.get(`${AUTH}/total-alumni-by-batch?token=${localStorage.getItem('access_token')}`)
                 .then((response) => {
-                    commit("UNSET_ADMIN_TOKEN");
-                    commit("UNSET_ADMIN_USER");
+                    commit("SET_ALUMNI_ACOUNT_BY_BATCH", response.data);
                     return response;
                 })
                 .catch((error) => {

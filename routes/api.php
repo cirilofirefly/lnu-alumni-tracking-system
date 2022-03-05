@@ -8,7 +8,8 @@ use App\Http\Controllers\v1\Admin\ {
     AuthController as AdminAuthController,
     BatchController as AdminBatchController,
     CategoryController as AdminCategoryController,
-    EventController as AdminEventController
+    EventController as AdminEventController,
+    DashboardController as AdminDashboardContainer
 };
 use App\Http\Controllers\v1\BatchController;
 
@@ -61,6 +62,8 @@ Route::group(['middleware' => 'api'], function (){
         Route::apiResource('events', AdminEventController::class)->except('show');
         Route::apiResource('batches', AdminBatchController::class)->only(['index', 'store', 'destroy']);
         Route::get('categories', [AdminCategoryController::class, 'index']);
+        Route::get('total-alumni-by-batch', [AdminDashboardContainer::class, 'totalAlumni']);
+
     });
 });
 

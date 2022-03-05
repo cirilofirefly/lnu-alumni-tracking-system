@@ -1,0 +1,31 @@
+.card-container {
+    height: 100px;
+    width: 100%;
+    border-radius: 10px;
+    background: #fff;
+    padding: 10px;
+    margin: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+
+    h2 {
+        font-weight: bold;
+    }
+
+    h6 {
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+}
+
+.chart-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50vh;
+    border-radius: 10px;
+}
