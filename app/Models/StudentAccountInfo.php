@@ -37,4 +37,8 @@ class StudentAccountInfo extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function student() {
+        return $this->hasOne(Student::class, 'id');
+    }
+
 }

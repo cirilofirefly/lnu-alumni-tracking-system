@@ -25,7 +25,6 @@ export default new Vuex.Store({
         ADMIN_BATCH,
         ADMIN_CATEGORIES,
         ADMIN_EVENT,
-        // Student
         STUDENT_AUTH,
         UTILS_BATCH,
     }

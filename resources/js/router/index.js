@@ -4,7 +4,12 @@ import Signin from '../views/Auth/Signin.vue'
 import Signup from '../views/Auth/Signup.vue'
 // Student
 import Student from '../views/Student/Student.vue'
-import StudentDashboard from '../views/Student/Dashboard.vue'
+import StudentHome from '../views/Student/Home.vue'
+import StudentAccountSetting from '../views/Student/AccountSetting.vue'
+import StudentEvents from '../views/Student/Events.vue'
+import StudentFeedback from '../views/Student/Feedback.vue'
+import StudentIDRequest from '../views/Student/IDRequest.vue'
+
 // Admin
 import Admin from '../views/Admin/Admin.vue'
 import AdminDashboard from '../views/Admin/Dashboard.vue'
@@ -42,8 +47,12 @@ const ROUTES = [
         path: '/student',
         component: Student,
         children: [
-            { path: 'dashboard', name: 'student.dashboard', component: StudentDashboard },
-            { path: "", redirect: "dashboard" }
+            { path: 'home', name: 'student.home', component: StudentHome },
+            { path: 'account-setting', name: 'student.account-setting', component: StudentAccountSetting },
+            { path: 'events', name: 'student.events', component: StudentEvents },
+            { path: 'feedback', name: 'student.feedback', component: StudentFeedback },
+            { path: 'id-request', name: 'student.id-request', component: StudentIDRequest },
+            { path: "", redirect: "home" }
         ],
     },
     {

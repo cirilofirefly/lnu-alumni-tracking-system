@@ -69,7 +69,7 @@ export default {
                 `${AUTH}/me?token=` + localStorage.getItem("access_token")
             )
                 .then((response) => {
-                    commit("SET_STUDENT_USER", response.data.user);
+                    commit("SET_STUDENT_USER", response.data);
                     return response;
                 })
                 .catch((error) => {

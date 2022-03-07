@@ -1,0 +1,96 @@
+$header-height: 7vh;
+
+.student {
+  position: relative;
+  margin: 0;
+  padding: 0;
+
+    .header {
+      height: 10vh;
+      width: 100%;
+      background: #1b16b8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .user-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span {
+          font-size: 18px;
+          margin-right: 5px;
+        }
+
+      }
+
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .logo {
+          margin-left: 20px;
+          width: 70px;
+          height: 70px;
+          content:url('../images/logo.png');
+        }
+
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          flex-direction: column;
+          color: #fff;
+          margin-left: 20px;
+
+          h5 {
+            font-weight: bold;
+            letter-spacing: 5px;
+            font-size: 20px;
+            text-transform: uppercase;
+            padding: 0;
+            margin: 0;
+          }
+
+          p {
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0;
+            margin: 0;
+          }
+        }
+      }
+
+      .user-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+
+        span {
+          font-size: 18px;
+          margin-right: 5px;
+        }
+      }
+    
+    }
+
+    .nav {
+      width: 100%;
+      height: 5vh;
+      padding: 5px;
+      background: #fff;
+      margin-top: 2vh;
+      border-bottom: 1px grey solid;    
+    }
+  
+    .router-container {
+      background: rgb(255,237,25);
+      background: linear-gradient(0deg, rgba(255,237,25,1) 0%, rgba(255,255,255,1) 55%);
+      height: 83vh;
+      width: 100%;
+    }
+  }
+  

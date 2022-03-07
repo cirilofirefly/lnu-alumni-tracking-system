@@ -18453,3 +18453,83 @@ textarea.form-control-lg {
   height: 50vh;
   border-radius: 10px;
 }
+
+.student {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+.student .header {
+  height: 10vh;
+  width: 100%;
+  background: #1b16b8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.student .header .user-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.student .header .user-info span {
+  font-size: 18px;
+  margin-right: 5px;
+}
+.student .header div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.student .header div .logo {
+  margin-left: 20px;
+  width: 70px;
+  height: 70px;
+  content: url(/images/logo.png?0a7e89b86e5212d0e8494a7669617a16);
+}
+.student .header div div {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  color: #fff;
+  margin-left: 20px;
+}
+.student .header div div h5, .student .header div div .h5 {
+  font-weight: bold;
+  letter-spacing: 5px;
+  font-size: 20px;
+  text-transform: uppercase;
+  padding: 0;
+  margin: 0;
+}
+.student .header div div p {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 0;
+  margin: 0;
+}
+.student .header .user-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
+.student .header .user-info span {
+  font-size: 18px;
+  margin-right: 5px;
+}
+.student .nav {
+  width: 100%;
+  height: 5vh;
+  padding: 5px;
+  background: #fff;
+  margin-top: 2vh;
+  border-bottom: 1px grey solid;
+}
+.student .router-container {
+  background: #ffed19;
+  background: linear-gradient(0deg, #ffed19 0%, white 55%);
+  height: 83vh;
+  width: 100%;
+}
