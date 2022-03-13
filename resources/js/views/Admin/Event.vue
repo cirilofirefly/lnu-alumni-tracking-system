@@ -42,8 +42,7 @@
                 </td>
                 <td class="text-center">
                   <button
-                    style="width: 100px"
-                    class="btn btn-primary mx-2"
+                    class="btn btn-default"
                     @click.prevent="
                       id = event.id;
                       eventInfo = { ...event };

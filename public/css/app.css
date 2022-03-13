@@ -1,5 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Poppins);
 @charset "UTF-8";
+:root {
+  --iron: #E2E3E4;
+}
+
 .modal-backdrop {
   opacity: 0.5;
 }

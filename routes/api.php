@@ -14,7 +14,9 @@ use App\Http\Controllers\v1\Admin\ {
 use App\Http\Controllers\v1\BatchController;
 
 use App\Http\Controllers\v1\Student\ {
-    AuthController as StudentAuthController
+
+    AuthController as StudentAuthController,
+    EventController as StudentEventController,
 };
 
 
@@ -65,6 +67,11 @@ Route::group(['middleware' => 'api'], function (){
         Route::get('total-alumni-by-batch', [AdminDashboardContainer::class, 'totalAlumni']);
 
     });
+
+    Route::group(['prefix' => 'student'], function () {
+        Route::apiResource('events', StudentEventController::class)->except('show');
+    });
+
 });
 
 

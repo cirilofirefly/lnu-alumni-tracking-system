@@ -9,6 +9,7 @@ import ADMIN_EVENT from './modules/admin/event';
 
 import ALUMNAE_APPROVAL from './modules/admin/approval';
 import STUDENT_AUTH from './modules/student/auth';
+import STUDENT_EVENT from './modules/student/event';
 
 import UTILS_BATCH from './modules/utils/batch';
 
@@ -26,6 +27,7 @@ export default new Vuex.Store({
         ADMIN_CATEGORIES,
         ADMIN_EVENT,
         STUDENT_AUTH,
+        STUDENT_EVENT,
         UTILS_BATCH,
     }
 })

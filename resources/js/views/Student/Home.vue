@@ -2,7 +2,7 @@
   <div class="container-fluid p-4">
     <div class="row">
       <div class="col-6">
-        <div class="col-12 p-3 bg-light shadow rounded">
+        <div class="col-12 p-3 bg-light shadow-lg rounded">
           <div
             class="col-12 d-flex justify-content-center align-items-center mb-2"
           >
@@ -107,9 +107,7 @@
             </div>
           </div>
           <div class="col-12 border border-dark rounded">
-            <h4 class="border-bottom border-dark p-2">
-              Educational Information
-            </h4>
+            <h4 class="border-bottom border-dark p-2">Education Information</h4>
             <div class="ps-2">
               <p class="m-0">
                 Student ID:
@@ -176,9 +174,34 @@
         </div>
       </div>
       <div class="col-6">
-        <div class="col-12 p-3 bg-light shadow rounded">
-          <h3>Latest Happening</h3>
-          <div>{{ user[0].student.student_account_info }}</div>
+        <div class="col-12 p-3 bg-light shadow-lg rounded">
+          <div class="d-flex justify-content-between align-items-center">
+            <h3 class="pt-4 pb-2 ps-2 text-uppercase fw-bold">
+              Latest Happening
+            </h3>
+            <span style="font-size: 20px; cursor: pointer">
+              <i @click="randomEvent" class="bi bi-arrow-clockwise"></i>
+            </span>
+          </div>
+          <div
+            v-if="loading"
+            class="d-flex justify-content-center align-items-center"
+          >
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+          <div v-else class="p-4">
+            <div v-if="event.length !== 0">
+              <h5>{{ event.name }}</h5>
+              <h5>{{ event.category.category }}</h5>
+              <div v-html="event.content"></div>
+              <button class="btn btn-primary">Learn More</button>
+            </div>
+            <div v-else>
+              <h5>No Event Found</h5>
+            </div>
+          </div>
         </div>
       </div>
       <!-- <div class="col-lg-6 col-md-12 bg-light shadow rounded p-3 m-3 ">
@@ -239,10 +262,31 @@
 
 <script>
 export default {
+  data() {
+    return {
+      loading: false,
+      event: [],
+    };
+  },
   computed: {
     user() {
       return this.$store.getters["STUDENT_AUTH/GET_STUDENT_USER"];
     },
+  },
+  methods: {
+    async randomEvent() {
+      this.loading = !this.loading;
+      const response = await this.$store.dispatch("STUDENT_EVENT/FETCH_EVENT");
+      if (response.status == 200) {
+        if (typeof response.data[0] !== "undefined") {
+          this.event = { ...response.data[0] };
+        }
+        this.loading = false;
+      }
+    },
+  },
+  mounted() {
+    this.randomEvent();
   },
 };
 </script>
