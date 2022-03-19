@@ -9,7 +9,7 @@
       <div class="m-3 d-flex justify-content-center">
         <div class="card-container shadow">
           <div>
-            <h2>{{ 20 + 1 }}</h2>
+            <h2>{{ alumni_records_count }}</h2>
             <h6>Alumni Records</h6>
           </div>
           <div>
@@ -77,6 +77,9 @@ export default {
     PlanetChart,
   },
   computed: {
+    alumni_records_count() {
+      return this.$store.getters["ALUMNAE_APPROVAL/GET_ALUMNAE_RECORDS_COUNT"];
+    },
     alumni_application_count() {
       return this.$store.getters["ALUMNAE_APPROVAL/GET_ALUMNAE_COUNT"];
     },

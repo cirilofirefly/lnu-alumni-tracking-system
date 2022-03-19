@@ -1,7 +1,7 @@
 <template>
   <div class="header shadow">
     <div></div>
-    <div v-if="user" class="user-info">
+    <div v-if="user.admin_info" class="user-info">
       <span>{{
         `${user.admin_info.first_name} ${user.admin_info.last_name}(${user.username})`
       }}</span>

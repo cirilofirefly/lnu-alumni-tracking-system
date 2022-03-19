@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="col-12 p-5">
     <canvas width="1400" height="450" id="planet-chart"></canvas>
   </div>
 </template>

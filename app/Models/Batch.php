@@ -11,7 +11,13 @@ class Batch extends Model
 
     protected $guarded = [];
 
+    protected $appends  = ['allow_delete'];
+
     public function student_account_infos() {
-        return $this->hasMany(StudentAccountInfo::class, 'id');
+        return $this->hasMany(StudentAccountInfo::class, 'batch_id', 'id');
+    }
+
+    public function getAllowDeleteAttribute() {
+        return  !$this->student_account_infos()->exists();
     }
 }

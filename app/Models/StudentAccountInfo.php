@@ -41,4 +41,8 @@ class StudentAccountInfo extends Authenticatable implements JWTSubject
         return $this->hasOne(Student::class, 'id');
     }
 
+    public function batch() {
+        return $this->belongsTo(Batch::class, 'batch_id', 'id');
+    }
+
 }

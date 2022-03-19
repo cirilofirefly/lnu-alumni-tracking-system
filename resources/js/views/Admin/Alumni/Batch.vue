@@ -31,8 +31,9 @@
               <tr v-for="(batch, index) in batches" :key="index">
                 <th scope="row">{{ index + 1 }}</th>
                 <td>{{ `${batch.batch} - ${batch.batch + 1}` }}</td>
-                <!-- <td class="text-center">
+                <td class="text-center">
                   <button
+                    :disabled="!batch.allow_delete"
                     class="btn btn-danger"
                     @click="
                       id = batch.id;
@@ -42,7 +43,7 @@
                     <i class="bi bi-trash"></i>
                     Delete
                   </button>
-                </td> -->
+                </td>
               </tr>
             </tbody>
           </table>

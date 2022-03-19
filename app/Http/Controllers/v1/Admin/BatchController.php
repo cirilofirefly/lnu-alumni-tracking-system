@@ -12,7 +12,7 @@ class BatchController extends Controller
     //
 
     public function index() {
-        return response()->json(Batch::all());
+        return response()->json(Batch::get());
     }
 
     public function store() {

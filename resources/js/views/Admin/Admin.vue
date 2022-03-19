@@ -1,15 +1,20 @@
 <template>
-  <div class="admin">
+  <div>
     <div v-if="loaded">
       <AdminSidebar />
-      <div>
-        <AdminHeader />
-        <router-view class="router-container"></router-view>
-      </div>
+      <AdminHeader />
+      <router-view class="router-container"></router-view>
     </div>
     <div
       v-else
-      class="w-100 vh-100 d-flex flex-column justify-content-center align-items-center"
+      class="
+        w-100
+        vh-100
+        d-flex
+        flex-column
+        justify-content-center
+        align-items-center
+      "
     >
       <div><h4>Now Loading...</h4></div>
       <div>
