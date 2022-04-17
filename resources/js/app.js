@@ -4,12 +4,12 @@ import router from './router'
 import store from './store'
 import { BootstrapVue } from 'bootstrap-vue'
 
-
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+
 const options = {
     position: "top-left",
-    timeout: 5000,
+    timeout: 4500,
     closeOnClick: true,
     pauseOnFocusLoss: true,
     pauseOnHover: true,

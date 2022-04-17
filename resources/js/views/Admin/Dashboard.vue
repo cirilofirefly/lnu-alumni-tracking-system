@@ -1,100 +1,98 @@
 <template>
   <div class="container-fluid">
-    <div class="row p-5">
-      <div class="col-12 col-md-6">
-        <h1 class="text-uppercase fw-bold" style="letter-spacing: 3px">
-          Dashboard
-        </h1>
-      </div>
-      <div class="m-3 d-flex justify-content-center">
-        <div class="card-container shadow">
-          <div>
-            <h2>{{ alumni_records_count }}</h2>
-            <h6>Alumni Records</h6>
-          </div>
-          <div>
-            <router-link
-              :to="{ name: 'admin.alumni.records' }"
-              class="btn btn-success"
-              ><i class="bi bi-eye-fill"></i>View</router-link
-            >
+    <div class="row g-0">
+      <h1 class="fw-bold" style="">Dashboard</h1>
+      <p>Welcome back, Here is your summary</p>
+      <div class="row gy-2 gx-1">
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="card p-4 shadow-sm">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h1 class="fw-bold">{{ alumni_records_count }}</h1>
+                <h5>Alumni Records</h5>
+              </div>
+              <div>
+                <router-link :to="{ name: 'admin.alumni.records' }" class="btn btn-success"><i class="bi bi-eye-fill"></i>View</router-link>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="card-container shadow">
-          <div>
-            <h2>{{ alumni_application_count }}</h2>
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="card p-4 shadow-sm">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h1 class="fw-bold">{{ alumni_application_count }}</h1>
 
-            <h6>Alumni Application</h6>
+                <h5>Alumni Application</h5>
+              </div>
+              <div>
+                <router-link :to="{ name: 'admin.alumni.approval' }" class="btn btn-success"><i class="bi bi-eye-fill"></i>View</router-link>
+              </div>
+            </div>
           </div>
-          <div>
-            <router-link
-              :to="{ name: 'admin.alumni.approval' }"
-              class="btn btn-success"
-              ><i class="bi bi-eye-fill"></i>View</router-link
-            >
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="card p-4 shadow-sm">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h1 class="fw-bold">{{ 20 + 1 }}</h1>
+                <h5>Alumni ID Records</h5>
+              </div>
+              <div>
+                <router-link :to="{ name: 'admin.alumni.id-request' }" class="btn btn-success"><i class="bi bi-eye-fill"></i>View</router-link>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+          <div class="card p-4 shadow-sm">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h1 class="fw-bold">{{ alumni_batch_count }}</h1>
+                <h5>Alumni Batch</h5>
+              </div>
+              <div>
+                <router-link :to="{ name: 'admin.alumni.batch' }" class="btn btn-success"><i class="bi bi-eye-fill"></i>View</router-link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="m-3 d-flex justify-content-center">
-        <div class="card-container shadow">
-          <div>
-            <h2>{{ 20 + 1 }}</h2>
-            <h6>Alumni ID Records</h6>
-          </div>
-          <div>
-            <router-link
-              :to="{ name: 'admin.alumni.id-request' }"
-              class="btn btn-success"
-              ><i class="bi bi-eye-fill"></i>View</router-link
-            >
+      <div class="d-flex mt-5">
+        <div class="col-12 col-lg-12">
+          <div class="bg-light card shadow-sm">
+            <PlanetChart />
           </div>
         </div>
-        <div class="card-container shadow">
-          <div>
-            <h2>{{ alumni_batch_count }}</h2>
-            <h6>Alumni Batch</h6>
-          </div>
-          <div>
-            <router-link
-              :to="{ name: 'admin.alumni.batch' }"
-              class="btn btn-success"
-              ><i class="bi bi-eye-fill"></i>View</router-link
-            >
-          </div>
-        </div>
-      </div>
-      <div class="bg-light chart-container shadow">
-        <PlanetChart />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import PlanetChart from "../../components/chartjs/PlanetChart.vue";
-export default {
-  components: {
-    PlanetChart,
-  },
-  computed: {
-    alumni_records_count() {
-      return this.$store.getters["ALUMNAE_APPROVAL/GET_ALUMNAE_RECORDS_COUNT"];
+  import PlanetChart from '../../components/chartjs/PlanetChart.vue';
+  export default {
+    components: {
+      PlanetChart,
     },
-    alumni_application_count() {
-      return this.$store.getters["ALUMNAE_APPROVAL/GET_ALUMNAE_COUNT"];
+    computed: {
+      alumni_records_count() {
+        return this.$store.getters['ALUMNAE_APPROVAL/GET_ALUMNAE_RECORDS_COUNT'];
+      },
+      alumni_application_count() {
+        return this.$store.getters['ALUMNAE_APPROVAL/GET_ALUMNAE_COUNT'];
+      },
+      alumni_batch_count() {
+        return this.$store.getters['ADMIN_BATCH/GET_BATCHES_COUNT'];
+      },
+      alumni_by_batch() {
+        return [];
+      },
     },
-    alumni_batch_count() {
-      return this.$store.getters["ADMIN_BATCH/GET_BATCHES_COUNT"];
+    async mounted() {
+      await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_ALUMNI');
     },
-    alumni_by_batch() {
-      return [];
-    },
-  },
-  async mounted() {
-    await this.$store.dispatch("ADMIN_DASHBOARD/TOTAL_ALUMNI");
-  },
-};
+  };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,13 +1,13 @@
 $navbar-height : 7vh;
 
 .landing {
-
-    position: relative;
+    position: fixed;
     width: 100%;
-    height: 100vh;
-    background-image: linear-gradient(rgba(252, 255, 91, 0.5), rgba(72, 115, 255, 0.5)), url('../images/lnu.jpg');
+    height: 100%;
+    background-image: linear-gradient(rgba(223, 143, 22, 0.651), rgba(20, 59, 187, 0.877)), url('../images/lnu.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
     
     .navbar {
         position: relative;
@@ -78,7 +78,7 @@ $navbar-height : 7vh;
             }
 
             h1 {
-                font-size: 64px;
+                font-size: 60px;
             }
 
             h3 {

@@ -4,7 +4,7 @@
       <router-link to="/" class="nav-item me-5">
         <span>
           <i class="bi bi-house-fill"></i>
-          MAIN PAGE
+          HOME
         </span>
       </router-link>
     </div>

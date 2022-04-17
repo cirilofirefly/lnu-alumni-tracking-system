@@ -2,11 +2,11 @@
   <div class="container-fluid">
     <div class="row p-5">
       <div class="col-12">
-        <h1 class="text-uppercase fw-bold" style="letter-spacing: 3px">
+        <h1 class="text-uppercase fw-bold">
           Event Management
         </h1>
       </div>
-      <div class="col-12 mt-3 shadow p-3 bg-light">
+      <div class="col-12 mt-3 shadow-sm p-3 bg-light">
         <div class="mb-5 mt-2">
           <button
             class="btn btn-success mx-2"
