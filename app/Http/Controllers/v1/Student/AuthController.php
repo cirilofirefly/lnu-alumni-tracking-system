@@ -70,7 +70,7 @@ class AuthController extends Controller
             $student_account_info = StudentAccountInfo::create([
                 'username' => $request->username,
                 'password' => bcrypt($request->password),
-                'account_status' => true,
+                'account_status' => false,
                 'educational_attainment' => $request->educational_attainment,
                 'batch_id' => $request->batch_id,
                 'college' => $request->college,
