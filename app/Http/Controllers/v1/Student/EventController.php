@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class EventController extends Controller
 {
     //
-    public function index() {
-        return response(Event::with('category')->inRandomOrder()->limit(1)->get());
+    public function show($slug) {
+        return response(Event::with('category')->where('slug', $slug)->first());
     }
 }

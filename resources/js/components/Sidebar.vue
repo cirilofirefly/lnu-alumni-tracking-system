@@ -93,7 +93,7 @@ export default {
 			this.toggled = !this.toggled;
 		},
 		async logout() {
-			const response = await this.$store.dispatch("ADMIN_AUTH/LOGOUT");
+			const response = await this.$store.dispatch("STUDENT_AUTH/LOGOUT");
 			if (response.status == 200) {
 				this.$router.push({ name: "signin" });
 				this.$toast.success(response.data.message);

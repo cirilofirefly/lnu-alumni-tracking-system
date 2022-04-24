@@ -75,7 +75,7 @@
       </li>
       <li class="nav-item">
         <div class="main">
-          <router-link class="nav-link" :to="{ name: 'admin.event' }">
+          <router-link class="nav-link" :to="{ name: 'admin.events' }">
             <box-icon
               color="#fff"
               type="solid"

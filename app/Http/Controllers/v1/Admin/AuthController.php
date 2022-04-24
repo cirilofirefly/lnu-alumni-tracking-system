@@ -48,7 +48,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(['user' => Admin::with('admin_info')->where('id', auth('admin')->user()->id)->first()]);
+        return response()->json(Admin::with('admin_info')->where('id', auth('admin')->user()->id)->first());
     }
 
     protected function respondWithToken($token)

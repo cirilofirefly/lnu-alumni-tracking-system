@@ -1,7 +1,7 @@
 <template>
   <div class="header shadow-sm">
-    <div class="lh-sm">
-      <p>{{ `${user.admin_info.last_name[0]}. ${user.admin_info.first_name}` }}</p>
+    <div class="lh-sm" v-if="user.admin_info">
+      <p>{{ `${user.admin_info.last_name}. ${user.admin_info.first_name}` }}</p>
       <p class="text-muted"><small>{{user.admin_info.email}}</small></p>
     </div>
     <div v-if="user.admin_info" class="user-info">
