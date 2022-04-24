@@ -67,9 +67,10 @@ Route::group(['middleware' => 'api'], function (){
         Route::apiResource('batches', AdminBatchController::class)->only(['index', 'store', 'destroy']);
         Route::get('categories', [AdminCategoryController::class, 'index']);
         Route::get('total-alumni-by-batch', [AdminDashboardContainer::class, 'totalAlumni']);
+        Route::get('total-batch', [AdminDashboardContainer::class, 'totalBatch']);
+        Route::get('total-alumni-records', [AdminDashboardContainer::class, 'totalAlumniRecords']);
         Route::get('records', [AdminRecordController::class, 'index']);
         Route::get('record/{id}', [AdminRecordController::class, 'show']);
-
     });
 
     Route::group(['prefix' => 'student'], function () {

@@ -22,7 +22,6 @@
             <div class="d-flex justify-content-between">
               <div>
                 <h1 class="fw-bold">{{ alumni_application_count }}</h1>
-
                 <h5>Alumni Application</h5>
               </div>
               <div>
@@ -35,7 +34,7 @@
           <div class="card p-4 shadow-sm">
             <div class="d-flex justify-content-between">
               <div>
-                <h1 class="fw-bold">{{ 20 + 1 }}</h1>
+                <h1 class="fw-bold">{{ 0 }}</h1>
                 <h5>Alumni ID Records</h5>
               </div>
               <div>
@@ -76,21 +75,25 @@
       PlanetChart,
     },
     computed: {
+
       alumni_records_count() {
-        return this.$store.getters['ALUMNAE_APPROVAL/GET_ALUMNAE_RECORDS_COUNT'];
+        return this.$store.getters['ADMIN_DASHBOARD/GET_ALUMNI_RECORD_COUNT'];
       },
       alumni_application_count() {
-        return this.$store.getters['ALUMNAE_APPROVAL/GET_ALUMNAE_COUNT'];
+        return this.$store.getters['ADMIN_DASHBOARD/GET_ALUMNI_COUNT'];
       },
       alumni_batch_count() {
-        return this.$store.getters['ADMIN_BATCH/GET_BATCHES_COUNT'];
+        return this.$store.getters['ADMIN_DASHBOARD/GET_BATCHES_COUNT'];
       },
       alumni_by_batch() {
         return [];
       },
     },
     async mounted() {
-      await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_ALUMNI');
+      await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_ALUMNI_BY_BATCH');
+    //   await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_ALUMNI');
+      await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_ALUMNI_RECORDS');
+      await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_BATCHES');
     },
   };
 </script>

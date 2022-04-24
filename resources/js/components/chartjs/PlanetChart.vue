@@ -14,13 +14,13 @@ export default {
         type: "line",
         data: {
           labels:
-            this.$store.getters["ADMIN_DASHBOARD/GET_ALUMNI_ACOUNT_BY_BATCH"]
+            this.$store.getters["ADMIN_DASHBOARD/GET_ALUMNI_COUNT_BY_BATCH"]
               .labels,
           datasets: [
             {
               label: "Alumni",
               data: this.$store.getters[
-                "ADMIN_DASHBOARD/GET_ALUMNI_ACOUNT_BY_BATCH"
+                "ADMIN_DASHBOARD/GET_ALUMNI_COUNT_BY_BATCH"
               ].data,
               backgroundColor: "rgba(54,73,93,.5)",
               borderColor: "#36495d",
