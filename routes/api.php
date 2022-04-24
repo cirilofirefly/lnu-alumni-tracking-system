@@ -62,7 +62,8 @@ Route::group(['middleware' => 'api'], function (){
         Route::put('approve-alumni/{id}', [AlumniAccountController::class, 'approveAccount']);
         Route::put('disapprove-alumni/{id}', [AlumniAccountController::class, 'disapproveAccount']);
         Route::get('alumnae', [AlumniAccountController::class, 'index']);
-        Route::apiResource('events', AdminEventController::class)->except('show');
+        Route::apiResource('events', AdminEventController::class);
+        Route::get('event/{slug}', [AdminEventController::class, 'show']);
         Route::apiResource('batches', AdminBatchController::class)->only(['index', 'store', 'destroy']);
         Route::get('categories', [AdminCategoryController::class, 'index']);
         Route::get('total-alumni-by-batch', [AdminDashboardContainer::class, 'totalAlumni']);
@@ -72,7 +73,7 @@ Route::group(['middleware' => 'api'], function (){
     });
 
     Route::group(['prefix' => 'student'], function () {
-        Route::apiResource('events', StudentEventController::class)->except('show');
+        Route::apiResource('event', StudentEventController::class)->except('show');
     });
 
 });

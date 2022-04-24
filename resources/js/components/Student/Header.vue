@@ -1,7 +1,5 @@
 <template>
   <div class="header shadow">
-    <!-- <code class="text-light">{{ user}}</code> -->
-
     <div>
       <div class="logo"></div>
       <div>

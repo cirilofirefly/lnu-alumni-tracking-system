@@ -18,6 +18,10 @@ class EventController extends Controller
         return response()->json(Event::with('category')->get());
     }
 
+    public function show($slug) {
+        return response()->json(Event::with('category')->where('slug', $slug)->first());
+    }
+
     public function store(Request $request) {
 
         $this->validate($request, [

@@ -5,15 +5,20 @@ const ADMIN = "admin"
 export default {
     namespaced: true,
     state: {
-        events: {}
+        events: {},
+        event: {}
     },
     getters: {
         GET_EVENTS: (state) => state.events,
+        GET_EVENT: (state) => state.event,
 
     },
     mutations: {
         SET_EVENTS: (state, events) => {
             state.events = events
+        },
+        SET_EVENT: (state, event) => {
+            state.event = event
         },
 
     },
@@ -22,6 +27,18 @@ export default {
             const res = await axios.get(`${ADMIN}/events?token=${localStorage.getItem('access_token')}`)
                 .then((response) => {
                     commit("SET_EVENTS", response.data);
+                    return response;
+                })
+                .catch((error) => {
+                    return error.response;
+                });
+
+            return res;
+        },
+        FETCH_EVENT: async ({ commit }, slug) => {
+            const res = await axios.get(`${ADMIN}/event/${slug}?token=${localStorage.getItem('access_token')}`)
+                .then((response) => {
+                    commit("SET_EVENT", response.data);
                     return response;
                 })
                 .catch((error) => {

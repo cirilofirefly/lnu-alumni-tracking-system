@@ -18,6 +18,7 @@ import AdminAlumniIDRequest from '../views/Admin/Alumni/IDRequest.vue'
 import AdminAlumniBatch from '../views/Admin/Alumni/Batch.vue'
 import AdminAlumniRecords from '../views/Admin/Alumni/Records.vue'
 import AdminAlumniRecord from '../views/Admin/Alumni/Record.vue'
+import AdminEvents from '../views/Admin/Events.vue'
 import AdminEvent from '../views/Admin/Event.vue'
 import AdminFeedback from '../views/Admin/Feedback.vue'
 import AdminNotification from '../views/Admin/Notification.vue'
@@ -66,7 +67,8 @@ const ROUTES = [
             { path: 'batch', name: 'admin.alumni.batch', component: AdminAlumniBatch },
             { path: 'records', name: 'admin.alumni.records', component: AdminAlumniRecords },
             { path: 'record/:id', name: 'admin.alumni.record', component: AdminAlumniRecord, props: true },
-            { path: 'event', name: 'admin.event', component: AdminEvent },
+            { path: 'events', name: 'admin.events', component: AdminEvents },
+            { path: 'event/:slug', name: 'admin.event', component: AdminEvent, props: true },
             { path: 'account', name: 'admin.account', component: AdminAccount },
             { path: 'feedback', name: 'admin.feedback', component: AdminFeedback },
             { path: 'notification', name: 'admin.notification', component: AdminNotification },
