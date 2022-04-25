@@ -15,7 +15,7 @@ use App\Http\Controllers\v1\Admin\ {
 use App\Http\Controllers\v1\BatchController;
 
 use App\Http\Controllers\v1\Student\ {
-
+    IDRequestController as StudentIDRequestController,
     AuthController as StudentAuthController,
     EventController as StudentEventController,
 };
@@ -74,7 +74,11 @@ Route::group(['middleware' => 'api'], function (){
     });
 
     Route::group(['prefix' => 'student'], function () {
-        Route::apiResource('event', StudentEventController::class)->except('show');
+        Route::get('event/{slug}', [StudentEventController::class, 'show']);
+        Route::get('latest-event', [StudentEventController::class, 'latestEvent']);
+        Route::get('id-student-account/{id}', [StudentIDRequestController::class, 'show']);
+        Route::put('update-student-account', [StudentIDRequestController::class, 'updateAccount']);
+
     });
 
 });

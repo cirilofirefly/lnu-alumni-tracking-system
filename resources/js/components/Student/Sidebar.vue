@@ -22,13 +22,13 @@
         <div class="main">
           <router-link class="nav-link" :to="{ name: 'student.id-request' }">
             <box-icon color="#fff" type="solid" name="envelope"></box-icon>
-            <span>ID Request</span></router-link
+            <span>ID Management</span></router-link
           >
         </div>
       </li>
        <li class="nav-item">
         <div class="main">
-          <router-link class="nav-link" :to="{ name: 'student.event' }">
+          <router-link class="nav-link" :to="{ name: 'student.events' }">
             <box-icon
               class="icon"
               type="solid"

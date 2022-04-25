@@ -5,7 +5,14 @@
 				<div class="mt-2 mb-3">
 					<h3>{{ event.name }}</h3>
 					<h6 class="text-muted">
-						{{ new Date(event.created_at).toLocaleString("en-US") }}
+						{{
+							`${new Date(event.created_at).toLocaleString("en-US", {
+								weekday: "long",
+								year: "numeric",
+								month: "long",
+								day: "numeric",
+							})} ${new Date(event.created_at).toLocaleTimeString("en-US")}`
+						}}
 					</h6>
 				</div>
 				<div>
