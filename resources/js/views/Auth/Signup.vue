@@ -371,7 +371,11 @@
 							"
 						>
 							<div>
-								<button @click.prevent="signup" class="btn btn-lg btn-primary">
+								<button
+									:disabled="isSubmitting"
+									@click.prevent="signup"
+									class="btn btn-lg btn-primary"
+								>
 									<i class="bi bi-box-arrow-right"></i> Sign up
 								</button>
 							</div>
@@ -417,6 +421,7 @@ export default {
 				degree_level: null,
 			},
 			form_status: 0,
+			isSubmitting: false,
 
 			attainments: [
 				{ name: "College Graduate" },
@@ -487,6 +492,7 @@ export default {
 	},
 	methods: {
 		async signup() {
+			this.isSubmitting = !this.isSubmitting;
 			let formData = new FormData();
 			formData.append("username", this.account.username);
 			formData.append("password", this.account.password);
@@ -532,8 +538,11 @@ export default {
 			}
 
 			if (response.status == 422) {
-				console.log(response.data.errors);
+				for (const [key, value] of Object.entries(response.data.errors)) {
+					this.$toast.error(value[0]);
+				}
 			}
+			this.isSubmitting = !this.isSubmitting;
 		},
 		handleImageFile(event) {
 			this.account.image = event.target.files[0];
