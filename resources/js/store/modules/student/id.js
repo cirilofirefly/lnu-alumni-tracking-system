@@ -1,3 +1,4 @@
+
 import axios from '../../../axios'
 
 const STUDENT = "student"
@@ -5,20 +6,21 @@ const STUDENT = "student"
 export default {
     namespaced: true,
     state: {
-        event: {}
+        account: {}
     },
     mutations: {
-        SET_EVENT: (state, event) => {
-            state.event = event
+        SET_STUDENT_ACCOUNT: (state, account) => {
+            state.account = account
         },
     },
     getters: {
-        GET_EVENT: (state) => state.event,
+        GET_STUDENT_ACCOUNT: (state) => state.account,
     },
     actions: {
-        FETCH_LATEST_EVENT: async ({ commit }) => {
-            const res = await axios.get(`${STUDENT}/latest-event?token=${localStorage.getItem('access_token')}`)
+        FETCH_STUDENT_ACCOUNT: async ({ commit }, id) => {
+            const res = await axios.get(`${STUDENT}/id-student-account/${id}?token=${localStorage.getItem('access_token')}`)
                 .then((response) => {
+                    commit('SET_STUDENT_ACCOUNT', response.data)
                     return response;
                 })
                 .catch((error) => {
@@ -27,10 +29,9 @@ export default {
 
             return res;
         },
-        FETCH_EVENT: async ({ commit }, slug) => {
-            const res = await axios.get(`${STUDENT}/event/${slug}?token=${localStorage.getItem('access_token')}`)
+        UPDATE_STUDENT_ACCOUNT: async ({ commit }, data) => {
+            const res = await axios.put(`${STUDENT}/update-student-account?token=${localStorage.getItem('access_token')}`, data)
                 .then((response) => {
-                    commit('SET_EVENT', response.data);
                     return response;
                 })
                 .catch((error) => {
@@ -40,4 +41,5 @@ export default {
             return res;
         },
     }
+
 }
