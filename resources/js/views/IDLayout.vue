@@ -30,6 +30,10 @@
 							<p>Telephone No:</p>
 							<span>{{ backInfo.telephone }}</span>
 						</div>
+						<div class="text-id">
+							<span>{{ backInfo.fullName }}</span>
+							<p>Alumni</p>
+						</div>
 					</div>
 				</div>
 				<div class="front">
@@ -52,6 +56,7 @@ export default {
 				email: "bucatcatcirilo@gmail.com",
 				mobile_number: "0926 412 3123",
 				telephone: "123 123 1234",
+				fullName: "Cirilo E. Bucatcat Jr.",
 			},
 		};
 	},
@@ -126,18 +131,37 @@ export default {
 					margin-top: 2rem;
 					margin-bottom: 3rem;
 
-
 					span {
 						left: 13%;
 						top: 4px;
 					}
 				}
 
-                &:nth-child(4) {
-                    span {
-                        font-size: 11px;
-                    }
-                }
+				&:nth-child(4) {
+					span {
+						font-size: 11px;
+					}
+				}
+
+				&:last-child {
+					text-align: center;
+					span {
+						width: 100%;
+						left: 50%;
+						transform: translate(-50%, 0);
+						top: 5rem;
+						text-transform: uppercase;
+						font-weight: bold;
+                        font-size: 1rem;
+					}
+					p {
+                        position: absolute;
+						left: 50%;
+						transform: translate(-50%, 0);
+						top: 6.2rem;
+                        font-weight: 500;
+					}
+				}
 			}
 		}
 	}
