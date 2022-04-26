@@ -26,6 +26,9 @@ import AdminFeedback from '../views/Admin/Feedback.vue'
 import AdminNotification from '../views/Admin/Notification.vue'
 import AdminAccount from '../views/Admin/Account.vue'
 
+import IDLayout from '../views/IDLayout.vue'
+
+
 
 
 import Landing from '../views/Landing.vue'
@@ -36,6 +39,12 @@ const ROUTES = [
         path: '/signin',
         name: 'signin',
         component: Signin
+    },
+
+    {
+        path: '/id-layout',
+        name: 'id.layout',
+        component: IDLayout
     },
     {
         path: '/signup',
