@@ -30,7 +30,7 @@ export default {
             return res;
         },
         UPDATE_STUDENT_ACCOUNT: async ({ commit }, data) => {
-            const res = await axios.put(`${STUDENT}/update-student-account?token=${localStorage.getItem('access_token')}`, data)
+            const response = await axios.put(`${STUDENT}/update-student-account?token=${localStorage.getItem('access_token')}`, data)
                 .then((response) => {
                     return response;
                 })
@@ -38,8 +38,19 @@ export default {
                     return error.response;
                 });
 
-            return res;
+            return response;
         },
+
+        UPLOAD_IMAGE: async ({ commit }, image) => {
+            return await axios.post(`${STUDENT}/upload-image?token=${localStorage.getItem('access_token')}`, image)
+                .then(response => {
+                    return response;
+                })
+                .catch(error => {
+                    return error.response
+                })
+        }
+
     }
 
 }

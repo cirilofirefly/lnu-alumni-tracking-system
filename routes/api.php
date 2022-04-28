@@ -54,8 +54,6 @@ Route::group([
 
 });
 
-
-
 Route::group(['middleware' => 'api'], function (){
 
     Route::group(['prefix' => 'admin'], function () {
@@ -75,9 +73,13 @@ Route::group(['middleware' => 'api'], function (){
 
     Route::group(['prefix' => 'student'], function () {
         Route::get('event/{slug}', [StudentEventController::class, 'show']);
+        Route::get('events', [StudentEventController::class, 'index']);
         Route::get('latest-event', [StudentEventController::class, 'latestEvent']);
         Route::get('id-student-account/{id}', [StudentIDRequestController::class, 'show']);
         Route::put('update-student-account', [StudentIDRequestController::class, 'updateAccount']);
+        Route::post('upload-image', [StudentIDRequestController::class, 'uploadImage']);
+        Route::get('get-comments', [StudentEventController::class, 'getComments']);
+        Route::post('post-comment', [StudentEventController::class, 'postComment']);
 
     });
 

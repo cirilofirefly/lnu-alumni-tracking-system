@@ -1,6 +1,6 @@
 <template>
-	<div class="container-fluid vh-100 pt-5">
-		<div class="row d-flex justify-content-center">
+	<div class="container-fluid vh-100">
+		<div class="row d-flex justify-content-center rounded">
 			<div class="col-8 bg-light p-5 shadow">
 				<div class="mt-2 mb-3">
 					<h3>{{ event.name }}</h3>
@@ -19,6 +19,59 @@
 					<span v-html="event.content"></span>
 				</div>
 			</div>
+			<div class="col-8 p-5 shadow">
+				<div class="comment-container mt-2 mb-5">
+					<div
+						v-for="comment in event.comments"
+						:key="comment.id"
+						class="d-flex justify-content-start align-items-stretch my-2"
+                        style="cursor: pointer;"
+						@click.prevent="showDelete(comment)"
+					>
+						<div class="col-1 my-auto img-container">
+							<img
+								width="70"
+								height="70"
+								:src="setImagePath(comment)"
+								class="img-fluid shadow rounded-circle align-baseline"
+							/>
+						</div>
+						<div class="col-11 mt-2 pe-5">
+							<p class="ps-3 text-justify">{{ comment.comment }}</p>
+						</div>
+					</div>
+				</div>
+				<div class="pt-4 d-flex align-items-center">
+					<div class="col-11">
+						<input
+							v-model="event_comment.comment"
+							placeholder="Write a comment..."
+							type="text"
+							class="form-control rounded-pill"
+						/>
+					</div>
+					<div>
+						<button
+							class="btn btn-primary rounded-circle mx-2"
+							@click="postComment()"
+							:disabled="isSubmitting"
+						>
+							<box-icon
+								class="icon mt-1"
+								name="send"
+								color="#ffffff"
+							></box-icon>
+						</button>
+					</div>
+				</div>
+
+				<b-modal id="delete-comment" title="Delete Comment" @ok.prevent="">
+					<p class="my-4 text-center">
+						Are you sure you want to delete this comment?
+					</p>
+					<p>{{ comment.comment }}</p>
+				</b-modal>
+			</div>
 		</div>
 	</div>
 </template>
@@ -27,11 +80,67 @@
 export default {
 	props: ["slug"],
 	data() {
-		return {};
+		return {
+			user_id: 1,
+			comments: [
+				{
+					id: 1,
+					user: "qweqweqwe",
+					comment:
+						"qweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqweqwe",
+				},
+				{ id: 2, user: "qweqweqwe", comment: "qweqweqweqweqweqweqwe" },
+				{ id: 3, user: "qweqweqwe", comment: "qweqweqweqweqweqweqwe" },
+				{ id: 4, user: "qweqweqwe", comment: "qweqweqweqweqweqweqwe" },
+				{ id: 5, user: "qweqweqwe", comment: "qweqweqweqweqweqweqwe" },
+				{ id: 6, user: "qweqweqwe", comment: "qweqweqweqweqweqweqwe" },
+				{ id: 7, user: "qweqweqwe", comment: "qweqweqweqweqweqweqwe" },
+				{ id: 8, user: "qweqweqwe", comment: "qweqweqweqweqweqweqwe" },
+				{ id: 9, user: "qweqweqwe", comment: "qweqweqweqweqweqweqwe" },
+				{ id: 10, user: "qweqweqwe", comment: "qweqweqweqweqweqweqwe" },
+				{ id: 11, user: "qweqweqwe", comment: "qweqweqweqweqweqweqwe" },
+				{ id: 12, user: "qweqweqwe", comment: "qweqweqweqweqweqweqwe" },
+			],
+			isSubmitting: false,
+			event_comment: { comment: "", event_id: 0, student_id: 0 },
+			comment: {},
+		};
 	},
 	computed: {
 		event() {
 			return this.$store.getters["STUDENT_EVENT/GET_EVENT"];
+		},
+		user() {
+			return this.$store.getters["STUDENT_AUTH/GET_STUDENT_USER"];
+		},
+	},
+
+	methods: {
+		async postComment() {
+			this.isSubmitting = !this.isSubmitting;
+			this.event_comment.event_id = this.event.id;
+			const response = await this.$store.dispatch(
+				"STUDENT_EVENT/POST_COMMENT",
+				this.event_comment
+			);
+			if (response.status == 200) {
+				this.isSubmitting = !this.isSubmitting;
+				this.event.comments.push({ ...this.event_comment });
+				this.event_comment.comment = "";
+			}
+		},
+		showDelete(comment) {
+			this.comment = { ...comment };
+			if (comment?.student) {
+				if (this.user[0]?.student.id == comment.student.id) {
+					this.$bvModal.show("delete-comment");
+				}
+			}
+		},
+		setImagePath(comment) {
+			return comment?.student.id_image
+				? `http://localhost:8000${comment.student?.id_image}`
+				: `http://localhost:8000${this.user[0]?.student.id_image}`;
 		},
 	},
 	async mounted() {
@@ -41,4 +150,28 @@ export default {
 </script>
 
 <style>
+.comment-container {
+	height: 40vh;
+	overflow-y: scroll !important;
+}
+
+.img-container {
+	height: 100%;
+	display: flex;
+	justify-content: flex-start;
+}
+.user-comment {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	flex-direction: column;
+	height: fit-content;
+	overflow-x: hidden;
+	overflow-y: scroll !important;
+}
+
+.user-comment div p {
+	font-size: 16px;
+	white-space: nowrap;
+}
 </style>

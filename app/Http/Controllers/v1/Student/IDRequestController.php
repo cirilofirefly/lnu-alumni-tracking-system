@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v1\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Models\StudentAccountInfo;
 use Illuminate\Http\Request;
 
 class IDRequestController extends Controller
@@ -61,5 +62,24 @@ class IDRequestController extends Controller
         $student->student_employee_info->sp_email = $request['student_employee_info']['sp_email'];
         $student->student_employee_info->save();
         return response()->json(['message' => 'Account Updated'], 200);
+    }
+
+    public function uploadImage(Request $request) {
+        
+        $this->validate($request, [
+            'image' => 'required|image|mimes:png,jpg|max:10000',
+        ]);
+
+        $id_image = $request->file('image');
+        $id_image_name = $id_image->getClientOriginalExtension();
+        $id_image_name = $request->student_number . '.' . $id_image_name;
+        $id_image->move(public_path('/alumni/files/images/ids'), $id_image_name);
+        $id_image_path = '/alumni/files/images/ids/' . $id_image_name;
+
+        $student_account = StudentAccountInfo::where('id', auth('student')->user()->id)->first(); 
+        $student_account->student->id_image = $id_image_path;
+        $student_account->student->save();
+
+        return response()->json(['message' => 'Image uploaded.'], 200);
     }
 }

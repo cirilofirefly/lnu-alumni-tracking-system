@@ -37,7 +37,8 @@
 							"
 						>
 							<img
-								:src="`http://localhost:8000${user[0].student.id_image}`"
+								@click="$bvModal.show('update-image')"
+								:src="previewImage"
 								style="width: 200px; height: 200px"
 								alt="Id Picture"
 								class="img-fluid shadow"
@@ -192,6 +193,27 @@
 					</div>
 				</div>
 			</div>
+
+			<b-modal
+				id="update-image"
+				title="Update Your ID"
+				ok-title="Save"
+				@ok.prevent="uploadImage()"
+				@cancel="revertImage()"
+			>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<input
+								v-on:change="onFileChange($event)"
+								type="file"
+								id="imageFile"
+								accept="image/png, image/jpeg"
+							/>
+						</div>
+					</div>
+				</div>
+			</b-modal>
 		</div>
 	</div>
 </template>
@@ -204,6 +226,9 @@ export default {
 			verified: true,
 			event: {},
 			userCheck: null,
+			image: null,
+			previewImage: null,
+			oldImage: null,
 		};
 	},
 	computed: {
@@ -222,8 +247,41 @@ export default {
 				this.setLoading();
 			}
 		},
+		async uploadImage() {
+			let formData = new FormData();
+			formData.append("image", this.image);
+			const response = await this.$store.dispatch(
+				"STUDENT_ID_REQUEST/UPLOAD_IMAGE",
+				formData
+			);
+
+			if (response.status == 200) {
+				this.$toast.success(response.data?.message ?? "");
+				this.$bvModal.hide("update-image");
+			}
+
+			if (response.status == 422) {
+				console.log(response.data);
+			}
+		},
 		setLoading() {
 			this.loading = !this.loading;
+		},
+
+		revertImage() {
+			this.previewImage = this.oldImage;
+		},
+
+		onFileChange(e) {
+			if (e.target?.files[0]) {
+				this.image = e.target?.files[0] ?? "";
+				this.oldImage = this.previewImage;
+				let reader = new FileReader();
+                reader.readAsDataURL(this.image)
+				reader.onload = (e) => {
+					this.previewImage = e.target.result;
+				};
+			}
 		},
 		setVerified(user) {
 			if (user.student_education_info) {
@@ -248,6 +306,7 @@ export default {
 			"STUDENT_ID_REQUEST/FETCH_STUDENT_ACCOUNT",
 			this.user[0].id
 		);
+		this.previewImage = `http://localhost:8000${this.user[0]?.student.id_image}`;
 		this.verified = this.setVerified(response.data) ?? true;
 		this.latestEvent();
 	},
@@ -255,4 +314,7 @@ export default {
 </script>
 
 <style>
+.img-fluid {
+	cursor: pointer;
+}
 </style>
