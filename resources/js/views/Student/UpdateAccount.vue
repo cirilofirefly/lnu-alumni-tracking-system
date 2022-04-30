@@ -28,6 +28,47 @@
 					>Cancel</b-button
 				>
 			</div>
+			<div class="col-3 mb-5 d-flex">
+				<div
+					class="
+						col-12
+						d-flex
+						flex-column
+						justify-content-center
+						align-items-center
+						mb-2
+					"
+				>
+					<img
+						@click="$bvModal.show('update-image')"
+						:src="previewImage"
+						style="width: 200px; height: 200px"
+						alt="Id Picture"
+						class="img-fluid"
+					/>
+					<h4>ID Image</h4>
+				</div>
+
+				<div
+					class="
+						col-12
+						d-flex
+						flex-column
+						justify-content-center
+						align-items-center
+						mb-2
+					"
+				>
+					<img
+						@click="$bvModal.show('update-signature')"
+						:src="previewSignature"
+						style="width: 200px; height: 200px"
+						alt="Id Picture"
+						class="img-fluid"
+					/>
+					<h4>Signature</h4>
+				</div>
+			</div>
 			<div class="col-12 mb-2 mb-2" v-if="userAccount.student_basic_info">
 				<h4 class="text-uppercase fw-bold">Basic Information</h4>
 				<div class="col-12">
@@ -512,6 +553,49 @@
 						</div>
 					</div>
 				</div>
+
+				<b-modal
+					id="update-image"
+					title="Update Your ID"
+					ok-title="Save"
+					@ok.prevent="uploadImage()"
+					@cancel="revertImage()"
+				>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<input
+									v-on:change="onFileChange($event)"
+									type="file"
+									id="imageFile"
+									accept="image/png, image/jpeg"
+								/>
+							</div>
+						</div>
+					</div>
+				</b-modal>
+
+				<b-modal
+					id="update-signature"
+					title="Update Your Signature"
+					ok-title="Save"
+					@ok.prevent="uploadSignature()"
+					@cancel="revertSignature()"
+				>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<input
+									v-on:change="onSignatureChange
+                                    ($event)"
+									type="file"
+									id="imageFile"
+									accept="image/png, image/jpeg"
+								/>
+							</div>
+						</div>
+					</div>
+				</b-modal>
 			</div>
 		</div>
 	</div>
@@ -524,6 +608,12 @@ export default {
 		return {
 			userAccount: {},
 			isEditing: true,
+			previewImage: "",
+			previewSignature: "",
+			oldSignature: "",
+			signature: "",
+			oldImage: "",
+			image: "",
 		};
 	},
 	computed: {
@@ -542,13 +632,86 @@ export default {
 			);
 			if (response.status == 200) {
 				this.$toast.success(response.data.message ?? "Message");
-                this.setEdit();
+				this.setEdit();
+			}
+		},
+		async uploadImage() {
+			let formData = new FormData();
+			formData.append("image", this.image);
+			formData.append("student_number", this.userAccount.student_basic_info.student_number);
+			const response = await this.$store.dispatch(
+				"STUDENT_ID_REQUEST/UPLOAD_IMAGE",
+				formData
+			);
+
+			if (response.status == 200) {
+				this.$toast.success(response.data?.message ?? "");
+				this.$bvModal.hide("update-image");
+			}
+
+			if (response.status == 422) {
+				console.log(response.data);
+			}
+		},
+
+        async uploadSignature() {
+			let formData = new FormData();
+			formData.append("signature", this.signature);
+			formData.append("student_number", this.userAccount.student_basic_info.student_number);
+			const response = await this.$store.dispatch(
+				"STUDENT_ID_REQUEST/UPLOAD_SIGNATURE",
+				formData
+			);
+
+			if (response.status == 200) {
+				this.$toast.success(response.data?.message ?? "");
+				this.$bvModal.hide("update-signature");
+			}
+
+			if (response.status == 422) {
+				console.log(response.data);
+			}
+		},
+		setLoading() {
+			this.loading = !this.loading;
+		},
+
+		revertImage() {
+			this.previewImage = this.oldImage;
+		},
+
+		revertSignature() {
+			this.previewSignature = this.oldSignature;
+		},
+		onSignatureChange(e) {
+			if (e.target?.files[0]) {
+				this.signature = e.target?.files[0] ?? "";
+				this.oldSignature = this.previewSignature;
+				let reader = new FileReader();
+				reader.readAsDataURL(this.signature);
+				reader.onload = (e) => {
+					this.previewSignature = e.target.result;
+				};
+			}
+		},
+		onFileChange(e) {
+			if (e.target?.files[0]) {
+				this.image = e.target?.files[0] ?? "";
+				this.oldImage = this.previewImage;
+				let reader = new FileReader();
+				reader.readAsDataURL(this.image);
+				reader.onload = (e) => {
+					this.previewImage = e.target.result;
+				};
 			}
 		},
 	},
 	async mounted() {
 		this.$store.dispatch("STUDENT_ID_REQUEST/FETCH_STUDENT_ACCOUNT", this.id);
 		this.userAccount = { ...this.user };
+		this.previewImage = `http://localhost:8000${this.userAccount?.id_image}`;
+		this.previewSignature = `http://localhost:8000${this.userAccount?.signature}`;
+
 	},
 };
 </script>

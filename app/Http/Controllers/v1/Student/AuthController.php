@@ -137,7 +137,7 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(StudentAccountInfo::with(['student.student_account_info', 'student.student_basic_info'])->where('id', auth('student')->user()->id)->get());
+        return response()->json(StudentAccountInfo::with(['student.student_account_info', 'student.student_basic_info', 'student.student_education_info', 'batch'])->where('id', auth('student')->user()->id)->get());
     }
 
     protected function respondWithToken($token)

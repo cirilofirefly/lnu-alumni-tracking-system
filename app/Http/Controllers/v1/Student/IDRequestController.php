@@ -3,19 +3,21 @@
 namespace App\Http\Controllers\v1\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\AlumniIdRequest;
+use App\Models\AlumniIdRequestInfo;
 use App\Models\Student;
 use App\Models\StudentAccountInfo;
 use Illuminate\Http\Request;
 
 class IDRequestController extends Controller
 {
-    //
-
-    public function show($id) {
+    public function show($id) 
+    {
         return response()->json(Student::where('id', $id)->with(['student_account_info.batch', 'student_basic_info', 'student_education_info', 'student_employee_info'])->first());
     }
 
-    public function updateAccount(Request $request) {
+    public function updateAccount(Request $request) 
+    {
         $student = Student::where('id', $request->id)->with(['student_basic_info', 'student_education_info', 'student_employee_info'])->first();
         $student->student_basic_info->first_name = $request['student_basic_info']['first_name'];
         $student->student_basic_info->middle_name = $request['student_basic_info']['middle_name'];
@@ -64,7 +66,8 @@ class IDRequestController extends Controller
         return response()->json(['message' => 'Account Updated'], 200);
     }
 
-    public function uploadImage(Request $request) {
+    public function uploadImage(Request $request) 
+    {
         
         $this->validate($request, [
             'image' => 'required|image|mimes:png,jpg|max:10000',
@@ -81,5 +84,49 @@ class IDRequestController extends Controller
         $student_account->student->save();
 
         return response()->json(['message' => 'Image uploaded.'], 200);
+    }
+
+    public function uploadSignature(Request $request) 
+    {
+        
+        $this->validate($request, [
+            'signature' => 'required|image|mimes:png,jpg|max:10000',
+        ]);
+
+        $signature = $request->file('signature');
+        $signature_name = $signature->getClientOriginalExtension();
+        $signature_name = $request->student_number . '.' . $signature_name;
+        $signature->move(public_path('/alumni/files/images/signature'), $signature_name);
+        $signature_path = '/alumni/files/images/signature/' . $signature_name;
+
+        $student_account = StudentAccountInfo::where('id', auth('student')->user()->id)->first(); 
+        $student_account->student->signature = $signature_path;
+        $student_account->student->save();
+
+        return response()->json(['message' => 'Signature uploaded.'], 200);
+    }
+
+    public function sendIdRequest(Request $request)
+    {
+        $student_account = StudentAccountInfo::where('id', auth('student')->user()->id)->first();
+        $alumni_request_info = AlumniIdRequestInfo::create([
+            'student_number' => $request->student_number,
+            'course'         => $request->course,
+            'batch'          => $request->batch,
+            'full_name'      => $request->full_name,
+            'address'        => $request->address,
+            'date_of_birth'  => $request->date_of_birth,
+            'email'  => $request->email_address,
+            'mobile_no'      => $request->mobile_no,
+            'telephone_no'   => $request->telephone_no,
+            'image'          => $request->image,
+            'signature'      => $request->signature,
+
+        ]);
+        AlumniIdRequest::create([
+            'alumni_id_request_info_id' => $alumni_request_info->id,
+            'student_id' => $student_account->student->id
+        ]);
+        return response()->json(['message' => 'ID Request sent.']);
     }
 }

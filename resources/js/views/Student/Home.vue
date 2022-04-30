@@ -5,7 +5,7 @@
 				>Your Account verified. You can request your Alumni ID
 				<router-link
 					class="text-decoration-none"
-					:to="{ path: `id-request/${user[0].id}` }"
+					:to="{ path: `id-request` }"
 					>here</router-link
 				>.</b-alert
 			>
@@ -250,6 +250,8 @@ export default {
 		async uploadImage() {
 			let formData = new FormData();
 			formData.append("image", this.image);
+			formData.append("student_number", this.user[0]?.student.student_basic_info.student_number);
+
 			const response = await this.$store.dispatch(
 				"STUDENT_ID_REQUEST/UPLOAD_IMAGE",
 				formData

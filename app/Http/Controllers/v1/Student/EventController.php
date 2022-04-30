@@ -10,21 +10,26 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    public function index() {
+    public function index() 
+    {
         return response(Event::with('category')->latest()->get());
     }
     public function show($slug) {
         return response(Event::with(['category', 'comments.student:id,id_image'])->where('slug', $slug)->first());
     }
-    public function latestEvent() {
+    public function latestEvent() 
+    {
         return response()->json(Event::with('category')->latest()->first());
     }
 
-    public function getComments(Request $request) {
+    public function getComments(Request $request)
+    {
         return response()->json(Event::where('id', $request->event_id)->first()->comments(), 200);
     }
 
-    public function postComment(Request $request) {
+    public function postComment(Request $request)
+
+    {
         $this->validate($request,[
             'comment' => 'required'
         ]);
@@ -39,5 +44,11 @@ class EventController extends Controller
 
         return response()->json(['message' => 'Comment added.'], 200);
 
+    }
+
+    public function deleteComment($comment_id, Request $request)
+    {
+        EventComment::where('id', $comment_id)->delete();
+        return response()->json(['message' => 'Comment deleted.']);
     }
 }

@@ -20,12 +20,12 @@
 				</div>
 			</div>
 			<div class="col-8 p-5 shadow">
-				<div class="comment-container mt-2 mb-5">
+				<div id="comment-container" class="mt-2 mb-5">
 					<div
 						v-for="comment in event.comments"
 						:key="comment.id"
 						class="d-flex justify-content-start align-items-stretch my-2"
-                        style="cursor: pointer;"
+						style="cursor: pointer"
 						@click.prevent="showDelete(comment)"
 					>
 						<div class="col-1 my-auto img-container">
@@ -65,11 +65,19 @@
 					</div>
 				</div>
 
-				<b-modal id="delete-comment" title="Delete Comment" @ok.prevent="">
+				<b-modal
+					id="delete-comment"
+					title="Delete Comment"
+					@ok.prevent="deleteComment()"
+					ok-title="Delete"
+					:ok-disabled="isSubmitting"
+				>
 					<p class="my-4 text-center">
 						Are you sure you want to delete this comment?
 					</p>
-					<p>{{ comment.comment }}</p>
+					<div class="col-12 shadow p-3">
+						<p class="text-justify">{{ comment.comment }}</p>
+					</div>
 				</b-modal>
 			</div>
 		</div>
@@ -81,7 +89,8 @@ export default {
 	props: ["slug"],
 	data() {
 		return {
-			user_id: 1,
+			comment_id: 0,
+			event_id: 0,
 			comments: [
 				{
 					id: 1,
@@ -127,32 +136,64 @@ export default {
 				this.isSubmitting = !this.isSubmitting;
 				this.event.comments.push({ ...this.event_comment });
 				this.event_comment.comment = "";
+				this.scrollDown();
+			}
+		},
+
+		async deleteComment() {
+			this.isSubmitting = !this.isSubmitting;
+			let data = {
+				comment_id: this.comment_id,
+				event_id: this.event_id,
+			};
+			const response = await this.$store.dispatch(
+				"STUDENT_EVENT/DELETE_COMMENT",
+				data
+			);
+			if (response.status == 200) {
+				this.isSubmitting = !this.isSubmitting;
+				if (this.event?.comments) {
+					await this.$store.dispatch("STUDENT_EVENT/FETCH_EVENT", this.slug);
+					await this.$bvModal.hide("delete-comment");
+                    this.scrollDown()
+				}
 			}
 		},
 		showDelete(comment) {
+			console.log(comment);
 			this.comment = { ...comment };
 			if (comment?.student) {
 				if (this.user[0]?.student.id == comment.student.id) {
+					this.comment_id = comment.id;
+					this.event_id = comment.event_id;
 					this.$bvModal.show("delete-comment");
 				}
 			}
 		},
 		setImagePath(comment) {
-			return comment?.student.id_image
+			return comment?.student?.id_image
 				? `http://localhost:8000${comment.student?.id_image}`
 				: `http://localhost:8000${this.user[0]?.student.id_image}`;
+		},
+		scrollDown() {
+			var element = document.getElementById("comment-container");
+			if (element) {
+				element.scrollTop = element.scrollHeight;
+			}
 		},
 	},
 	async mounted() {
 		await this.$store.dispatch("STUDENT_EVENT/FETCH_EVENT", this.slug);
+		this.scrollDown();
 	},
 };
 </script>
 
 <style>
-.comment-container {
+#comment-container {
 	height: 40vh;
 	overflow-y: scroll !important;
+	scroll-behavior: smooth;
 }
 
 .img-container {
@@ -166,8 +207,6 @@ export default {
 	justify-content: flex-start;
 	flex-direction: column;
 	height: fit-content;
-	overflow-x: hidden;
-	overflow-y: scroll !important;
 }
 
 .user-comment div p {

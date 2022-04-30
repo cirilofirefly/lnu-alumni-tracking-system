@@ -71,5 +71,18 @@ export default {
 
             return response;
         },
+
+        DELETE_COMMENT: async ({ commit }, data) => {
+            const response = await axios.delete(`${STUDENT}/delete-comment/${data.comment_id}?token=${localStorage.getItem('access_token')}`, data)
+                .then((response) => {
+                    commit('SET_EVENTS', response.data);
+                    return response;
+                })
+                .catch((error) => {
+                    return error.response;
+                });
+
+            return response;
+        },
     }
 }

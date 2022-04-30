@@ -78,8 +78,12 @@ Route::group(['middleware' => 'api'], function (){
         Route::get('id-student-account/{id}', [StudentIDRequestController::class, 'show']);
         Route::put('update-student-account', [StudentIDRequestController::class, 'updateAccount']);
         Route::post('upload-image', [StudentIDRequestController::class, 'uploadImage']);
+        Route::post('upload-signature', [StudentIDRequestController::class, 'uploadSignature']);
+        Route::post('send-id-request', [StudentIDRequestController::class, 'sendIdRequest']);
         Route::get('get-comments', [StudentEventController::class, 'getComments']);
         Route::post('post-comment', [StudentEventController::class, 'postComment']);
+        Route::delete('delete-comment/{event_id}', [StudentEventController::class, 'deleteComment']);
+
 
     });
 

@@ -49,8 +49,25 @@ export default {
                 .catch(error => {
                     return error.response
                 })
+        },
+        UPLOAD_SIGNATURE: async ({ commit }, signature) => {
+            return await axios.post(`${STUDENT}/upload-signature?token=${localStorage.getItem('access_token')}`, signature)
+                .then(response => {
+                    return response;
+                })
+                .catch(error => {
+                    return error.response
+                })
+        },
+        SEND_ID_REQUEST: async ({ commit }, id_ino) => {
+            return await axios.post(`${STUDENT}/send-id-request?token=${localStorage.getItem('access_token')}`, id_ino)
+                .then(response => {
+                    return response;
+                })
+                .catch(error => {
+                    return error.response
+                })
         }
-
     }
 
 }
