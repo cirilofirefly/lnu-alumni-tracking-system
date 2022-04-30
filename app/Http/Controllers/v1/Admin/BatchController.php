@@ -4,6 +4,7 @@ namespace App\Http\Controllers\v1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Batch;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,6 +14,10 @@ class BatchController extends Controller
 
     public function index() {
         return response()->json(Batch::get());
+    }
+
+    public function getStudents(Request $request) {
+        return response()->json(Batch::with('student_account_infos.student.student_basic_info')->where('id', $request->batch_id)->first());
     }
 
     public function store() {
