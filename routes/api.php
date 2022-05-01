@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\v1\Admin\ {
     AlumniAccountController,
+    AlumniIdRequestController,
     AuthController as AdminAuthController,
     BatchController as AdminBatchController,
     CategoryController as AdminCategoryController,
@@ -71,6 +72,13 @@ Route::group(['middleware' => 'api'], function (){
         Route::get('total-alumni-records', [AdminDashboardContainer::class, 'totalAlumniRecords']);
         Route::get('records', [AdminRecordController::class, 'index']);
         Route::get('record/{id}', [AdminRecordController::class, 'show']);
+
+        Route::get('get-student-id-requests/{type}', [AlumniIdRequestController::class, 'getStudentIDRequests']);
+        Route::get('get-student-id-request/{id}', [AlumniIdRequestController::class, 'getStudentIDRequest']);
+        Route::post('approve-student-id-request/{id}', [AlumniIdRequestController::class, 'approveStudentIDRequest']);
+        Route::post('disapprove-student-id-request/{id}', [AlumniIdRequestController::class, 'disapproveStudentIDRequest']);
+
+
     });
 
     Route::group(['prefix' => 'student'], function () {

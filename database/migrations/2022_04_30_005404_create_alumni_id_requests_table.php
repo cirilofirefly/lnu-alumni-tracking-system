@@ -15,7 +15,7 @@ class CreateAlumniIdRequestsTable extends Migration
     {
         Schema::create('alumni_id_requests', function (Blueprint $table) {
             $table->id();
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->nullable();
             $table->foreignId('alumni_id_request_info_id')->constrained();
             $table->foreignId('student_id')->constrained();
             $table->timestamps();

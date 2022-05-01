@@ -18242,15 +18242,7 @@ textarea.form-control-lg {
   font-size: 18px;
 }
 
-.signup {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(/images/lnu2.jpg?93bf26535948f38df08bc000ef577bb7);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.signup .navbar {
+.navbar {
   position: relative;
   width: 100%;
   height: 7vh;
@@ -18259,7 +18251,7 @@ textarea.form-control-lg {
   justify-content: flex-end;
   align-items: center;
 }
-.signup .navbar .nav-item {
+.navbar .nav-item {
   font-size: 20px;
   margin: 0 1rem;
   color: #fff;
@@ -18268,7 +18260,7 @@ textarea.form-control-lg {
   display: inline-block;
   position: relative;
 }
-.signup .navbar .nav-item::after {
+.navbar .nav-item::after {
   content: "";
   position: absolute;
   width: 100%;
@@ -18280,45 +18272,34 @@ textarea.form-control-lg {
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
-.signup .navbar .nav-item:hover::after {
+.navbar .nav-item:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
-.signup .signup-content {
+
+.signup {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(/images/lnu2.jpg?93bf26535948f38df08bc000ef577bb7);
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 100%;
-  height: 93vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.signup .signup-content .signup-main {
+  height: 100vh;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 70%;
-  height: 83vh;
-  background: #fff;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  border-radius: 5px;
 }
-.signup .signup-content .signup-main .alumni-type {
-  width: 50%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.signup .form {
+  width: 40%;
+  height: 90vh;
+  margin: 0 auto;
+  overflow-y: auto;
 }
-.signup .signup-content .signup-main .signup-form {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  .signup .form {
+    width: 80%;
+  }
 }
-.signup .btn-signup {
-  letter-spacing: 2px;
-  font-size: 18px;
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .signup .form {
+    width: 70%;
+  }
 }
 
 .sidebar {
@@ -18559,4 +18540,26 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p {
 
 .lh-sm {
   line-height: 0.85 !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  border-radius: 5px;
 }

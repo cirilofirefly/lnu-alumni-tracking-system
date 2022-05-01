@@ -3,44 +3,45 @@
 		<div>
 			<h1>Batch {{ alumnae.batch }}</h1>
 		</div>
-		<table class="table table-striped mt-4">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Name</th>
-				</tr>
-			</thead>
-			<tbody>
-				<div v-if="loading" class="mt-2 float-center mx-auto">
-					<span>Loading Data...</span>
-					<div class="spinner-border" role="status">
-						<span class="sr-only"></span>
+		<div class="px-5 pb-5 pt-2 shadow mt-4">
+			<table class="table table-striped mt-4 ">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<div v-if="loading" class="mt-2 float-center mx-auto">
+						<span>Loading Data...</span>
+						<div class="spinner-border" role="status">
+							<span class="sr-only"></span>
+						</div>
 					</div>
-				</div>
-				<tr
-					v-else
-					v-for="alumni in alumnae.student_account_infos"
-					:key="alumni.id"
-				>
-					<th scope="row">{{ alumni.id }}</th>
-					<td>
-						{{
-							`${alumni.student.student_basic_info.first_name} ${
-								alumni.student.student_basic_info.middle_name == null
-									? ""
-									: alumni.student.student_basic_info.middle_name
-							} ${alumni.student.student_basic_info.last_name}`
-						}}
-					</td>
-					<td class="text-center">
-						<button class="btn btn-primary" @click.prevent="showInfo(alumni)">
-							Show
-						</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-
+					<tr
+						v-else
+						v-for="alumni in alumnae.student_account_infos"
+						:key="alumni.id"
+					>
+						<th scope="row">{{ alumni.id }}</th>
+						<td>
+							{{
+								`${alumni.student.student_basic_info.first_name} ${
+									alumni.student.student_basic_info.middle_name == null
+										? ""
+										: alumni.student.student_basic_info.middle_name
+								} ${alumni.student.student_basic_info.last_name}`
+							}}
+						</td>
+						<td class="text-center">
+							<button class="btn btn-primary" @click.prevent="showInfo(alumni)">
+								Show
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		<b-modal ok-only ok-title="Close" id="modal-info" size="lg">
 			<div v-if="alumni" class="container-fluid">
 				<div class="row">
@@ -81,7 +82,9 @@
 							</h6>
 							<h6>
 								Mobile Number:
-								<strong>{{ alumni.student.student_basic_info.mobile_number }} </strong>
+								<strong
+									>{{ alumni.student.student_basic_info.mobile_number }}
+								</strong>
 							</h6>
 							<h6>
 								Telephone Number:
@@ -100,7 +103,9 @@
 						</h6>
 						<h6>
 							Birthplace:
-							<strong>{{ alumni.student.student_basic_info.birthplace }} </strong>
+							<strong
+								>{{ alumni.student.student_basic_info.birthplace }}
+							</strong>
 						</h6>
 						<h6>
 							Gender:
@@ -137,7 +142,7 @@
 </template>
 
 <script>
-import moment from 'moment'
+import moment from "moment";
 export default {
 	props: ["batch_id"],
 	data() {

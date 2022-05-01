@@ -19,4 +19,9 @@ class AlumniIdRequest extends Model
     {
         return $this->belongsTo(AlumniIdRequestInfo::class, 'alumni_id_request_info_id', 'id');
     }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_id', 'id');
+    }
 }

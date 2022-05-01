@@ -26,8 +26,7 @@ import AdminEvent from '../views/Admin/Event.vue'
 import AdminFeedback from '../views/Admin/Feedback.vue'
 import AdminNotification from '../views/Admin/Notification.vue'
 import AdminAccount from '../views/Admin/Account.vue'
-
-import IDLayout from '../views/IDLayout.vue'
+import AdminIDPrintable from '../views/Admin/Alumni/IDLayout.vue'
 
 
 
@@ -40,12 +39,6 @@ const ROUTES = [
         path: '/signin',
         name: 'signin',
         component: Signin
-    },
-
-    {
-        path: '/id-layout',
-        name: 'id.layout',
-        component: IDLayout
     },
     {
         path: '/signup',
@@ -78,6 +71,7 @@ const ROUTES = [
             { path: 'dashboard', name: 'admin.dashboard', component: AdminDashboard },
             { path: 'approval', name: 'admin.alumni.approval', component: AdminAlumniApproval },
             { path: 'id-request', name: 'admin.alumni.id-request', component: AdminAlumniIDRequest },
+            { path: 'id-printable/:request_id', name: 'id.printable', component: AdminIDPrintable, props: true },
             { path: 'batch', name: 'admin.alumni.batch', component: AdminAlumniBatch },
             { path: 'batch-alumni/:batch_id', name: 'admin.batch.alumni', component: AdminBatchAlumni, props: true },
             { path: 'records', name: 'admin.alumni.records', component: AdminAlumniRecords },
