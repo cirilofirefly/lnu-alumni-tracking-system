@@ -16,7 +16,7 @@
 						aria-label="Default select example"
 					>
 						<option disabled>Select Status</option>
-						<option selected :value="null">Pending</option>
+						<option selected :value="2">Pending</option>
 						<option :value="1">Approved</option>
 						<option :value="0">Disapproved</option>
 					</select>
@@ -60,7 +60,7 @@
 							<td class="text-center">
 								<span
 									:class="
-										alumni.status === null
+										alumni.status === 2
 											? 'bg-primary'
 											: alumni.status === 1
 											? 'bg-success text-light'
@@ -69,7 +69,7 @@
 									class="mt-2 p-1 rounded"
 								>
 									{{
-										alumni.status === null
+										alumni.status === 2
 											? "Pending"
 											: alumni.status == 0
 											? "Disapproved"
@@ -82,7 +82,7 @@
 									Preview
 								</button>
 								<button
-									v-if="alumni.status == null"
+									v-if="alumni.status == 2"
 									class="btn btn-success"
 									@click.prevent="id = alumni.id"
 									v-b-modal.modal-approve
@@ -90,7 +90,7 @@
 									Approve
 								</button>
 								<button
-									v-if="alumni.status == null"
+									v-if="alumni.status == 2"
 									class="btn btn-danger"
 									@click.prevent="id = alumni.id"
 									v-b-modal.modal-disapprove
@@ -235,7 +235,7 @@ export default {
 			id: null,
 			alumni: null,
 			loading: false,
-			requestType: null,
+			requestType: 2,
 		};
 	},
 	filters: {
