@@ -72,7 +72,7 @@
 					<div class="id-body">
 						<img :src="require('../../../../images/lnu.jpg').default" />
 						<div class="id-body-inside">
-							<img :src="require('../../../../images/logo.png').default" />
+							<img :src="require('../../../../images/logo-2.png').default" />
 
 							<img
 								class="img-fluid"
@@ -241,11 +241,11 @@ export default {
 	&::before {
 		content: "\A";
 		border-style: solid;
-		border-width: 30px 35px 30px 0;
+		border-width: 23px 29px 30px 0;
 		transform: rotate(180deg);
 		border-color: transparent #10286b transparent transparent;
 		position: absolute;
-		left: -5px;
+		left: 0px;
 	}
 }
 
