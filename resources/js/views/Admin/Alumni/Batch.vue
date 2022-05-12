@@ -9,14 +9,12 @@
 			<div class="col-12 mt-3 shadow p-3 bg-light">
 				<div class="mb-5 mt-2 d-flex justify-content-between pe-3">
 					<div>
-						<button class="btn btn-success mx-2" @click.prevent="storeBatch">
-							<div
-								style="width: 14px; height: 14px"
-								class="spinner-border text-light"
-								role="status"
-								v-if="loading"
-							></div>
-							<i v-else class="bi bi-plus"></i> Add Batch Year
+						<button
+							:disabled="loading"
+							class="btn btn-success mx-2"
+							@click.prevent="storeBatch"
+						>
+							<i class="bi bi-plus"></i> Add Batch Year
 						</button>
 					</div>
 					<div>
@@ -81,10 +79,10 @@
 									</button>
 								</td>
 							</tr>
-                            
-                            <div v-if="batches.length == 0 " class="col-12">
-                                <span>No data to show.</span>
-                            </div>
+
+							<div v-if="batches.length == 0" class="col-12">
+								<span>No da ta to show.</span>
+							</div>
 						</tbody>
 					</table>
 
@@ -118,11 +116,10 @@ export default {
 	},
 	methods: {
 		async storeBatch() {
-			this.loading = !this.loading;
 			const response = await this.$store.dispatch("ADMIN_BATCH/STORE_BATCH");
 			if (response.status == 200) {
 				this.$toast.success("New Batch Year added.");
-				await this.$store.dispatch("ADMIN_BATCH/FETCH_BATCHES");
+				this.getData();
 				this.loading = !this.loading;
 			}
 		},
@@ -131,12 +128,12 @@ export default {
 				"ADMIN_BATCH/DELETE_BATCH",
 				this.id
 			);
-			console.log(response);
-
+			this.loading = !this.loading;
 			if (response.status == 200) {
 				this.$toast.success("Batch Year deleted.");
 				this.$bvModal.hide("modal-delete");
-				await this.$store.dispatch("ADMIN_BATCH/FETCH_BATCHES");
+				this.getData();
+				this.loading = !this.loading;
 			}
 
 			if (response.status == 400) {
