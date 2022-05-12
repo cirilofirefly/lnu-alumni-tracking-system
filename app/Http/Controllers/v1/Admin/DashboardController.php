@@ -34,6 +34,9 @@ class DashboardController extends Controller
     }
 
     public function totalAlumniRecords() {
-        return response()->json(Student::count());
+        return response()->json([
+                'alumni_records' => Student::count(),
+                'alumni_id_records_count' => AlumniIdRequest::where('status', 1)->count()
+            ]);
     }
 }

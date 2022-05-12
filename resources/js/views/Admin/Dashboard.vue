@@ -34,7 +34,7 @@
           <div class="card p-4 shadow-sm">
             <div class="d-flex justify-content-between">
               <div>
-                <h1 class="fw-bold">{{ 0 }}</h1>
+                <h1 class="fw-bold">{{ alumni_id_records_count }}</h1>
                 <h5>Alumni ID Records</h5>
               </div>
               <div>
@@ -84,6 +84,9 @@
       },
       alumni_batch_count() {
         return this.$store.getters['ADMIN_DASHBOARD/GET_BATCHES_COUNT'];
+      },
+      alumni_id_records_count() {
+        return this.$store.getters['ADMIN_DASHBOARD/GET_ALUMNI_ID_RECORDS_COUNT'];
       },
       alumni_by_batch() {
         return [];

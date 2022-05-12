@@ -19,6 +19,7 @@ export default {
         },
         total_batch: 0,
         total_alumni_record: 0,
+        total_alumni_id_records_count: 0,
         total_alumni: 0
 
     },
@@ -30,8 +31,12 @@ export default {
         GET_ALUMNI_RECORD_COUNT: (state) => state.total_alumni_record,
         GET_BATCHES_COUNT: (state) => state.total_batch,
         GET_ALUMNI_COUNT: (state) => state.total_alumni,
+        GET_ALUMNI_ID_RECORDS_COUNT: (state) => state.total_alumni_id_records_count
     },
     mutations: {
+        SET_ALUMNI_ID_RECORDS_COUNT: (state, total_alumni_id_records_count) => {
+            state.total_alumni_id_records_count = total_alumni_id_records_count
+        },
         SET_ALUMNI_COUNT_BY_BATCH: (state, total_alumni_by_batch) => {
             state.total_alumni_by_batch = {
                 labels: [],
@@ -101,7 +106,8 @@ export default {
         TOTAL_ALUMNI_RECORDS: async ({ commit }) => {
             const res = await axios.get(`${AUTH}/total-alumni-records?token=${localStorage.getItem('access_token')}`)
                 .then((response) => {
-                    commit("SET_ALUMNI_RECORD_COUNT", response.data);
+                    commit("SET_ALUMNI_RECORD_COUNT", response.data.alumni_records);
+                    commit("SET_ALUMNI_ID_RECORDS_COUNT", response.data.alumni_id_records_count);
                     return response;
                 })
                 .catch((error) => {
