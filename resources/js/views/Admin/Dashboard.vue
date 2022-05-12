@@ -94,7 +94,6 @@
     },
     async mounted() {
       await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_ALUMNI_BY_BATCH');
-    //   await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_ALUMNI');
       await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_ALUMNI_RECORDS');
       await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_BATCHES');
     },
