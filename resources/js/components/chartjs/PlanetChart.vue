@@ -21,16 +21,27 @@ export default {
               label: "Alumni",
               data: this.$store.getters[
                 "ADMIN_DASHBOARD/GET_ALUMNI_COUNT_BY_BATCH"
-              ].data,
+              ]?.data,
               backgroundColor: "rgba(54,73,93,.5)",
               borderColor: "#36495d",
               borderWidth: 3,
             },
             {
               label: "Alumni ID",
-              data: [],
+              data: this.$store.getters[
+                "ADMIN_DASHBOARD/GET_ALUMNI_ALUMNI_ID_COUNT"
+              ]?.data,
               backgroundColor: "rgba(71, 183,132,.5)",
               borderColor: "#47b784",
+              borderWidth: 3,
+            },
+            {
+              label: "Employee",
+              data: this.$store.getters[
+                "ADMIN_DASHBOARD/GET_ALUMNI_EMPLOYEE_COUNT"
+              ]?.data,
+              backgroundColor: "rgb(12, 142, 234, .5)",
+              borderColor: "rgb(12, 142, 234)",
               borderWidth: 3,
             },
           ],
@@ -58,3 +69,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.red {
+    background: rgb(red, rgb(12, 142, 234), blue);
+}
+</style>

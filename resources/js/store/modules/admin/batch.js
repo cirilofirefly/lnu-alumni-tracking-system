@@ -28,8 +28,8 @@ export default {
 
     },
     actions: {
-        FETCH_BATCHES: async ({ commit }) => {
-            const res = await axios.get(`${ADMIN}/batches?token=${localStorage.getItem('access_token')}`)
+        FETCH_BATCHES: async ({ commit }, search) => {
+            const res = await axios.get(`${ADMIN}/batches?search=${search}&token=${localStorage.getItem('access_token')}`)
                 .then((response) => {
                     commit("SET_BATCHES", response.data);
                     commit("SET_BATCHES_COUNT", response.data.length);

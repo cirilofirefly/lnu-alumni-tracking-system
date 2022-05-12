@@ -7,16 +7,39 @@
 				</h1>
 			</div>
 			<div class="col-12 mt-3 shadow p-3 bg-light">
-				<div class="mb-5 mt-2">
-					<button class="btn btn-success mx-2" @click.prevent="storeBatch">
-						<div
-							style="width: 14px; height: 14px"
-							class="spinner-border text-light"
-							role="status"
-							v-if="loading"
-						></div>
-						<i v-else class="bi bi-plus"></i> Add Batch Year
-					</button>
+				<div class="mb-5 mt-2 d-flex justify-content-between pe-3">
+					<div>
+						<button class="btn btn-success mx-2" @click.prevent="storeBatch">
+							<div
+								style="width: 14px; height: 14px"
+								class="spinner-border text-light"
+								role="status"
+								v-if="loading"
+							></div>
+							<i v-else class="bi bi-plus"></i> Add Batch Year
+						</button>
+					</div>
+					<div>
+						<div class="input-group mb-3">
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Search"
+								aria-label="Search"
+								aria-describedby="search"
+								v-model="search"
+							/>
+							<div class="input-group-append">
+								<button
+									@click.prevent="getData"
+									class="btn btn-outline-secondary"
+									type="button"
+								>
+									<i class="bi bi-search"></i>
+								</button>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div>
 					<table class="table table-striped">
@@ -36,7 +59,14 @@
 							<tr v-else v-for="(batch, index) in batches" :key="index">
 								<th scope="row">{{ index + 1 }}</th>
 								<td>{{ `${batch.batch} - ${batch.batch + 1}` }}</td>
-								<td> <button class="btn btn-success" @click="$router.push({ path: `batch-alumni/${batch.id}`})">View</button> </td>
+								<td>
+									<button
+										class="btn btn-success"
+										@click="$router.push({ path: `batch-alumni/${batch.id}` })"
+									>
+										View
+									</button>
+								</td>
 								<td class="text-center">
 									<button
 										:disabled="!batch.allow_delete"
@@ -51,6 +81,10 @@
 									</button>
 								</td>
 							</tr>
+                            
+                            <div v-if="batches.length == 0 " class="col-12">
+                                <span>No data to show.</span>
+                            </div>
 						</tbody>
 					</table>
 
@@ -74,6 +108,7 @@ export default {
 		return {
 			id: null,
 			loading: false,
+			search: "",
 		};
 	},
 	computed: {
@@ -108,13 +143,16 @@ export default {
 				this.$toast.error(response.data.error);
 			}
 		},
+		async getData() {
+			await this.$store.dispatch("ADMIN_BATCH/FETCH_BATCHES", this.search);
+		},
 		setLoading() {
 			this.loading = !this.loading;
 		},
 	},
 	async mounted() {
 		this.setLoading();
-		await this.$store.dispatch("ADMIN_BATCH/FETCH_BATCHES");
+		this.getData();
 		this.setLoading();
 	},
 };

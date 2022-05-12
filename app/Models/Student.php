@@ -28,4 +28,9 @@ class Student extends Model
         return $this->belongsTo(StudentEmployeeInfo::class, 'student_employee_info_id', 'id');
     }
 
+    public function alumniRequest()
+    {
+        return $this->hasMany(AlumniIdRequest::class, 'student_id', 'id');
+    }
+
 }

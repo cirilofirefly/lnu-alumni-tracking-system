@@ -4,7 +4,6 @@ namespace App\Http\Controllers\v1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Batch;
-use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,8 +11,14 @@ class BatchController extends Controller
 {
     //
 
-    public function index() {
-        return response()->json(Batch::get());
+    public function index(Request $request) {
+        $search = $request->search;
+        $batches = Batch::where(function($query) use ($search) {
+            if($search) {
+                $query->where('batch', 'like', "%$search%");
+            }
+        })->get();
+        return response()->json($batches, 200);
     }
 
     public function getStudents(Request $request) {
@@ -24,7 +29,6 @@ class BatchController extends Controller
 
         DB::beginTransaction();
         try {
-
             $latest_batch = Batch::latest()->first();
             Batch::create(['batch' => $latest_batch->batch + 1]);
             DB::commit();

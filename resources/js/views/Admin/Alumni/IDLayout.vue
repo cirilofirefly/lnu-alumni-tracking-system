@@ -24,7 +24,9 @@
 						</div>
 						<div class="text-id">
 							<p>Email Address:</p>
-							<span>{{ alumni_id.alumni_info.email }}</span>
+							<span>{{
+								alumni_id.alumni_info.email
+							}}</span>
 						</div>
 						<div class="text-id">
 							<p>Mobile No:</p>
@@ -90,7 +92,9 @@
 							</h6>
 						</div>
 						<div class="text-center mt-1">
-							<h5 class="fw-bold">ID No. {{ alumni_id.alumni_info.student_number }}</h5>
+							<h5 class="fw-bold">
+								ID No. {{ alumni_id.alumni_info.student_number }}
+							</h5>
 						</div>
 					</div>
 					<div class="col-12 d-flex align-items-center justify-content-center">
