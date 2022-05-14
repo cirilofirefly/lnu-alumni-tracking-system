@@ -25,6 +25,7 @@ import AdminAlumniRecord from '../views/Admin/Alumni/Record.vue'
 import AdminEvents from '../views/Admin/Events.vue'
 import AdminEvent from '../views/Admin/Event.vue'
 import AdminFeedback from '../views/Admin/Feedback.vue'
+import AdminFeedbacks from '../views/Admin/Feedbacks.vue'
 import AdminNotification from '../views/Admin/Notification.vue'
 import AdminAccount from '../views/Admin/Account.vue'
 import AdminIDPrintable from '../views/Admin/Alumni/IDLayout.vue'
@@ -81,7 +82,8 @@ const ROUTES = [
             { path: 'events', name: 'admin.events', component: AdminEvents },
             { path: 'event/:slug', name: 'admin.event', component: AdminEvent, props: true },
             { path: 'account', name: 'admin.account', component: AdminAccount },
-            { path: 'feedback', name: 'admin.feedback', component: AdminFeedback },
+            { path: 'feedbacks', name: 'admin.feedbacks', component: AdminFeedbacks },
+            { path: 'feedback/:id', name: 'admin.feedback', component: AdminFeedback, props: true },
             { path: 'notification', name: 'admin.notification', component: AdminNotification },
             { path: "", redirect: "dashboard" }
         ],

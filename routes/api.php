@@ -78,6 +78,8 @@ Route::group(['middleware' => 'api'], function (){
         Route::post('approve-student-id-request/{id}', [AlumniIdRequestController::class, 'approveStudentIDRequest']);
         Route::post('disapprove-student-id-request/{id}', [AlumniIdRequestController::class, 'disapproveStudentIDRequest']);
         Route::post('send-message/{id}', [AdminFeedbackController::class, 'sendMessage']);
+        Route::get('get-feedback/{id}', [AdminFeedbackController::class, 'getFeedback']);
+        Route::post('send-message/{id}', [AdminFeedbackController::class, 'sendMessage']);
 
     });
     Route::group(['prefix' => 'student'], function () {
@@ -94,8 +96,8 @@ Route::group(['middleware' => 'api'], function (){
         Route::post('post-comment', [StudentEventController::class, 'postComment']);
         Route::delete('delete-comment/{event_id}', [StudentEventController::class, 'deleteComment']);
         Route::get('get-feedbacks', [StudentFeedbackController::class, 'getFeedbacks']);
-        Route::get('get-feedback/{id}', [StudentFeedbackController::class, 'getFeedback']);
         Route::post('send-feedback', [StudentFeedbackController::class, 'sendFeedback']);
+        Route::get('get-feedback/{id}', [StudentFeedbackController::class, 'getFeedback']);
         Route::post('send-message/{id}', [StudentFeedbackController::class, 'sendMessage']);
     });
 });

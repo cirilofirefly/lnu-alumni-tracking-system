@@ -95,13 +95,13 @@
       </li>
       <li class="nav-item">
         <div class="main">
-          <router-link class="nav-link" :to="{ name: 'admin.feedback' }">
+          <router-link class="nav-link" :to="{ name: 'admin.feedbacks' }">
             <box-icon color="#fff" type="solid" name="envelope"></box-icon>
             <span>Feedback</span></router-link
           >
         </div>
       </li>
-      <li class="nav-item">
+      <li class="nav-item"> 
         <div class="main">
           <router-link class="nav-link" :to="{ name: 'admin.notification' }">
             <box-icon color="#fff" type="solid" name="bell-ring"></box-icon>
