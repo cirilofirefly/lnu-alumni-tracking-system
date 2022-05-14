@@ -18,4 +18,8 @@ class Feedback extends Model
     public function student() {
         return $this->belongsTo(Student::class, 'student_id', 'id');
     }
+
+    public function messages() {
+        return $this->hasMany(FeedbackMessage::class, 'feedback_id', 'id');
+    }
 }

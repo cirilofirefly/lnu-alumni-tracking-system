@@ -1,110 +1,146 @@
 <template>
-	<div>
-		<h1>Feedback</h1>
-		<h6 class="text-muted">Your feedback will be shown here.</h6>
-		<div class="row mt-3">
-			<div class="col shadow p-3">
-				<button
-					class="btn btn-primary my-4"
-					@click="$bvModal.show('feedback-modal')"
+	<div class="container-fluid d-flex justify-content-center">
+		<div class="col-6 shadow p-3 rounded">
+			<div class="col-12">
+				<h5>{{ feedback.thread }}</h5>
+			</div>
+			<div
+				id="message-container"
+				class="col-12 mt-5"
+				style="overflow-y: scroll; height: 50vh"
+			>
+				<div
+					class="my-3"
+					v-for="(message, index) in feedback.messages"
+					:key="index"
 				>
-					<i class="bi bi-envelope"></i>
-					Send a feedback
-				</button>
-				<div class="col-12 bg-light px-4">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Name</th>
-								<th scope="col">Email</th>
-								<th scope="col" class="text-center">Content</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr v-for="(feedback, index) in feedbacks" :key="index">
-								<th scope="row">{{ index }}</th>
-								<td>{{ `${feedback.student.student_basic_info.last_name}, 
-                                    ${feedback.student.student_basic_info.first_name} 
-                                    ${feedback.student.student_basic_info.middle_name == null ? '' : feedback.student.student_basic_info.middle_name}
-                                    ${feedback.student.student_basic_info.suffix == null ? '' : feedback.student.student_basic_info.suffix}` }}</td>
-								<td>{{ feedback.student.student_basic_info.email }}</td>
-								<td class="text-center">
-                                    {{ feedback.thread }}
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					<div
+						v-if="!message.isAdmin"
+						class="col-12 d-flex align-items-end justify-content-end"
+					>
+						<div class="d-flex align-items-center">
+							<span
+								class="me-3"
+								style="
+									word-break: break-all;
+									word-wrap: break-word;
+									white-space: pre-wrap;
+                                    text-align: start;
+
+								"
+							>
+								{{ message.message }}
+							</span>
+							<div>
+								<img
+									src=""
+									width="40"
+									height="40"
+									class="bg-dark rounded-circle img-fluid mx-2"
+								/>
+							</div>
+						</div>
+					</div>
+					<div v-else class="col-12 d-flex align-items-start justify-content-start">
+						<div class="d-flex align-items-center">
+							<div class="me-3">
+								<img
+									src=""
+									class="bg-dark rounded-circle img-fluid mx-2"
+									width="40"
+									height="40"
+								/>
+							</div>
+							<span
+								class="me-3"
+								style="
+									word-break: break-all;
+									white-space: pre-wrap;
+                                    text-align: start;
+
+								"
+							>
+								{{ message.message }}
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 mt-4 pb-3">
+				<div class="d-flex">
+					<input
+						v-model="message"
+						type="text"
+						class="form-control rounded-pill"
+					/>
+					<button
+						@click="sendMessage"
+						:disabled="isLoading"
+						class="btn btn-primary rounded-circle ms-2"
+					>
+						<i class="bi bi-send"></i>
+					</button>
 				</div>
 			</div>
 		</div>
-
-		<b-modal
-			id="feedback-modal"
-			title="Feedback"
-			ok-variant="success"
-			ok-title-html='<i class="bi bi-envelope"></i>  Send'
-			@ok.prevent="sendFeedback"
-			centered
-		>
-			<div class="form-group my-2">
-				<label for="content">Content</label>
-				<textarea
-					name="content"
-					v-model="feedback.content"
-					class="form-control"
-					id="content"
-					cols="30"
-					rows="10"
-					placeholder="Enter your feedback here."
-				></textarea>
-			</div>
-		</b-modal>
 	</div>
 </template>
 
 <script>
 import axios from "../../axios";
 export default {
+	props: ["id"],
 	data() {
 		return {
-			feedback: {
-				content: "",
-			},
-			feedbacks: [],
+			feedback: {},
+			message: "",
+			isLoading: false,
 		};
 	},
 	computed: {},
 	methods: {
-		async sendFeedback() {
+		scrollDown() {
+			var element = document.getElementById("message-container");
+			if (element) {
+				element.scrollTop = element.scrollHeight;
+			}
+		},
+		async sendMessage() {
+			this.isLoading = this.isLoading;
 			await axios
 				.post(
-					`student/send-feedback?token=${localStorage.getItem("access_token")}`,
-					this.feedback
+					`student/send-message/${this.id}?token=${localStorage.getItem(
+						"access_token"
+					)}`,
+					{ message: this.message }
 				)
 				.then((response) => {
-					this.$toast.success("Feedback Sent.");
 					this.getData();
-					this.$bvModal.hide("feedback-modal");
+					this.message = "";
+					this.isLoading = !this.isLoading;
 				})
 				.catch((error) => {
 					console.log(error);
+					this.isLoading = !this.isLoading;
 				});
 		},
 		async getData() {
 			await axios
 				.get(
-					`student/get-feedbacks?token=${localStorage.getItem("access_token")}`
+					`student/get-feedback/${this.id}?token=${localStorage.getItem(
+						"access_token"
+					)}`
 				)
 				.then((repsonse) => {
-					this.feedbacks = { ...repsonse.data };
+					this.feedback = { ...repsonse.data };
+					this.scrollDown();
 				})
 				.catch((error) => {
 					console.log(error);
 				});
 		},
 	},
-	async mounted() {
+	mounted() {
 		this.getData();
 	},
 };

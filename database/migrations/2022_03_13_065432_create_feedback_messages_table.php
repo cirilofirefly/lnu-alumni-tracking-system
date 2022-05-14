@@ -15,7 +15,7 @@ class CreateFeedbackMessagesTable extends Migration
     {
         Schema::create('feedback_messages', function (Blueprint $table) {
             $table->id();
-            $table->string('message');
+            $table->longText('message');
             $table->boolean('isAdmin')->default(false);
             $table->unsignedBigInteger('feedback_id');
             $table->foreign('feedback_id')->references('id')->on('feedbacks')->onDelete('cascade');

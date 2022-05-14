@@ -53,7 +53,7 @@
       </li>
       <li class="nav-item">
         <div class="main">
-          <router-link class="nav-link" :to="{ name: 'student.feedback' }">
+          <router-link class="nav-link" :to="{ name: 'student.feedbacks' }">
             <box-icon color="#fff" type="solid" name="user"></box-icon>
             <span>Feedback</span></router-link
           >

@@ -8,6 +8,7 @@ import StudentHome from '../views/Student/Home.vue'
 import StudentAccountSetting from '../views/Student/AccountSetting.vue'
 import StudentEvents from '../views/Student/Events.vue'
 import StudentEvent from '../views/Student/Event.vue'
+import StudentFeedbacks from '../views/Student/Feedbacks.vue'
 import StudentFeedback from '../views/Student/Feedback.vue'
 import StudentIDRequest from '../views/Student/IDRequest.vue'
 import StudentUpdateAccount from '../views/Student/UpdateAccount.vue'
@@ -58,7 +59,8 @@ const ROUTES = [
             { path: 'account-setting', name: 'student.account-setting', component: StudentAccountSetting },
             { path: 'events', name: 'student.events', component: StudentEvents },
             { path: 'event/:slug', name: 'student.event', component: StudentEvent, props: true },
-            { path: 'feedback', name: 'student.feedback', component: StudentFeedback },
+            { path: 'feedbacks', name: 'student.feedbacks', component: StudentFeedbacks },
+            { path: 'feedback/:id', name: 'student.feedback', component: StudentFeedback, props: true },
             { path: 'id-request', name: 'student.id-request', component: StudentIDRequest },
             { path: 'id-request/:id', name: 'student.update-account', component: StudentUpdateAccount, props: true },
             { path: "", redirect: "home" }

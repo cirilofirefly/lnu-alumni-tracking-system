@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\v1\Admin\ {
@@ -22,7 +21,6 @@ use App\Http\Controllers\v1\Student\ {
     EventController as StudentEventController,
     FeedbackController as StudentFeedbackController
 };
-use App\Models\Student;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,12 +34,9 @@ use App\Models\Student;
 */
 
 Route::group([
-
     'middleware' => 'api',
     'prefix' => 'auth'
-
 ], function ($router) {
-
     Route::group(['prefix' => 'admin'], function (){
         Route::post('login', [AdminAuthController::class, 'login']);
         Route::post('logout', [AdminAuthController::class, 'logout']);
@@ -49,7 +44,6 @@ Route::group([
         Route::put('update-account', [AdminAuthController::class, 'updateAccount']);
         Route::post('me', [AdminAuthController::class, 'me']);
     });
-
     Route::group(['prefix' => 'student'], function (){
         Route::post('signup', [StudentAuthController::class, 'signup']);
         Route::post('login', [StudentAuthController::class, 'login']);
@@ -58,11 +52,9 @@ Route::group([
         Route::put('change-password', [StudentAuthController::class, 'changePassword']);
 
     });
-
 });
 
 Route::group(['middleware' => 'api'], function (){
-
     Route::group(['prefix' => 'admin'], function () {
         Route::put('approve-alumni/{id}', [AlumniAccountController::class, 'approveAccount']);
         Route::put('disapprove-alumni/{id}', [AlumniAccountController::class, 'disapproveAccount']);
@@ -77,20 +69,17 @@ Route::group(['middleware' => 'api'], function (){
         Route::get('total-batch', [AdminDashboardContainer::class, 'totalBatch']);
         Route::get('total-alumni-records', [AdminDashboardContainer::class, 'totalAlumniRecords']);
         Route::get('total-alumni-application', [AdminDashboardContainer::class, 'totalAlumniApplication']);
-
         Route::get('records', [AdminRecordController::class, 'index']);
         Route::get('record/{id}', [AdminRecordController::class, 'show']);
         Route::get('get-feedbacks', [AdminFeedbackController::class, 'index']);
         Route::get('send-feedback/{id}', [AdminFeedbackController::class, 'store']);
-
         Route::get('get-student-id-requests/{type}', [AlumniIdRequestController::class, 'getStudentIDRequests']);
         Route::get('get-student-id-request/{id}', [AlumniIdRequestController::class, 'getStudentIDRequest']);
         Route::post('approve-student-id-request/{id}', [AlumniIdRequestController::class, 'approveStudentIDRequest']);
         Route::post('disapprove-student-id-request/{id}', [AlumniIdRequestController::class, 'disapproveStudentIDRequest']);
-
+        Route::post('send-message/{id}', [AdminFeedbackController::class, 'sendMessage']);
 
     });
-
     Route::group(['prefix' => 'student'], function () {
         Route::get('event/{slug}', [StudentEventController::class, 'show']);
         Route::get('events', [StudentEventController::class, 'index']);
@@ -105,13 +94,10 @@ Route::group(['middleware' => 'api'], function (){
         Route::post('post-comment', [StudentEventController::class, 'postComment']);
         Route::delete('delete-comment/{event_id}', [StudentEventController::class, 'deleteComment']);
         Route::get('get-feedbacks', [StudentFeedbackController::class, 'getFeedbacks']);
+        Route::get('get-feedback/{id}', [StudentFeedbackController::class, 'getFeedback']);
         Route::post('send-feedback', [StudentFeedbackController::class, 'sendFeedback']);
-
-
-
-
+        Route::post('send-message/{id}', [StudentFeedbackController::class, 'sendMessage']);
     });
-
 });
 
 

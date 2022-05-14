@@ -15,9 +15,9 @@
           >
             <i class="bi bi-plus"></i> Add Event
           </button>
-          <button class="btn btn-success">
+          <!-- <button class="btn btn-success">
             <i class="bi bi-journal-text"></i> View all events
-          </button>
+          </button> -->
         </div>
         <div>
           <table class="table table-striped">
