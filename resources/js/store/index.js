@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import ADMIN_AUTH from './modules/admin/auth';
 import ADMIN_BATCH from './modules/admin/batch';
+import ADMIN_FEEDBACK from './modules/admin/feedback';
 import ADMIN_CATEGORIES from './modules/admin/category';
 import ADMIN_DASHBOARD from './modules/admin/dashboard';
 import ADMIN_EVENT from './modules/admin/event';
@@ -21,6 +22,7 @@ export default new Vuex.Store({
         ALUMNAE_APPROVAL,
         ADMIN_DASHBOARD,
         ADMIN_BATCH,
+        ADMIN_FEEDBACK,
         ADMIN_CATEGORIES,
         ADMIN_EVENT,
         ADMIN_ID_MANAGEMENT,

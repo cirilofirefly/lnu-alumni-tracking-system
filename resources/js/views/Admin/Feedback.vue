@@ -17,7 +17,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(feedbacks, index) in feedbackss" :key="index">
+            <tr v-for="(feedbacks, index) in feedbacks" :key="index">
               <th scope="row">{{ index + 1 }}</th>
               <td>{{ feedbacks.name }}</td>
               <td>{{ feedbacks.email }}</td>

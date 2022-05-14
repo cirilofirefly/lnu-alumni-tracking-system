@@ -7,6 +7,7 @@ use App\Http\Controllers\v1\Admin\ {
     AlumniAccountController,
     AlumniIdRequestController,
     AuthController as AdminAuthController,
+    FeedbackController as AdminFeedbackController,
     BatchController as AdminBatchController,
     CategoryController as AdminCategoryController,
     EventController as AdminEventController,
@@ -43,6 +44,7 @@ Route::group([
     Route::group(['prefix' => 'admin'], function (){
         Route::post('login', [AdminAuthController::class, 'login']);
         Route::post('logout', [AdminAuthController::class, 'logout']);
+        Route::put('change-password', [AdminAuthController::class, 'changePassword']);
         Route::post('me', [AdminAuthController::class, 'me']);
     });
 
@@ -51,6 +53,8 @@ Route::group([
         Route::post('login', [StudentAuthController::class, 'login']);
         Route::post('logout', [StudentAuthController::class, 'logout']);
         Route::post('me', [StudentAuthController::class, 'me']);
+        Route::put('change-password', [StudentAuthController::class, 'changePassword']);
+
     });
 
 });
@@ -70,8 +74,12 @@ Route::group(['middleware' => 'api'], function (){
         Route::get('total-batch', [AdminDashboardContainer::class, 'totalBatch']);
         Route::get('total-batch', [AdminDashboardContainer::class, 'totalBatch']);
         Route::get('total-alumni-records', [AdminDashboardContainer::class, 'totalAlumniRecords']);
+        Route::get('total-alumni-application', [AdminDashboardContainer::class, 'totalAlumniApplication']);
+
         Route::get('records', [AdminRecordController::class, 'index']);
         Route::get('record/{id}', [AdminRecordController::class, 'show']);
+        Route::get('get-feedbacks', [AdminFeedbackController::class, 'index']);
+        Route::get('send-feedback/{id}', [AdminFeedbackController::class, 'store']);
 
         Route::get('get-student-id-requests/{type}', [AlumniIdRequestController::class, 'getStudentIDRequests']);
         Route::get('get-student-id-request/{id}', [AlumniIdRequestController::class, 'getStudentIDRequest']);
@@ -86,6 +94,7 @@ Route::group(['middleware' => 'api'], function (){
         Route::get('events', [StudentEventController::class, 'index']);
         Route::get('latest-event', [StudentEventController::class, 'latestEvent']);
         Route::get('id-student-account/{id}', [StudentIDRequestController::class, 'show']);
+        Route::get('request-logs/{id}', [StudentIDRequestController::class, 'requestLogs']);
         Route::put('update-student-account', [StudentIDRequestController::class, 'updateAccount']);
         Route::post('upload-image', [StudentIDRequestController::class, 'uploadImage']);
         Route::post('upload-signature', [StudentIDRequestController::class, 'uploadSignature']);

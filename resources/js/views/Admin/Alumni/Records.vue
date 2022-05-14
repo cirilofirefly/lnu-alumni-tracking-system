@@ -25,12 +25,12 @@
 				</div>
 			</div>
             <tr  v-else v-for="student in records" :key="student.id">
-              <th v-if="student">{{ student.student_basic_info.student_number }}</th>
-              <td v-if="student">{{ `${student.student_basic_info.first_name} ${student.student_basic_info.last_name}`}}</td>
-              <td v-if="student">{{ student.student_basic_info.mobile_number }}</td>
-              <td v-if="student">{{ student.student_basic_info.current_address }}</td>
+              <th v-if="student">{{ student.student.student_basic_info.student_number }}</th>
+              <td v-if="student">{{ `${student.student.student_basic_info.first_name} ${student.student.student_basic_info.last_name}`}}</td>
+              <td v-if="student">{{ student.student.student_basic_info.mobile_number }}</td>
+              <td v-if="student">{{ student.student.student_basic_info.current_address }}</td>
               <td v-if="student" class="text-center">
-                <b-button variant="info text-light" @click="$router.push({ path: `record/${student.id}` })">View More</b-button>
+                <b-button variant="info text-light" @click="$router.push({ path: `record/${student.student.id}` })">View More</b-button>
               </td>
             </tr>
           </tbody>

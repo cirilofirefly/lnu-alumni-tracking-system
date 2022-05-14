@@ -4,7 +4,7 @@
 			<h1 class="mb-2 text-uppercase fw-bold">ID Management</h1>
 		</div>
 		<div
-			class="row d-flex justify-content-between align-items-center px-3 mt-5"
+			class="row d-flex justify-content-between align-items-top px-3 mt-5"
 		>
 			<div class="d-flex align-items-center mb-2">
 				<button v-b-modal.id-request class="btn btn-primary">
@@ -134,9 +134,13 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-5 shadow p-3 mx-2">
+			<div class="col-5 shadow p-3 px-4 pt-3 mx-2">
 				<h3 class="mb-3">Request Log</h3>
-				<div class="row"></div>
+				<div class="row px-4">
+                    <div class="col-12 pl-2 border-top py-2" v-for="log in requestLogs" :key="log.id">
+                        {{log.created_at | setDate}}
+                    </div>                    
+                </div>
 			</div>
 
 			<b-modal
@@ -216,9 +220,18 @@ export default {
 		user() {
 			return this.$store.getters["STUDENT_AUTH/GET_STUDENT_USER"];
 		},
+        requestLogs() {
+			return this.$store.getters["STUDENT_ID_REQUEST/GET_REQUEST_LOGS"];
+		},
 	},
-	mounted() {
+    filters: {
+        setDate(date) {
+            return moment(date).format('LLL');
+        }
+    },
+	async mounted() {
 		this.setIdInfo();
+        await this.$store.dispatch("STUDENT_ID_REQUEST/FETCH_REQUEST_LOGS", this.user[0].student.id)
 	},
 };
 </script>

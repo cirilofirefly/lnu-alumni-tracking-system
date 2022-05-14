@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\AlumniIdRequest;
 use App\Models\Batch;
 use App\Models\Student;
+use App\Models\StudentAccountInfo;
 
 class DashboardController extends Controller
 {
-    public function totalAlumni() {
+    public function totalAlumni() 
+    {
         return response()->json([
             'batch' => Batch::withCount('student_account_infos')->get(),
             'alumni_id' => Batch::with(['student_account_infos.student' => function($query) {
@@ -25,18 +27,26 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function totalAlumniID() {
+    public function totalAlumniID() 
+    {
         return response()->json(AlumniIdRequest::count());
     }
 
-    public function totalBatch() {
+    public function totalBatch() 
+    {
         return response()->json(Batch::count());
     }
 
-    public function totalAlumniRecords() {
+    public function totalAlumniRecords() 
+    {
         return response()->json([
-                'alumni_records' => Student::count(),
+                'alumni_records' => StudentAccountInfo::where('account_status', 1)->count(),
                 'alumni_id_records_count' => AlumniIdRequest::where('status', 1)->count()
             ]);
+    }
+
+    public function totalAlumniApplication()
+    {
+        return response()->json(Student::count());
     }
 }

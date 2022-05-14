@@ -20,7 +20,8 @@ export default {
         total_batch: 0,
         total_alumni_record: 0,
         total_alumni_id_records_count: 0,
-        total_alumni: 0
+        total_alumni: 0,
+        total_alumni_application: 0
 
     },
     getters: {
@@ -31,6 +32,7 @@ export default {
         GET_ALUMNI_RECORD_COUNT: (state) => state.total_alumni_record,
         GET_BATCHES_COUNT: (state) => state.total_batch,
         GET_ALUMNI_COUNT: (state) => state.total_alumni,
+        GET_ALUMNI_APPLICATION_COUNT: (state) => state.total_alumni_application,
         GET_ALUMNI_ID_RECORDS_COUNT: (state) => state.total_alumni_id_records_count
     },
     mutations: {
@@ -86,6 +88,9 @@ export default {
         SET_ALUMN: (state, total_alumni_record) => {
             state.total_alumni_record = total_alumni_record
         },
+        SET_ALUMNI_APPLICATION: (state, total_alumni_application) => {
+            state.total_alumni_application = total_alumni_application
+        },
 
     },
     actions: {
@@ -115,6 +120,17 @@ export default {
                 });
 
             return res;
+        },
+        TOTAL_ALUMNI_APPLICATION: async ({ commit }) => {
+            return await axios.get(`${AUTH}/total-alumni-application?token=${localStorage.getItem('access_token')}`)
+            .then((response) => {
+                commit("SET_ALUMNI_APPLICATION", response.data);
+                return response;
+            })
+            .catch((error) => {
+                return error.response;
+            });
+
         },
         TOTAL_BATCHES: async ({ commit }) => {
             const res = await axios.get(`${AUTH}/total-batch?token=${localStorage.getItem('access_token')}`)

@@ -129,4 +129,9 @@ class IDRequestController extends Controller
         ]);
         return response()->json(['message' => 'ID Request sent.']);
     }
+
+    public function requestLogs()
+    {
+        return response()->json(AlumniIdRequest::all());
+    }
 }

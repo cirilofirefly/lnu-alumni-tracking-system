@@ -11,6 +11,7 @@ use App\Models\StudentEmployeeInfo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -103,7 +104,7 @@ class AuthController extends Controller
             $tor_name = $tor->getClientOriginalExtension();
             $tor_name = $request->student_number . '.' . $tor_name;
             $tor->move(public_path('/alumni/files/images/tors'), $tor_name);
-            $tor_path = '/alumni/files/tors/' . $tor_name;
+            $tor_path = '/alumni/files/images/tors/' . $tor_name;
 
             $id_image_name = $id_image->getClientOriginalExtension();
             $id_image_name = $request->student_number . '.' . $id_image_name;
@@ -147,5 +148,23 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth('admin')->factory()->getTTL() * 60,
         ]);
+    }
+
+    public function changePassword(Request $request) {
+
+        $this->validate($request, [
+            'oldPassword' => 'required',
+            'password' => 'required|max:8|confirmed'
+        ]);
+
+        $student_account_info = StudentAccountInfo::where('id', auth('student')->user()->id)->first();
+        if($student_account_info) {
+            if(Hash::check($request->oldPassword, $student_account_info->password)) {
+                $student_account_info->password = bcrypt($request->password);
+                $student_account_info->save();
+            }
+        }
+
+        return response()->json([], 200);
     }
 }

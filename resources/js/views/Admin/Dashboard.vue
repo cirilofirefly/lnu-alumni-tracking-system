@@ -80,7 +80,7 @@
         return this.$store.getters['ADMIN_DASHBOARD/GET_ALUMNI_RECORD_COUNT'];
       },
       alumni_application_count() {
-        return this.$store.getters['ADMIN_DASHBOARD/GET_ALUMNI_COUNT'];
+        return this.$store.getters['ADMIN_DASHBOARD/GET_ALUMNI_APPLICATION_COUNT'];
       },
       alumni_batch_count() {
         return this.$store.getters['ADMIN_DASHBOARD/GET_BATCHES_COUNT'];
@@ -95,6 +95,7 @@
     async mounted() {
       await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_ALUMNI_BY_BATCH');
       await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_ALUMNI_RECORDS');
+      await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_ALUMNI_APPLICATION');
       await this.$store.dispatch('ADMIN_DASHBOARD/TOTAL_BATCHES');
     },
   };

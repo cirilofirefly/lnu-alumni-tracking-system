@@ -4,13 +4,14 @@ namespace App\Http\Controllers\v1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Models\StudentAccountInfo;
 use Illuminate\Http\Request;
 
 class RecordController extends Controller
 {
     //
     public function index() {
-        return response()->json(Student::with(['student_basic_info'])->get());
+        return response()->json(StudentAccountInfo::with(['student.student_basic_info'])->where('account_status', 1)->get());
     }
 
     public function show($id) {

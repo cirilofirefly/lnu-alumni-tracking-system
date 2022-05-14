@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
 {
-    //
-
     public function index() {
+        return response()->json(Feedback::all());
+    }
+
+    public function store() {
         return response()->json(Feedback::all());
     }
 

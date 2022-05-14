@@ -7,15 +7,16 @@
         <p class="p-0">Alumni Information Tracking Sytem</p>
       </div>
     </div>
-    <div v-if="user" class="user-info text-light">
+    <div v-if="user.student" class="user-info text-light">
       <span>{{
         `${user[0].student.student_basic_info.first_name} ${user[0].student.student_basic_info.first_name}(${user[0].username})`
       }}</span>
 
-      <button @click.prevent="logout" class="btn btn-light d-flex">
+      
+    </div>
+    <button @click.prevent="logout" class="btn btn-light d-flex">
         <i class="bi bi-box-arrow-in-left"></i> Logout
       </button>
-    </div>
   </div>
 </template>
 
