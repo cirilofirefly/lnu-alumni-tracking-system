@@ -45,6 +45,7 @@ Route::group([
         Route::post('login', [AdminAuthController::class, 'login']);
         Route::post('logout', [AdminAuthController::class, 'logout']);
         Route::put('change-password', [AdminAuthController::class, 'changePassword']);
+        Route::put('update-account', [AdminAuthController::class, 'updateAccount']);
         Route::post('me', [AdminAuthController::class, 'me']);
     });
 
