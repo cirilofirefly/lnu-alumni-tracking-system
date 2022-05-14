@@ -20,6 +20,7 @@ use App\Http\Controllers\v1\Student\ {
     IDRequestController as StudentIDRequestController,
     AuthController as StudentAuthController,
     EventController as StudentEventController,
+    FeedbackController as StudentFeedbackController
 };
 use App\Models\Student;
 
@@ -103,6 +104,10 @@ Route::group(['middleware' => 'api'], function (){
         Route::get('get-comments', [StudentEventController::class, 'getComments']);
         Route::post('post-comment', [StudentEventController::class, 'postComment']);
         Route::delete('delete-comment/{event_id}', [StudentEventController::class, 'deleteComment']);
+        Route::get('get-feedbacks', [StudentFeedbackController::class, 'getFeedbacks']);
+        Route::post('send-feedback', [StudentFeedbackController::class, 'sendFeedback']);
+
+
 
 
     });

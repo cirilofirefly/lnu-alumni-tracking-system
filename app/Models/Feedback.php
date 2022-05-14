@@ -12,4 +12,10 @@ class Feedback extends Model
     protected $table = 'feedbacks';
     protected $guarded = [];
 
+    public function admin() {
+        return $this->belongsTo(Admin::class, 'admin_id', 'id');
+    }
+    public function student() {
+        return $this->belongsTo(Student::class, 'student_id', 'id');
+    }
 }
