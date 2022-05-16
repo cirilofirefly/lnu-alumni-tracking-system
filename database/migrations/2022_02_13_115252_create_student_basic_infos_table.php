@@ -25,7 +25,7 @@ class CreateStudentBasicInfosTable extends Migration
             $table->string("mobile_number");
             $table->string("telephone_number");
             $table->string("email");
-            $table->dateTime("birthdate");
+            $table->dateTime("birthdate")->nullable();
             $table->string("birthplace");
             $table->string("religion");
             $table->string("gender");

@@ -8,7 +8,6 @@ use App\Models\StudentAccountInfo;
 use App\Models\StudentBasicInfo;
 use App\Models\StudentEducationInfo;
 use App\Models\StudentEmployeeInfo;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -43,25 +42,9 @@ class AuthController extends Controller
             'username' => 'required',
             'password' => 'required|confirmed|min:8|max:50',
             'student_number' => 'required',
-            'email' => 'required|email',
             'first_name' => 'required',
             'last_name' => 'required',
-            'current_address' => 'required',
-            'permanent_address' => 'required',
-            'mobile_number' => 'required',
-            'telephone_number' => 'required',
-            'birthdate' => 'required',
-            'birthplace' => 'required',
-            'gender' => 'required',
-            'religion' => 'required',
-            'civil_status' => 'required',
-            'educational_attainment' => 'required',
-            'batch_id' => 'required',
-            'college' => 'required',
-            'program' => 'required',
-            'degree_level' => 'required',
-            'image' => 'required|image|mimes:png|max:10000',
-            'pdf' => 'required|mimes:pdf|max:10000',
+            'email' => 'required|email',
         ]);
 
         DB::beginTransaction();
@@ -72,52 +55,39 @@ class AuthController extends Controller
                 'username' => $request->username,
                 'password' => bcrypt($request->password),
                 'account_status' => false,
-                'educational_attainment' => $request->educational_attainment,
-                'batch_id' => $request->batch_id,
-                'college' => $request->college,
-                'program' => $request->program,
-                'degree_level' => $request->degree_level
+                'educational_attainment' => 'NO DATA',
+                'batch_id' => null,
+                'college' => 'NO DATA',
+                'program' => 'NO DATA',
+                'degree_level' => 'NO DATA'
             ]);
     
             $student_basic_info = StudentBasicInfo::create([
                 'student_number' => $request->student_number,
                 'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
                 'last_name' => $request->last_name,
-                'current_address' => $request->current_address,
-                'permanent_address' => $request->permanent_address,
-                'mobile_number' => $request->mobile_number,
-                'telephone_number' => $request->telephone_number,
+                'current_address' => 'NO DATA',
+                'permanent_address' => 'NO DATA',
+                'mobile_number' => 'NO DATA',
+                'telephone_number' => 'NO DATA',
                 'email' => $request->email,
-                'birthdate' => $request->birthdate,
-                'birthplace' => $request->birthplace,
-                'religion' => $request->religion,
-                'gender' => $request->gender,
-                'civil_status' => $request->civil_status,
+                'birthplace' => 'NO DATA',
+                'religion' => 'NO DATA',
+                'gender' => 'NO DATA',
+                'civil_status' => 'NO DATA',
             ]);
     
             $student_education_info = StudentEducationInfo::create();
             $student_employee_info = StudentEmployeeInfo::create();
-
-            $tor = $request->file('pdf');
-            $id_image = $request->file('image');
-
-            $tor_name = $tor->getClientOriginalExtension();
-            $tor_name = $request->student_number . '.' . $tor_name;
-            $tor->move(public_path('/alumni/files/images/tors'), $tor_name);
-            $tor_path = '/alumni/files/images/tors/' . $tor_name;
-
-            $id_image_name = $id_image->getClientOriginalExtension();
-            $id_image_name = $request->student_number . '.' . $id_image_name;
-            $id_image->move(public_path('/alumni/files/images/ids'), $id_image_name);
-            $id_image_path = '/alumni/files/images/ids/' . $id_image_name;
 
             Student::create([
                 'student_account_info_id' => $student_account_info->id,
                 'student_basic_info_id' => $student_basic_info->id,
                 'student_education_info_id' => $student_education_info->id,
                 'student_employee_info_id' => $student_employee_info->id,
-                'id_image' => $id_image_path,
-                'tor_file' => $tor_path,
+                'id_image' => 'NO DATA',
+                'tor_file' => 'NO DATA',
                 'accept_term' => $request->accept_term ? 1 : 0
             ]);
 

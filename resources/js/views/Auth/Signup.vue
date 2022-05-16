@@ -19,8 +19,7 @@
 							Create an account and wait for admin confirmation
 						</h5>
 					</div>
-
-					<div class="mb-2">
+					<!-- <div class="mb-2">
 						<h1 class="mb-3">Education</h1>
 						<div class="form-group mb-2 col-md-12">
 							<label for="edu-att">Education Attainment</label>
@@ -109,9 +108,9 @@
 								</option>
 							</select>
 						</div>
-					</div>
+					</div> -->
 					<div class="mb-2">
-						<h1 class="mb-3">Account & Basic Information</h1>
+						<h1 class="mb-3">Account Information</h1>
 						<div class="form-group mb-3 col-md-12">
 							<label for="username">Username</label>
 							<input
@@ -192,7 +191,7 @@
 								placeholder="Last Name"
 							/>
 						</div>
-						<div class="form-group mb-3">
+						<!--- <div class="form-group mb-3">
 							<label for="suffix">Suffix</label>
 							<input
 								v-model="account.suffix"
@@ -241,11 +240,10 @@
 								id="telephone_number"
 								placeholder="###-###-####"
 							/>
-						</div>
+						</div> -->
 					</div>
 					<div class="mb-2">
-						<h1 class="mb-3">Other Information</h1>
-						<div class="form-group mb-3">
+						<!-- <div class="form-group mb-3">
 							<label for="birth_date">Birth Date</label>
 							<input
 								v-model="account.birthdate"
@@ -321,7 +319,7 @@
 								accept=".png"
 								@change="handleImageFile($event)"
 							/>
-						</div>
+						</div> -->
 
 						<div
 							class="
@@ -354,7 +352,7 @@
 										id="accept-term"
 									/>
 									<label class="form-check-label" for="accept-term">
-										Upon signing below, I hereby give my consent for the
+										Upon clicking sign up, I hereby give my consent for the
 										processing release, and relation of personal Information.
 									</label>
 								</div>

@@ -47,11 +47,6 @@
 								</button>
 							</td>
 							<td class="text-center">
-								<a class="nav-link" target="_blank" :href="alumni.tor_file"
-									>View</a
-								>
-							</td>
-							<td class="text-center">
 								<a class="nav-link" target="_blank" :href="alumni.id_image"
 									>View</a
 								>
@@ -75,9 +70,7 @@
 						</tr>
 					</tbody>
 				</table>
-
 				<p><strong>Total Entries: </strong> {{ alumnae.length }}</p>
-
 				<div>
 					<b-modal
 						id="modal-approve"
