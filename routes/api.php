@@ -104,3 +104,5 @@ Route::group(['middleware' => 'api'], function (){
 
 
 Route::get('batches', [BatchController::class, 'index']);
+
+Route::get('latest-event', [StudentEventController::class, 'latestEventLanding']);

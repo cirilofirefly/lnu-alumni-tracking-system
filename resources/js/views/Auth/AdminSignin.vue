@@ -16,10 +16,9 @@
 					<div class="row justify-content-center align-items-center">
 						<div class="col-sm-12 col-md-6 col-lg-6">
 							<img src="/images/logo.png" alt="" height="100" />
-							<h1 class="ls-sm m-0 mb-3">Good day, User!</h1>
+							<h1 class="ls-sm m-0 mb-3">Good day, Admin!</h1>
 							<p class="mb-2">
-								Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-								Nesciunt delectus molestiae beatae nulla repudiandae.
+								Please enter credentials to proceed.
 							</p>
 							<p class="mt-2 mb-3 text-muted align-self-end">
 								Forgot password? Click
@@ -93,16 +92,12 @@ export default {
 	methods: {
 		async signin() {
 			const response = await this.$store.dispatch(
-				"STUDENT_AUTH/LOGIN",
+				"ADMIN_AUTH/LOGIN",
 				this.credentials
 			);
 			if (response.status == 200) {
-				if (response.data?.access_token) {
-					this.$toast.success("Successfully logged in.");
-					this.$router.push("/student");
-				} else {
-					this.$toast.info(response.data.message);
-				}
+				this.$toast.success("Successfully logged in.");
+				this.$router.push("/admin");
 			} else {
 				this.$toast.error(response.data.error);
 			}

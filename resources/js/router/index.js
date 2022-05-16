@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Signin from '../views/Auth/Signin.vue'
 import Signup from '../views/Auth/Signup.vue'
+import AdminSignin from '../views/Auth/AdminSignin.vue'
 // Student
 import Student from '../views/Student/Student.vue'
 import StudentHome from '../views/Student/Home.vue'
@@ -41,6 +42,11 @@ const ROUTES = [
         path: '/signin',
         name: 'signin',
         component: Signin
+    },
+    {
+        path: '/admin-signin',
+        name: 'admin-signin',
+        component: AdminSignin
     },
     {
         path: '/signup',

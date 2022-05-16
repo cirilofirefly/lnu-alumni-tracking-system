@@ -52,7 +52,7 @@
 									:key="batch.id"
 									:value="batch.id"
 								>
-									{{ `${batch.batch} - ${batch.batch + 1}` }}
+									{{ batch.batch }}
 								</option>
 							</select>
 						</div>

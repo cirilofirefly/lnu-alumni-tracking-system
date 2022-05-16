@@ -22,6 +22,11 @@ class EventController extends Controller
         return response()->json(Event::with('category')->latest()->first());
     }
 
+    public function latestEventLanding() 
+    {
+        return response()->json(Event::with('category')->latest()->first());
+    }
+
     public function getComments(Request $request)
     {
         return response()->json(Event::where('id', $request->event_id)->first()->comments(), 200);
