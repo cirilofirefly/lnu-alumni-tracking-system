@@ -17,10 +17,7 @@
 						<div class="col-sm-12 col-md-6 col-lg-6">
 							<img src="/images/logo.png" alt="" height="100" />
 							<h1 class="ls-sm m-0 mb-3">Good day, User!</h1>
-							<p class="mb-2">
-								Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-								Nesciunt delectus molestiae beatae nulla repudiandae.
-							</p>
+							<p class="mb-2">Please enter credentials to proceed.</p>
 							<p class="mt-2 mb-3 text-muted align-self-end">
 								Forgot password? Click
 								<router-link to="/forgot-password" class="text-decoration-none"
