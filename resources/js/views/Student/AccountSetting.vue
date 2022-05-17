@@ -2,8 +2,15 @@
 	<div>
 		<h1>Account Settings</h1>
 		<div class="row">
-            <div class="col-12 p-3">
+			<div class="col-12 p-3">
 				<div class="row bg-light shadow rounded pt-2 pb-5">
+					<div class="my-2">
+						<router-link
+							class="btn btn-primary"
+							:to="{ path: `id-request/${user[0].id}` }"
+							>Update Account</router-link
+						>
+					</div>
 					<h3 class="text-uppercase fw-bold mt-4 ps-4 mb-4">
 						Basic Information
 					</h3>
@@ -159,7 +166,7 @@
 			@ok.prevent="savePassword"
 			ok-variant="success"
 			ok-title="Save"
-            centered
+			centered
 		>
 			<div class="row">
 				<div class="col-12">
@@ -169,28 +176,49 @@
 							type="password"
 							class="form-control"
 							id="current-password"
-                            v-model="changePassword.oldPassword"
+							v-model="changePassword.oldPassword"
 							placeholder="Enter current password"
 						/>
 					</div>
-                    <div class="form-group my-2">
+					<div class="form-group my-2">
 						<label for="new-password">New Password</label>
 						<input
 							type="password"
 							class="form-control"
 							id="new-password"
-                            v-model="changePassword.password"
+							v-model="changePassword.password"
 							placeholder="Enter new password"
 						/>
 					</div>
-                    <div class="form-group my-2">
+					<div class="form-group my-2">
 						<label for="confirm-new-password">Confirm New Password</label>
 						<input
 							type="password"
 							class="form-control"
 							id="confirm-new-password"
-                            v-model="changePassword.password_confirmation"
+							v-model="changePassword.password_confirmation"
 							placeholder="Enter confirm new password"
+						/>
+					</div>
+				</div>
+			</div>
+		</b-modal>
+
+		<b-modal
+			id="update-image"
+			title="Update Your ID"
+			ok-title="Save"
+			@ok.prevent="uploadImage()"
+			@cancel="revertImage()"
+		>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<input
+							v-on:change="onFileChange($event)"
+							type="file"
+							id="imageFile"
+							accept="image/png, image/jpeg"
 						/>
 					</div>
 				</div>
@@ -200,33 +228,86 @@
 </template>
 
 <script>
-import axios from '../../axios'
+import axios from "../../axios";
 export default {
-    data() {
-        return {
-            changePassword: {
-                oldPassword: '',
-                password: '',
-                password_confirmation: ''
-            }
-        }
-    },
-    computed: {
-        user() {
+	data() {
+		return {
+			changePassword: {
+				oldPassword: "",
+				password: "",
+				password_confirmation: "",
+			},
+			image: null,
+			previewImage: null,
+			oldImage: null,
+		};
+	},
+	computed: {
+		user() {
 			return this.$store.getters["STUDENT_AUTH/GET_STUDENT_USER"];
 		},
-    },
+	},
 	methods: {
 		async savePassword() {
-            await axios.put(`auth/student/change-password?token=${localStorage.getItem('access_token')}`, this.changePassword)
-                .then(response => {
-                    this.$toast.success('Password saved')
-                    this.$bvModal.hide('password-modal')
-                })
-                .catch(error => {
-                    console.log(error)
-                });
-        },
+			await axios
+				.put(
+					`auth/student/change-password?token=${localStorage.getItem(
+						"access_token"
+					)}`,
+					this.changePassword
+				)
+				.then((response) => {
+					this.$toast.success("Password saved");
+					this.$bvModal.hide("password-modal");
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+		revertImage() {
+			this.previewImage = this.oldImage;
+		},
+
+		onFileChange(e) {
+			if (e.target?.files[0]) {
+				this.image = e.target?.files[0] ?? "";
+				this.oldImage = this.previewImage;
+				let reader = new FileReader();
+				reader.readAsDataURL(this.image);
+				reader.onload = (e) => {
+					this.previewImage = e.target.result;
+				};
+			}
+		},
+		async uploadImage() {
+			let formData = new FormData();
+			formData.append("image", this.image);
+			formData.append(
+				"student_number",
+				this.user[0]?.student.student_basic_info.student_number
+			);
+
+			const response = await this.$store.dispatch(
+				"STUDENT_ID_REQUEST/UPLOAD_IMAGE",
+				formData
+			);
+
+			if (response.status == 200) {
+				this.$toast.success(response.data?.message ?? "");
+				this.$bvModal.hide("update-image");
+			}
+
+			if (response.status == 422) {
+				console.log(response.data);
+			}
+		},
+	},
+	async mounted() {
+		let response = await this.$store.dispatch(
+			"STUDENT_ID_REQUEST/FETCH_STUDENT_ACCOUNT",
+			this.user[0]?.id
+		);
+		this.previewImage = `http://localhost:8000${this.user[0]?.student?.id_image}`;
 	},
 };
 </script>

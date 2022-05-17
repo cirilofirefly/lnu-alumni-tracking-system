@@ -63,27 +63,6 @@
 					</div>
 				</div>
 			</div>
-
-			<b-modal
-				id="update-image"
-				title="Update Your ID"
-				ok-title="Save"
-				@ok.prevent="uploadImage()"
-				@cancel="revertImage()"
-			>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<input
-								v-on:change="onFileChange($event)"
-								type="file"
-								id="imageFile"
-								accept="image/png, image/jpeg"
-							/>
-						</div>
-					</div>
-				</div>
-			</b-modal>
 		</div>
 	</div>
 </template>
@@ -96,9 +75,6 @@ export default {
 			verified: true,
 			event: {},
 			userCheck: null,
-			image: null,
-			previewImage: null,
-			oldImage: null,
 			percentage: {
 				progress: 0,
 				total: 0,
@@ -121,46 +97,8 @@ export default {
 				this.setLoading();
 			}
 		},
-		async uploadImage() {
-			let formData = new FormData();
-			formData.append("image", this.image);
-			formData.append(
-				"student_number",
-				this.user[0]?.student.student_basic_info.student_number
-			);
-
-			const response = await this.$store.dispatch(
-				"STUDENT_ID_REQUEST/UPLOAD_IMAGE",
-				formData
-			);
-
-			if (response.status == 200) {
-				this.$toast.success(response.data?.message ?? "");
-				this.$bvModal.hide("update-image");
-			}
-
-			if (response.status == 422) {
-				console.log(response.data);
-			}
-		},
 		setLoading() {
 			this.loading = !this.loading;
-		},
-
-		revertImage() {
-			this.previewImage = this.oldImage;
-		},
-
-		onFileChange(e) {
-			if (e.target?.files[0]) {
-				this.image = e.target?.files[0] ?? "";
-				this.oldImage = this.previewImage;
-				let reader = new FileReader();
-				reader.readAsDataURL(this.image);
-				reader.onload = (e) => {
-					this.previewImage = e.target.result;
-				};
-			}
 		},
 		setVerified(user) {
 			if (user.student_education_info) {
@@ -185,6 +123,7 @@ export default {
 				total: 0,
 			};
 			if (student) {
+                
 				for (const [key, value] of Object.entries(student)) {
 					if (key == "id_image" || key == "tor_file" || key == "signature") {
 						if (value != "NO DATA" && value != null) {
@@ -194,8 +133,17 @@ export default {
 					}
 				}
 
+                for (const [key, value] of Object.entries(student?.student_account_info)) {
+					if (key != "deleted_at") {
+						if (value != "NO DATA" && value != null) {
+							percentage.progress++;
+						}
+						percentage.total++;
+					}
+				}
+
                 for (const [key, value] of Object.entries(student?.student_basic_info)) {
-					if (key != "deleted_at" || key != "created_at" || key != "id" || key != 'updated_at' || key != 'middle_name' || key != 'suffix') {
+					if (key != "deleted_at" || key != 'middle_name' || key != 'suffix') {
 						if (value != "NO DATA" && value != null) {
 							percentage.progress++;
 						}
@@ -204,7 +152,16 @@ export default {
 				}
 
                 for (const [key, value] of Object.entries(student?.student_education_info)) {
-					if (key != "deleted_at" || key != "created_at" || key != "id" || key != 'updated_at') {
+					if (key != "deleted_at") {
+						if (value != "NO DATA" && value != null) {
+							percentage.progress++;
+						}
+						percentage.total++;
+					}
+				}
+
+                for (const [key, value] of Object.entries(student?.student_employee_info)) {
+					if (key != "deleted_at") {
 						if (value != "NO DATA" && value != null) {
 							percentage.progress++;
 						}
@@ -213,6 +170,7 @@ export default {
 				}
 			}
 			this.percentage = { ...percentage };
+            console.log(this.percentage)
 		},
 	},
 	async mounted() {
