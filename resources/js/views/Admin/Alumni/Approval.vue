@@ -14,7 +14,7 @@
 							<th scope="col">Name</th>
 							<th scope="col" class="text-center">Info</th>
 							<th scope="col" class="text-center">
-								Transcript of Records(TOR)
+								ID Picture
 							</th>
 							<th scope="col" class="text-center">ID Picture</th>
 							<th scope="col" class="text-center">Actions</th>
@@ -54,14 +54,14 @@
 							<td class="text-center">
 								<button
 									class="btn btn-success"
-									@click.prevent="id = alumni.id"
+									@click.prevent="id = alumni.student_account_info_id"
 									v-b-modal.modal-approve
 								>
 									Approve
 								</button>
 								<button
 									class="btn btn-danger"
-									@click.prevent="id = alumni.id"
+									@click.prevent="id = alumni.student_account_info_id"
 									v-b-modal.modal-disapprove
 								>
 									Decline

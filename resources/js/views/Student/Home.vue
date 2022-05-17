@@ -1,167 +1,35 @@
 <template>
 	<div class="container-fluid pb-5">
-		<div class="col-12">
+		<h1 class="mb-5 mt-5 text-uppercase fw-bold">Dashboard</h1>
+		<div class="col-12" v-if="user">
 			<b-alert v-if="verified" show variant="success"
-				>Your Account verified. You can request your Alumni ID
-				<router-link
-					class="text-decoration-none"
-					:to="{ path: `id-request` }"
+				>Your account registration progress is {{Math.round((percentage.progress / percentage.total) * 100)}}%. Your Account verified. You can request your Alumni ID
+				<router-link class="text-decoration-none" :to="{ path: `id-request` }"
 					>here</router-link
 				>.</b-alert
 			>
 			<b-alert v-else show variant="warning"
-				>Your Account is not fully verified for ID Request. Please fill all
+				>Your Account is not fully verified for ID Request. Your account registration progress is {{ Math.round((percentage.progress / percentage.total) * 100) }}%. Please fill all
 				necessary information by clicking
 				<router-link
 					class="text-decoration-none"
 					:to="{ path: `id-request/${user[0].id}` }"
-					>here</router-link
-				>.</b-alert
+					>here</router-link>.</b-alert
 			>
-		</div>
-		<h1 class="mb-2 text-uppercase fw-bold">Dashboard</h1>
-		<div class="row">
-			<div class="col-12 p-3">
-				<div class="row bg-light shadow rounded pt-2 pb-5">
-					<h3 class="text-uppercase fw-bold mt-4 ps-4 mb-4">
-						Basic Information
-					</h3>
-					<div class="col-3">
-						<div
-							class="
-								col-12
-								d-flex
-								justify-content-center
-								align-items-center
-								mb-2
-							"
-						>
-							<img
-								@click="$bvModal.show('update-image')"
-								:src="previewImage"
-								style="width: 200px; height: 200px"
-								alt="Id Picture"
-								class="img-fluid shadow"
-							/>
-						</div>
-					</div>
-					<div class="col-9">
-						<div class="row">
-							<div class="col-4">
-								<h4 class="text-uppercase">
-									<strong>{{
-										`${user[0].student.student_basic_info.last_name},  ${
-											user[0].student.student_basic_info.first_name
-										} ${
-											user[0].student.student_basic_info.suffix == null
-												? ""
-												: user[0].student.student_basic_info.suffix
-										} ${
-											user[0].student.student_basic_info.middle_name == null
-												? ""
-												: user[0].student.student_basic_info.middle_name
-										} `
-									}}</strong>
-								</h4>
-							</div>
-							<div class="col-6">
-								<h4>
-									<strong class="bg-primary rounded text-light px-3 py-1">
-										{{ user[0].student.student_basic_info.student_number }}
-									</strong>
-								</h4>
-							</div>
-							<div class="col-12 mb-3">
-								<p class="text-muted">
-									{{ user[0].student.student_basic_info.email }}
-								</p>
-							</div>
-							<div class="col-6">
-								<p>
-									<span class="mt-5 fw-bold text-uppercase">
-										Mobile Number
-									</span>
-									<br />
-									{{ user[0].student.student_basic_info.mobile_number }}
-								</p>
-							</div>
-							<div class="col-6 mb-2">
-								<p>
-									<span class="mt-5 fw-bold text-uppercase">
-										Telephone Number
-									</span>
-									<br />
-									{{ user[0].student.student_basic_info.telephone_number }}
-								</p>
-							</div>
-							<div class="col-6">
-								<p>
-									<span class="mt-5 fw-bold text-uppercase"> Birthdate </span>
-									<br />
-									{{
-										new Date(
-											user[0].student.student_basic_info.birthdate
-										).toLocaleString("en-US", {
-											weekday: "long",
-											year: "numeric",
-											month: "long",
-											day: "numeric",
-										})
-									}}
-								</p>
-							</div>
-							<div class="col-6 mb-2">
-								<p>
-									<span class="mt-5 fw-bold text-uppercase"> Birthplace </span>
-									<br />
-									{{ user[0].student.student_basic_info.birthplace }}
-								</p>
-							</div>
-							<div class="col-6">
-								<p>
-									<span class="mt-5 fw-bold text-uppercase">
-										Current Address
-									</span>
-									<br />
-									{{ user[0].student.student_basic_info.current_address }}
-								</p>
-							</div>
-							<div class="col-6 mb-2">
-								<p>
-									<span class="mt-5 fw-bold text-uppercase">
-										Permanent Address
-									</span>
-									<br />
-									{{ user[0].student.student_basic_info.permanent_address }}
-								</p>
-							</div>
-							<div class="col-6">
-								<p>
-									<span class="mt-5 fw-bold text-uppercase"> Religion </span>
-									<br />
-									{{ user[0].student.student_basic_info.religion }}
-								</p>
-							</div>
-							<div class="col-6 mb-2">
-								<p>
-									<span class="mt-5 fw-bold text-uppercase"> Gender </span>
-									<br />
-									{{ user[0].student.student_basic_info.gender }}
-								</p>
-							</div>
-							<div class="col-6">
-								<p>
-									<span class="mt-5 fw-bold text-uppercase">
-										Civil Status
-									</span>
-									<br />
-									{{ user[0].student.student_basic_info.civil_status }}
-								</p>
-							</div>
-						</div>
-					</div>
+			<div class="progress">
+				<div
+					class="progress-bar"
+					role="progressbar"
+					:style="`width: ${Math.round((percentage.progress / percentage.total) * 100)}%`"
+					:aria-valuenow="Math.round((percentage.progress / percentage.total) * 100)"
+					:aria-valuemin="0"
+					:aria-valuemax="100"
+				>
+					{{ `${Math.round((percentage.progress / percentage.total) * 100)}%` }}
 				</div>
 			</div>
+		</div>
+		<div class="row">
 			<div class="col-12 mt-5">
 				<div class="col-12 p-3 bg-light shadow-lg rounded">
 					<div class="d-flex justify-content-between align-items-center">
@@ -176,9 +44,11 @@
 						</div>
 					</div>
 					<div v-else class="p-4">
-						<div v-if="event">
+						<div v-if="event.length">
 							<h2 class="mb-2">{{ event.name }}</h2>
-							<h6 class="mb-2 text-muted">{{ event.category.category }}</h6>
+							<h6 v-if="event.category" class="mb-2 text-muted">
+								{{ event.category.category }}
+							</h6>
 							<div class="mb-2" v-html="event.content"></div>
 							<button
 								class="btn btn-primary rounded"
@@ -229,6 +99,10 @@ export default {
 			image: null,
 			previewImage: null,
 			oldImage: null,
+			percentage: {
+				progress: 0,
+				total: 0,
+			},
 		};
 	},
 	computed: {
@@ -250,7 +124,10 @@ export default {
 		async uploadImage() {
 			let formData = new FormData();
 			formData.append("image", this.image);
-			formData.append("student_number", this.user[0]?.student.student_basic_info.student_number);
+			formData.append(
+				"student_number",
+				this.user[0]?.student.student_basic_info.student_number
+			);
 
 			const response = await this.$store.dispatch(
 				"STUDENT_ID_REQUEST/UPLOAD_IMAGE",
@@ -279,7 +156,7 @@ export default {
 				this.image = e.target?.files[0] ?? "";
 				this.oldImage = this.previewImage;
 				let reader = new FileReader();
-                reader.readAsDataURL(this.image)
+				reader.readAsDataURL(this.image);
 				reader.onload = (e) => {
 					this.previewImage = e.target.result;
 				};
@@ -302,14 +179,50 @@ export default {
 				}
 			}
 		},
+		setAccountRegistrationProgress(student) {
+			let percentage = {
+				progress: 0,
+				total: 0,
+			};
+			if (student) {
+				for (const [key, value] of Object.entries(student)) {
+					if (key == "id_image" || key == "tor_file" || key == "signature") {
+						if (value != "NO DATA" && value != null) {
+							percentage.progress++;
+						}
+						percentage.total++;
+					}
+				}
+
+                for (const [key, value] of Object.entries(student?.student_basic_info)) {
+					if (key != "deleted_at" || key != "created_at" || key != "id" || key != 'updated_at' || key != 'middle_name' || key != 'suffix') {
+						if (value != "NO DATA" && value != null) {
+							percentage.progress++;
+						}
+						percentage.total++;
+					}
+				}
+
+                for (const [key, value] of Object.entries(student?.student_education_info)) {
+					if (key != "deleted_at" || key != "created_at" || key != "id" || key != 'updated_at') {
+						if (value != "NO DATA" && value != null) {
+							percentage.progress++;
+						}
+						percentage.total++;
+					}
+				}
+			}
+			this.percentage = { ...percentage };
+		},
 	},
 	async mounted() {
 		let response = await this.$store.dispatch(
 			"STUDENT_ID_REQUEST/FETCH_STUDENT_ACCOUNT",
-			this.user[0].id
+			this.user[0]?.id
 		);
-		this.previewImage = `http://localhost:8000${this.user[0]?.student.id_image}`;
+		this.previewImage = `http://localhost:8000${this.user[0]?.student?.id_image}`;
 		this.verified = this.setVerified(response.data) ?? true;
+		this.setAccountRegistrationProgress(response.data);
 		this.latestEvent();
 	},
 };
