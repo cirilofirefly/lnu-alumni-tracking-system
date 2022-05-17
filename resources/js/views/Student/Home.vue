@@ -3,25 +3,34 @@
 		<h1 class="mb-5 mt-5 text-uppercase fw-bold">Dashboard</h1>
 		<div class="col-12" v-if="user">
 			<b-alert v-if="verified" show variant="success"
-				>Your account registration progress is {{Math.round((percentage.progress / percentage.total) * 100)}}%. Your Account verified. You can request your Alumni ID
+				>Your account registration progress is
+				{{ Math.round((percentage.progress / percentage.total) * 100) }}%. Your
+				Account verified. You can request your Alumni ID
 				<router-link class="text-decoration-none" :to="{ path: `id-request` }"
 					>here</router-link
 				>.</b-alert
 			>
 			<b-alert v-else show variant="warning"
-				>Your Account is not fully verified for ID Request. Your account registration progress is {{ Math.round((percentage.progress / percentage.total) * 100) }}%. Please fill all
-				necessary information by clicking
+				>Your Account is not fully verified for ID Request. Your account
+				registration progress is
+				{{ Math.round((percentage.progress / percentage.total) * 100) }}%.
+				Please fill all necessary information by clicking
 				<router-link
 					class="text-decoration-none"
 					:to="{ path: `id-request/${user[0].id}` }"
-					>here</router-link>.</b-alert
+					>here</router-link
+				>.</b-alert
 			>
 			<div class="progress">
 				<div
 					class="progress-bar"
 					role="progressbar"
-					:style="`width: ${Math.round((percentage.progress / percentage.total) * 100)}%`"
-					:aria-valuenow="Math.round((percentage.progress / percentage.total) * 100)"
+					:style="`width: ${Math.round(
+						(percentage.progress / percentage.total) * 100
+					)}%`"
+					:aria-valuenow="
+						Math.round((percentage.progress / percentage.total) * 100)
+					"
 					:aria-valuemin="0"
 					:aria-valuemax="100"
 				>
@@ -123,54 +132,71 @@ export default {
 				total: 0,
 			};
 			if (student) {
-                
 				for (const [key, value] of Object.entries(student)) {
-					if (key == "id_image" || key == "tor_file" || key == "signature") {
-						if (value != "NO DATA" && value != null) {
+					if (key === "id_image" || key === "signature" || key === "tor_file") {
+						percentage.total++;
+						if (value !== null || value !== "NO DATA") {
 							percentage.progress++;
 						}
-						percentage.total++;
 					}
 				}
-
-                for (const [key, value] of Object.entries(student?.student_account_info)) {
+				for (const [key, value] of Object.entries(
+					student?.student_account_info
+				)) {
+					if (key !== "deleted_at" && key !== "batch") {
+						percentage.total++;
+						if (value !== "NO DATA" && value !== null && value !== "") {
+							percentage.progress++;
+						}
+					}
+				}
+				for (const [key, value] of Object.entries(
+					student?.student_basic_info
+				)) {
+					if (
+						(key != "deleted_at" || key != "middle_name" || key != "suffix") &&
+						value != "NO DATA" &&
+						value != null &&
+						value != ""
+					) {
+						percentage.progress++;
+					}
 					if (key != "deleted_at") {
-						if (value != "NO DATA" && value != null) {
-							percentage.progress++;
-						}
 						percentage.total++;
 					}
 				}
-
-                for (const [key, value] of Object.entries(student?.student_basic_info)) {
-					if (key != "deleted_at" || key != 'middle_name' || key != 'suffix') {
-						if (value != "NO DATA" && value != null) {
-							percentage.progress++;
-						}
-						percentage.total++;
+				for (const [key, value] of Object.entries(
+					student?.student_education_info
+				)) {
+					if (
+						key != "deleted_at" &&
+						value != "NO DATA" &&
+						value != null &&
+						value != ""
+					) {
+						percentage.progress++;
 					}
-				}
-
-                for (const [key, value] of Object.entries(student?.student_education_info)) {
 					if (key != "deleted_at") {
-						if (value != "NO DATA" && value != null) {
-							percentage.progress++;
-						}
 						percentage.total++;
 					}
 				}
-
-                for (const [key, value] of Object.entries(student?.student_employee_info)) {
+				for (const [key, value] of Object.entries(
+					student?.student_employee_info
+				)) {
+					if (
+						key != "deleted_at" &&
+						value != "NO DATA" &&
+						value != null &&
+						value != ""
+					) {
+						percentage.progress++;
+					}
 					if (key != "deleted_at") {
-						if (value != "NO DATA" && value != null) {
-							percentage.progress++;
-						}
 						percentage.total++;
 					}
 				}
 			}
 			this.percentage = { ...percentage };
-            console.log(this.percentage)
 		},
 	},
 	async mounted() {
