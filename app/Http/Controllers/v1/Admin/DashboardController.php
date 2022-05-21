@@ -24,6 +24,11 @@ class DashboardController extends Controller
                     $query->where('company', '!=', null);
                 }]);
             }])->get(),
+            'graph' => [
+                StudentAccountInfo::where('employment_status', "Employment")->count(),
+                StudentAccountInfo::where('employment_status', "Current looking for Employment")->count(),
+                StudentAccountInfo::where('employment_status', "Futher Study")->count(),
+            ]
         ]);
     }
 

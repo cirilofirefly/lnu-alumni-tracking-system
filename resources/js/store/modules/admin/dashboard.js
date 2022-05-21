@@ -21,7 +21,8 @@ export default {
         total_alumni_record: 0,
         total_alumni_id_records_count: 0,
         total_alumni: 0,
-        total_alumni_application: 0
+        total_alumni_application: 0,
+        pie_data: []
 
     },
     getters: {
@@ -33,9 +34,13 @@ export default {
         GET_BATCHES_COUNT: (state) => state.total_batch,
         GET_ALUMNI_COUNT: (state) => state.total_alumni,
         GET_ALUMNI_APPLICATION_COUNT: (state) => state.total_alumni_application,
-        GET_ALUMNI_ID_RECORDS_COUNT: (state) => state.total_alumni_id_records_count
+        GET_ALUMNI_ID_RECORDS_COUNT: (state) => state.total_alumni_id_records_count,
+        GET_PIE_CHART_DATA: (state) => state.pie_data
     },
     mutations: {
+        SET_PIE_CHART_DATA: (state, pie_data) => {
+            state.pie_data = pie_data
+        },
         SET_ALUMNI_ID_RECORDS_COUNT: (state, total_alumni_id_records_count) => {
             state.total_alumni_id_records_count = total_alumni_id_records_count
         },
@@ -99,6 +104,7 @@ export default {
                 .then((response) => {
                     commit("SET_ALUMNI_COUNT_BY_BATCH", response.data.batch);
                     commit("SET_ALUMNI_EMPLOYEE_COUNT", response.data.employee);
+                    commit("SET_PIE_CHART_DATA", response.data.graph);
                     commit("SET_ALUMNI_ID_COUNT", response.data.alumni_id);
                     return response;
                 })

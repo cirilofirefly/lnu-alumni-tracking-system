@@ -24,7 +24,7 @@
 					size="lg"
 					class="px-3 mx-2"
 					variant="secondary"
-					@click="setEdit"
+					@click="cancelEdit"
 					>Cancel</b-button
 				>
 			</div>
@@ -69,7 +69,6 @@
 					<h4>Signature</h4>
 				</div>
 			</div>
-			{{ userAccount.student_account_info }}
 			<div class="col-12 mb-2 mb-2" v-if="userAccount.student_account_info">
 				<h4 class="text-uppercase fw-bold">Account Information</h4>
 				<div class="col-12">
@@ -95,7 +94,11 @@
 									v-model="
 										userAccount.student_account_info.educational_attainment
 									"
-                                    @change="setEducationalAttainmentKey(userAccount.student_account_info.educational_attainment)"
+									@change="
+										setEducationalAttainmentKey(
+											userAccount.student_account_info.educational_attainment
+										)
+									"
 									aria-label="Default select example"
 								>
 									<option :value="null">-- Select Option --</option>
@@ -760,8 +763,8 @@ export default {
 			signature: "",
 			oldImage: "",
 			image: "",
-            attainmentKey: '',
-            
+			attainmentKey: "",
+
 			attainments: [
 				{ name: "College Graduate", key: "bachelors" },
 				{ name: "Master's Graduate", key: "masters" },
@@ -863,9 +866,7 @@ export default {
 				{ name: "PhD in Social Science Research", key: "doctorate" },
 			];
 			if (this.attainmentKey) {
-				return programs.filter(
-					(program) => program.key === this.attainmentKey
-				);
+				return programs.filter((program) => program.key === this.attainmentKey);
 			}
 			return programs;
 		},
@@ -873,6 +874,10 @@ export default {
 	methods: {
 		setEdit() {
 			this.isEditing = !this.isEditing;
+		},
+		cancelEdit() {
+			this.isEditing = !this.isEditing;
+			this.userAccount = { ...this.user };
 		},
 		async updateAccount() {
 			const response = await this.$store.dispatch(
@@ -906,11 +911,11 @@ export default {
 			}
 		},
 
-        setEducationalAttainmentKey(educational_attainment) {
-            this.attainmentKey = this.attainments.filter(attainment => {
-                return attainment.name === educational_attainment
-            })[0].key
-        },
+		setEducationalAttainmentKey(educational_attainment) {
+			this.attainmentKey = this.attainments.filter((attainment) => {
+				return attainment.name === educational_attainment;
+			})[0].key;
+		},
 
 		async uploadSignature() {
 			let formData = new FormData();

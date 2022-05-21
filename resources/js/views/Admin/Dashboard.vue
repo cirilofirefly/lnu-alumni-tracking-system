@@ -60,6 +60,7 @@
       <div class="d-flex mt-5">
         <div class="col-12 col-lg-12">
           <div class="bg-light card shadow-sm">
+            <PieChart />
             <PlanetChart />
           </div>
         </div>
@@ -69,10 +70,12 @@
 </template>
 
 <script>
+  import PieChart from '../../components/chartjs/PieChart.vue';
   import PlanetChart from '../../components/chartjs/PlanetChart.vue';
   export default {
     components: {
-      PlanetChart,
+      PieChart,
+      PlanetChart
     },
     computed: {
 
