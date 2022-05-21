@@ -18,7 +18,15 @@ class IDRequestController extends Controller
 
     public function updateAccount(Request $request) 
     {
-        $student = Student::where('id', $request->id)->with(['student_basic_info', 'student_education_info', 'student_employee_info'])->first();
+        $student = Student::where('id', $request->id)->with(['student_account_info','student_basic_info', 'student_education_info', 'student_employee_info'])->first();
+        $student->student_account_info->username = $request['student_account_info']['username'];
+        $student->student_account_info->educational_attainment = $request['student_account_info']['educational_attainment'];
+        $student->student_account_info->batch_id = $request['student_account_info']['batch_id'];
+        $student->student_account_info->college = $request['student_account_info']['college'];
+        $student->student_account_info->program = $request['student_account_info']['program'];
+        $student->student_account_info->degree_level = $request['student_account_info']['degree_level'];
+        $student->student_account_info->employment_status = $request['student_account_info']['employment_status'];
+        $student->student_account_info->save();
         $student->student_basic_info->first_name = $request['student_basic_info']['first_name'];
         $student->student_basic_info->middle_name = $request['student_basic_info']['middle_name'];
         $student->student_basic_info->last_name = $request['student_basic_info']['last_name'];

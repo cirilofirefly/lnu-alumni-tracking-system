@@ -56,7 +56,7 @@
 							</div>
 							<tr v-else v-for="(batch, index) in batches" :key="index">
 								<th scope="row">{{ index + 1 }}</th>
-								<td>{{ `${batch.batch} - ${batch.batch + 1}` }}</td>
+								<td>{{ batch.batch }}</td>
 								<td>
 									<button
 										class="btn btn-success"

@@ -69,6 +69,153 @@
 					<h4>Signature</h4>
 				</div>
 			</div>
+			{{ userAccount.student_account_info }}
+			<div class="col-12 mb-2 mb-2" v-if="userAccount.student_account_info">
+				<h4 class="text-uppercase fw-bold">Account Information</h4>
+				<div class="col-12">
+					<div class="row">
+						<div class="col-3">
+							<div class="form-group">
+								<label for="first-name">Username</label>
+								<input
+									:disabled="isEditing"
+									class="form-control"
+									id="first-name"
+									type="text"
+									v-model="userAccount.student_account_info.username"
+								/>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="form-group">
+								<label for="edu-att">Education Attainment</label>
+								<select
+									:disabled="isEditing"
+									class="form-select"
+									v-model="
+										userAccount.student_account_info.educational_attainment
+									"
+                                    @change="setEducationalAttainmentKey(userAccount.student_account_info.educational_attainment)"
+									aria-label="Default select example"
+								>
+									<option :value="null">-- Select Option --</option>
+									<option
+										:value="attainment.name"
+										v-for="(attainment, index) in attainments"
+										:key="index"
+									>
+										{{ attainment.name }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="form-group">
+								<div class="form-group">
+									<label for="edu-att">Year Graduate</label>
+									<select
+										:disabled="isEditing"
+										class="form-select"
+										v-model="userAccount.student_account_info.batch_id"
+										aria-label="Default select example"
+									>
+										<option :value="null">-- Select Option --</option>
+										<option
+											v-for="batch in batches"
+											:key="batch.id"
+											:value="batch.id"
+										>
+											{{ batch.batch }}
+										</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-3 mb-2">
+							<div class="form-group">
+								<label for="edu-att">College</label>
+								<select
+									class="form-select"
+									:disabled="isEditing"
+									v-model="userAccount.student_account_info.college"
+									aria-label="Default select example"
+								>
+									<option :value="null">-- Select Option --</option>
+									<option
+										:value="college.name"
+										v-for="(college, index) in colleges"
+										:key="index"
+									>
+										{{ college.name }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-4 mb-2">
+							<div class="form-group">
+								<label for="edu-att">Program/Course</label>
+								<select
+									class="form-select"
+									:disabled="isEditing"
+									v-model="userAccount.student_account_info.program"
+									aria-label="Default select example"
+								>
+									<option :value="null">-- Select Option --</option>
+									<option
+										:value="program.name"
+										v-for="(program, index) in programs"
+										:key="index"
+									>
+										{{ program.name }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="form-group">
+								<label for="edu-att">Degree Level</label>
+								<select
+									class="form-select"
+									:disabled="isEditing"
+									v-model="userAccount.student_account_info.degree_level"
+									aria-label="Default select example"
+								>
+									<option :value="null">-- Select Option --</option>
+									<option
+										v-for="(degree_level, index) in degree_levels"
+										:key="index"
+										:value="degree_level.name"
+									>
+										{{ degree_level.name }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="form-group">
+								<label for="edu-att"
+									>Please let us know what you are going on to do:</label
+								>
+								<select
+									class="form-select"
+									:disabled="isEditing"
+									v-model="userAccount.student_account_info.employment_status"
+									aria-label="Default select example"
+								>
+									<option :value="null">-- Select Option --</option>
+									<option
+										v-for="(employment_status, index) in employement_statuses"
+										:key="index"
+										:value="employment_status.name"
+									>
+										{{ employment_status.name }}
+									</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="col-12 mb-2 mb-2" v-if="userAccount.student_basic_info">
 				<h4 class="text-uppercase fw-bold">Basic Information</h4>
 				<div class="col-12">
@@ -586,8 +733,7 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<input
-									v-on:change="onSignatureChange
-                                    ($event)"
+									v-on:change="onSignatureChange($event)"
 									type="file"
 									id="imageFile"
 									accept="image/png, image/jpeg"
@@ -614,11 +760,114 @@ export default {
 			signature: "",
 			oldImage: "",
 			image: "",
+            attainmentKey: '',
+            
+			attainments: [
+				{ name: "College Graduate", key: "bachelors" },
+				{ name: "Master's Graduate", key: "masters" },
+				{ name: "Doctorate Graduate", key: "doctorate" },
+				{ name: "ILS Graduate", key: "ils" },
+			],
+
+			colleges: [
+				{ name: "College of Arts and Sciences" },
+				{ name: "College of Management and Entrepreneur" },
+				{ name: "College of Education" },
+				{ name: "Others" },
+			],
+
+			employement_statuses: [
+				{ name: "Employment" },
+				{ name: "Current looking for Employment" },
+				{ name: "Futher Study" },
+			],
+
+			degree_levels: [
+				{ name: "Elementary" },
+				{ name: "Bachelor's" },
+				{ name: "Master's" },
+				{ name: "Doctorate" },
+			],
 		};
 	},
 	computed: {
 		user() {
 			return this.$store.getters["STUDENT_ID_REQUEST/GET_STUDENT_ACCOUNT"];
+		},
+		batches() {
+			return this.$store.getters["UTILS_BATCH/GET_BATCHES"];
+		},
+
+		programs() {
+			let programs = [
+				{
+					name: "Bachelor of Elementary Education Bachelor of Elementary Education",
+					key: "bachelors",
+				},
+				{ name: "Bachelor of Secondary Education", key: "bachelors" },
+				{
+					name: "Bachelor of Technology and Livelihood Education",
+					key: "bachelors",
+				},
+				{ name: "Bachelor of Arts in Political Science", key: "bachelors" },
+				{ name: "Bachelor of Arts in Communication", key: "bachelors" },
+				{
+					name: "Bachelor of Library and Information Science",
+					key: "bachelors",
+				},
+				{
+					name: "Bachelor of Science in Information Technology",
+					key: "bachelors",
+				},
+				{ name: "Bachelor of Arts in English Language", key: "bachelors" },
+				{ name: "Bachelor of Science in Biology", key: "bachelors" },
+				{ name: "Bachelor of Science in Entrepreneurship", key: "bachelors" },
+				{ name: "Bachelor of Science in Tourism Management", key: "bachelors" },
+				{
+					name: "Bachelor of Science in Hotel & Restaurant Management",
+					key: "bachelors",
+				},
+				{ name: "Master in Teaching Major in Filipino", key: "masters" },
+				{ name: "Master in Teaching Major in Mathematics", key: "masters" },
+				{ name: "Master in Teaching Major in Natural Science", key: "masters" },
+				{ name: "Master in Teaching Major in Reading", key: "masters" },
+				{ name: "Master in Teaching Major in Social Science", key: "masters" },
+				{ name: "Master in Education Major in Filipino", key: "masters" },
+				{ name: "Master in Education Major in Mathematics", key: "masters" },
+				{
+					name: "Master in Education Major in Natural Science",
+					key: "masters",
+				},
+				{ name: "Master in Education Major in Reading", key: "masters" },
+				{ name: "Master in Education Major in Social Science", key: "masters" },
+				{ name: "Master in Educational Administration", key: "masters" },
+				{ name: "Master in Physical Education", key: "masters" },
+				{ name: "Master in English", key: "masters" },
+				{ name: "Master in Education", key: "masters" },
+				{ name: "Master in Biology", key: "masters" },
+				{ name: "Master in Social Work", key: "masters" },
+				{ name: "Master in Management", key: "masters" },
+				{ name: "MA in Pre-Elementary", key: "masters" },
+				{ name: "MA in Special Education", key: "masters" },
+				{ name: "MA in Teaching in Language Teaching", key: "masters" },
+				{ name: "MA in Math Education", key: "masters" },
+				{ name: "Doctor of Arts in Language Teaching", key: "doctorate" },
+				{
+					name: "Doctor of Education in Educational Administration",
+					key: "doctorate",
+				},
+				{
+					name: "Doctor of Management in Human Resource Management",
+					key: "doctorate",
+				},
+				{ name: "PhD in Social Science Research", key: "doctorate" },
+			];
+			if (this.attainmentKey) {
+				return programs.filter(
+					(program) => program.key === this.attainmentKey
+				);
+			}
+			return programs;
 		},
 	},
 	methods: {
@@ -638,7 +887,10 @@ export default {
 		async uploadImage() {
 			let formData = new FormData();
 			formData.append("image", this.image);
-			formData.append("student_number", this.userAccount.student_basic_info.student_number);
+			formData.append(
+				"student_number",
+				this.userAccount.student_basic_info.student_number
+			);
 			const response = await this.$store.dispatch(
 				"STUDENT_ID_REQUEST/UPLOAD_IMAGE",
 				formData
@@ -654,10 +906,19 @@ export default {
 			}
 		},
 
-        async uploadSignature() {
+        setEducationalAttainmentKey(educational_attainment) {
+            this.attainmentKey = this.attainments.filter(attainment => {
+                return attainment.name === educational_attainment
+            })[0].key
+        },
+
+		async uploadSignature() {
 			let formData = new FormData();
 			formData.append("signature", this.signature);
-			formData.append("student_number", this.userAccount.student_basic_info.student_number);
+			formData.append(
+				"student_number",
+				this.userAccount.student_basic_info.student_number
+			);
 			const response = await this.$store.dispatch(
 				"STUDENT_ID_REQUEST/UPLOAD_SIGNATURE",
 				formData
@@ -707,11 +968,14 @@ export default {
 		},
 	},
 	async mounted() {
-		this.$store.dispatch("STUDENT_ID_REQUEST/FETCH_STUDENT_ACCOUNT", this.id);
+		await this.$store.dispatch("UTILS_BATCH/FETCH_BATCHES");
+		await this.$store.dispatch(
+			"STUDENT_ID_REQUEST/FETCH_STUDENT_ACCOUNT",
+			this.id
+		);
 		this.userAccount = { ...this.user };
 		this.previewImage = `http://localhost:8000${this.userAccount?.id_image}`;
 		this.previewSignature = `http://localhost:8000${this.userAccount?.signature}`;
-
 	},
 };
 </script>

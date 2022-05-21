@@ -74,7 +74,6 @@
 						</div>
 						<div class="form-group mb-2 col-md-12">
 							<label for="edu-att">Program/Course</label>
-
 							<select
 								class="form-select"
 								v-model="account.program"
@@ -417,70 +416,10 @@ export default {
 				college: null,
 				program: null,
 				degree_level: null,
+                employment_status: null
 			},
 			form_status: 0,
 			isSubmitting: false,
-
-			attainments: [
-				{ name: "College Graduate" },
-				{ name: "Master's Graduate" },
-				{ name: "Doctorate Graduate" },
-				{ name: "ILS Graduate" },
-			],
-			degree_levels: [
-				{ name: "Bachelor's" },
-				{ name: "Master's" },
-				{ name: "Doctorate" },
-			],
-
-			colleges: [
-				{ name: "College of Arts and Sciences" },
-				{ name: "College of Management and Entrepreneur" },
-				{ name: "College of Education" },
-				{ name: "N/A" },
-			],
-
-			programs: [
-				{
-					name: "Bachelor of Elementary Education Bachelor of Elementary Education",
-				},
-				{ name: "Bachelor of Secondary Education" },
-				{ name: "Bachelor of Technology and Livelihood Education" },
-				{ name: "Bachelor of Arts in Political Science" },
-				{ name: "Bachelor of Arts in Communication" },
-				{ name: "Bachelor of Library and Information Science" },
-				{ name: "Bachelor of Science in Information Technology" },
-				{ name: "Bachelor of Arts in English Language" },
-				{ name: "Bachelor of Science in Biology" },
-				{ name: "Bachelor of Science in Entrepreneurship" },
-				{ name: "Bachelor of Science in Tourism Management" },
-				{ name: "Bachelor of Science in Hotel & Restaurant Management" },
-				{ name: "Master in Teaching Major in Filipino" },
-				{ name: "Master in Teaching Major in Mathematics" },
-				{ name: "Master in Teaching Major in Natural Science" },
-				{ name: "Master in Teaching Major in Reading" },
-				{ name: "Master in Teaching Major in Social Science" },
-				{ name: "Master in Education Major in Filipino" },
-				{ name: "Master in Education Major in Mathematics" },
-				{ name: "Master in Education Major in Natural Science" },
-				{ name: "Master in Education Major in Reading" },
-				{ name: "Master in Education Major in Social Science" },
-				{ name: "Master in Educational Administration" },
-				{ name: "Master in Physical Education" },
-				{ name: "Master in English" },
-				{ name: "Master in Education" },
-				{ name: "Master in Biology" },
-				{ name: "Master in Social Work" },
-				{ name: "Master in Management" },
-				{ name: "MA in Pre-Elementary" },
-				{ name: "MA in Special Education" },
-				{ name: "MA in Teaching in Language Teaching" },
-				{ name: "MA in Math Education" },
-				{ name: "Doctor of Arts in Language Teaching" },
-				{ name: "Doctor of Education in Educational Administration" },
-				{ name: "Doctor of Management in Human Resource Management" },
-				{ name: "PhD in Social Science Research" },
-			],
 		};
 	},
 	computed: {
