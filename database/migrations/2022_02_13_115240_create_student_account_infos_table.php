@@ -23,7 +23,6 @@ class CreateStudentAccountInfosTable extends Migration
             $table->string("college");
             $table->string("program");
             $table->string("degree_level");
-            $table->string("employment_status");
             $table->softDeletes();
             $table->timestamps();
         });
