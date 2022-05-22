@@ -28,6 +28,7 @@ export default {
 				options: {
 					responsive: true,
 					hoverOffset: 4,
+                    cutout: 40
 				},
 			},
 		};
