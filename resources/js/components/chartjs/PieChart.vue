@@ -1,6 +1,6 @@
 <template>
-	<div class="col-12 p-5">
-		<canvas width="1400" height="300" id="pie-chart"></canvas>
+	<div class="p-5">
+		<canvas width="350" height="350" id="pie-chart"></canvas>
 	</div>
 </template>
 
@@ -14,8 +14,8 @@ export default {
 				type: "pie",
 				data: {
 					labels: [
-						"Employment",
-						"Current looking for Employment",
+						"Employed",
+						"Looking for a Job",
 						"Futher Study",
 					],
 					datasets: [

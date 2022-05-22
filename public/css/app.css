@@ -18046,7 +18046,7 @@ textarea.form-control-lg {
   }
 }
 .landing {
-  position: fixed;
+  position: relative;
   width: 100%;
   height: 100%;
   background-image: linear-gradient(rgba(223, 143, 22, 0.651), rgba(20, 59, 187, 0.877)), url(/images/lnu.jpg?0df8973b37da2965d01bd1aff2f585e6);

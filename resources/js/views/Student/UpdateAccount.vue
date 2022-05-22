@@ -780,8 +780,9 @@ export default {
 			],
 
 			employement_statuses: [
-				{ name: "Employment" },
-				{ name: "Current looking for Employment" },
+				{ name: "Employed" },
+				{ name: "Not Employed" },
+				{ name: "Looking for a Job" },
 				{ name: "Futher Study" },
 			],
 

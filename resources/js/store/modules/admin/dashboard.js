@@ -62,9 +62,9 @@ export default {
             total_alumni_id_count.forEach(batch => {
                 let total_employee = 0;
                 batch?.student_account_infos.forEach(student_account_info => {
-                    if(student_account_info.student.alumni_request_count != 0) {
+                    if (student_account_info.student.alumni_request_count != 0) {
                         total_employee++
-                    } 
+                    }
                 })
                 state.total_alumni_id_count.data.push(total_employee)
             });
@@ -77,9 +77,9 @@ export default {
             total_alumni_employee_count.forEach(batch => {
                 let total_employee = 0;
                 batch?.student_account_infos.forEach(student_account_info => {
-                    if(student_account_info.student.student_employee_info_count == 1) {
+                    if (student_account_info.student.student_employee_info_count == 1) {
                         total_employee++
-                    } 
+                    }
                 })
                 state.total_alumni_employee_count.data.push(total_employee)
             });
@@ -99,8 +99,9 @@ export default {
 
     },
     actions: {
-        TOTAL_ALUMNI_BY_BATCH: async ({ commit }) => {
-            const res = await axios.get(`${AUTH}/total-alumni-by-batch?token=${localStorage.getItem('access_token')}`)
+        TOTAL_ALUMNI_BY_BATCH: async ({ commit }, filter) => {
+            let query = `?program=${filter.program}&college=${filter.college}&batch=${filter.batch}&token=${localStorage.getItem('access_token')}`
+            const res = await axios.get(`${AUTH}/total-alumni-by-batch${query}`)
                 .then((response) => {
                     commit("SET_ALUMNI_COUNT_BY_BATCH", response.data.batch);
                     commit("SET_ALUMNI_EMPLOYEE_COUNT", response.data.employee);
@@ -129,13 +130,13 @@ export default {
         },
         TOTAL_ALUMNI_APPLICATION: async ({ commit }) => {
             return await axios.get(`${AUTH}/total-alumni-application?token=${localStorage.getItem('access_token')}`)
-            .then((response) => {
-                commit("SET_ALUMNI_APPLICATION", response.data);
-                return response;
-            })
-            .catch((error) => {
-                return error.response;
-            });
+                .then((response) => {
+                    commit("SET_ALUMNI_APPLICATION", response.data);
+                    return response;
+                })
+                .catch((error) => {
+                    return error.response;
+                });
 
         },
         TOTAL_BATCHES: async ({ commit }) => {

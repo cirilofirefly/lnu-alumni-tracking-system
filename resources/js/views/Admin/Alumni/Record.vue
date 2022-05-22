@@ -318,10 +318,10 @@ export default {
       return `http://localhost:8000${path}`;
     },
     setValue(value) {
-      return value ?? "";
+      return value == null || value == 'NO DATA' ? "" : value;
     },
     setInfo(value) {
-      return value ?? "No Data";
+      return value == null || value == 'NO DATA' ? "NO DATA" : value;
     },
     formatDate(date) {
       return moment(date).format("LL");
