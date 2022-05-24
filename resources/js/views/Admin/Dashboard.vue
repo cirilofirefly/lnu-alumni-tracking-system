@@ -80,7 +80,7 @@
 							<div class="ms-3">
 								<h5>Filter by</h5>
 							</div>
-							<div class="ms-5 col-3">
+							<div class="ms-5 col-2">
 								<div class="form-group d-flex align-items-center">
 									<label for="edu-att" class="me-2">Program/Course:</label>
 									<select
@@ -103,7 +103,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="ms-3 col-3">
+							<div class="ms-3 col-2">
 								<div class="form-group d-flex align-items-center">
 									<label for="edu-att" class="me-2">College:</label>
 									<select
@@ -126,7 +126,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="ms-3 col-3">
+							<div class="ms-3 col-2">
 								<div class="form-group d-flex align-items-center">
 									<label for="edu-att" class="me-2">Batch:</label>
 									<select
@@ -151,24 +151,18 @@
 							</div>
 						</div>
 						<div
-							class="col-12 d-flex justify-content-between align-items-center"
+							class="col-12 d-flex justify-content-evenly align-items-center"
 						>
 							<div class="col-3">
 								<div class="p-5 text-center" v-if="pieData">
 									<canvas width="350" height="350" id="pie-chart"></canvas>
-									<h5>Alumni By Employee Status</h5>
-								</div>
-							</div>
-							<div class="col-3">
-								<div class="p-5 text-center" v-if="pieData">
-									<!-- <canvas width="350" height="350" id="pie-chart1"></canvas> -->
-									<h5>Alumni By Batch</h5>
+									<h6 class="mt-2">Alumni By Employee Status</h6>
 								</div>
 							</div>
 							<div class="col-3">
 								<div class="p-5 text-center" v-if="pieData">
 									<canvas width="350" height="350" id="pie-chart1"></canvas>
-									<h5>Alumni By Batch</h5>
+									<h6 class="mt-2">Alumni By Batch</h6>
 								</div>
 							</div>
 						</div>
