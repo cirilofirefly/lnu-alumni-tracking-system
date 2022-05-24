@@ -152,6 +152,7 @@
 										{{ college.name }}
 									</option>
 								</select>
+                                <input :disabled="isEditing" class="form-control mt-2" v-if="userAccount.student_account_info.college == 'Others'" v-model="college_others" type="text">
 							</div>
 						</div>
 						<div class="col-4 mb-2">
@@ -764,6 +765,7 @@ export default {
 			oldImage: "",
 			image: "",
 			attainmentKey: "",
+            college_others: "",
 
 			attainments: [
 				{ name: "College Graduate", key: "bachelors" },
@@ -881,6 +883,9 @@ export default {
 			this.userAccount = { ...this.user };
 		},
 		async updateAccount() {
+            if(this.userAccount.student_account_info.college == 'Others') {
+                this.userAccount.student_account_info.college = this.college_others
+            }
 			const response = await this.$store.dispatch(
 				"STUDENT_ID_REQUEST/UPDATE_STUDENT_ACCOUNT",
 				this.userAccount
@@ -980,6 +985,10 @@ export default {
 			this.id
 		);
 		this.userAccount = { ...this.user };
+        if(this.colleges.filter((college) =>  college.name === this.user.student_account_info.college).length === 0) {
+            this.college_others = this.user.student_account_info.college;
+            this.userAccount.student_account_info.college = 'Others'
+        }
 		this.previewImage = `http://localhost:8000${this.userAccount?.id_image}`;
 		this.previewSignature = `http://localhost:8000${this.userAccount?.signature}`;
 	},

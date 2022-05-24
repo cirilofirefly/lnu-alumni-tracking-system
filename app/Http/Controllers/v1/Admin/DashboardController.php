@@ -13,9 +13,9 @@ class DashboardController extends Controller
 {
     public function totalAlumni(Request $request) 
     {
-        $batch = isset($request->batch) ? $request->batch : '';
-        $college = isset($request->college) ? $request->college : '';
-        $program = isset($request->program) ? $request->program : '';
+        $batch = $request->batch;
+        $college = $request->college;
+        $program = $request->program;
 
         return response()->json([
             'batch' => Batch::withCount('student_account_infos')->get(),
@@ -30,8 +30,8 @@ class DashboardController extends Controller
                 }]);
             }])->get(),
             'graph' => [
-                StudentAccountInfo::where(function($query) use($batch, $college, $program) {
-                        $query->where('employment_status', "Employed");
+                StudentAccountInfo::where('employment_status', "Employed")
+                    ->where(function($query) use($batch, $college, $program) {
                         if($batch) {
                             $query->where('batch_id', $batch);
                         }
@@ -42,8 +42,8 @@ class DashboardController extends Controller
                             $query->where('program', $program);
                         }
                 })->count(),
-                StudentAccountInfo::where(function($query) use($batch, $college, $program) {
-                        $query->where('employment_status', "Not Employed");
+                StudentAccountInfo::where('employment_status', "Not Employed")
+                    ->where(function($query) use($batch, $college, $program) {
                         if($batch) {
                             $query->where('batch_id', $batch);
                         }
@@ -55,34 +55,26 @@ class DashboardController extends Controller
                         }
                 })->count(),
                 StudentAccountInfo::where('employment_status', "Looking for a Job")
-                    ->where(function($query) use($batch) {
+                    ->where(function($query) use($batch, $college, $program) {
                         if($batch) {
                             $query->where('batch_id', $batch);
                         }
-                    })
-                    ->where(function($query) use($college) {
                         if($college) {
                             $query->where('college', $college);
                         }
-                    })
-                    ->where(function($query) use($program) {
                         if($program) {
                             $query->where('program', $program);
                         }
                     })
                 ->count(),
                 StudentAccountInfo::where('employment_status', "Further Study")
-                    ->orWhere(function($query) use($batch) {
-                        if($batch) {
+                    ->where(function($query) use($batch, $college, $program) {
+                        if(!is_null($batch)) {
                             $query->where('batch_id', $batch);
                         }
-                    })
-                    ->orWhere(function($query) use($college) {
                         if($college) {
                             $query->where('college', $college);
                         }
-                    })
-                    ->orWhere(function($query) use($program) {
                         if($program) {
                             $query->where('program', $program);
                         }
