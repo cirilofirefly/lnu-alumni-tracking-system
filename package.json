@@ -28,6 +28,7 @@
         "bootstrap-vue": "^2.21.2",
         "boxicons": "^2.1.1",
         "chart.js": "^2.9.4",
+        "chartjs-plugin-datalabels": "^1.0.0",
         "moment": "^2.29.3",
         "toastr": "^2.1.4",
         "vue-file-agent": "^1.7.3",

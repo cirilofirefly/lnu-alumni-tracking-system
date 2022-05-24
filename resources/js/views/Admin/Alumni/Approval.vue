@@ -13,9 +13,6 @@
 							<th scope="col">#</th>
 							<th scope="col">Name</th>
 							<th scope="col" class="text-center">Info</th>
-							<th scope="col" class="text-center">
-								ID Picture
-							</th>
 							<th scope="col" class="text-center">ID Picture</th>
 							<th scope="col" class="text-center">Actions</th>
 						</tr>

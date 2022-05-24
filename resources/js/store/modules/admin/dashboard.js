@@ -50,7 +50,7 @@ export default {
                 data: []
             }
             total_alumni_by_batch.forEach(batch => {
-                state.total_alumni_by_batch.labels.push(`${batch.batch} - ${batch.batch + 1}`)
+                state.total_alumni_by_batch.labels.push(batch.batch)
                 state.total_alumni_by_batch.data.push(batch.student_account_infos_count)
             });
         },

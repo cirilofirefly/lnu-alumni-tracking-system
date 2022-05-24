@@ -69,15 +69,15 @@ class DashboardController extends Controller
                 ->count(),
                 StudentAccountInfo::where('employment_status', "Further Study")
                     ->where(function($query) use($batch, $college, $program) {
-                        if(!is_null($batch)) {
-                            $query->where('batch_id', $batch);
-                        }
-                        if($college) {
-                            $query->where('college', $college);
-                        }
-                        if($program) {
-                            $query->where('program', $program);
-                        }
+                        // if($batch) {
+                        //     $query->where('batch_id', $batch);
+                        // }
+                        // if($college) {
+                        //     $query->where('college', $college);
+                        // }
+                        // if($program) {
+                        //     $query->where('program', $program);
+                        // }
                     })
                 ->count(),
             ]

@@ -20,12 +20,6 @@
 							<p class="mb-2">
 								Please enter credentials to proceed.
 							</p>
-							<p class="mt-2 mb-3 text-muted align-self-end">
-								Forgot password? Click
-								<router-link to="/forgot-password" class="text-decoration-none"
-									>here</router-link
-								>
-							</p>
 						</div>
 						<div class="col-sm-12 col-md-6 col-lg-6">
 							<h2 class="mb-2 fw-bold">Log-in</h2>
@@ -65,12 +59,6 @@
 									</span>
 								</button>
 							</form>
-							<p class="mt-3 text-muted">
-								You don't have an account?
-								<router-link to="/signup" class="text-decoration-none"
-									>Sign up</router-link
-								>
-							</p>
 						</div>
 					</div>
 				</div>

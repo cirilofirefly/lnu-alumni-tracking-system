@@ -150,9 +150,26 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-3">
-							<div class="p-5" v-if="pieData">
-								<canvas width="350" height="350" id="pie-chart"></canvas>
+						<div
+							class="col-12 d-flex justify-content-between align-items-center"
+						>
+							<div class="col-3">
+								<div class="p-5 text-center" v-if="pieData">
+									<canvas width="350" height="350" id="pie-chart"></canvas>
+									<h5>Alumni By Employee Status</h5>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="p-5 text-center" v-if="pieData">
+									<!-- <canvas width="350" height="350" id="pie-chart1"></canvas> -->
+									<h5>Alumni By Batch</h5>
+								</div>
+							</div>
+							<div class="col-3">
+								<div class="p-5 text-center" v-if="pieData">
+									<canvas width="350" height="350" id="pie-chart1"></canvas>
+									<h5>Alumni By Batch</h5>
+								</div>
 							</div>
 						</div>
 						<div class="col-12">
@@ -169,6 +186,7 @@
 <script>
 import PlanetChart from "../../components/chartjs/PlanetChart.vue";
 import Chart from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 export default {
 	data() {
@@ -298,20 +316,101 @@ export default {
 					datasets: [
 						{
 							data: this.pieData,
-							backgroundColor: ["blue", "red", "yellow", "green"],
+							backgroundColor: [
+								"#003f5c",
+								"#2f4b7c",
+								"#665191",
+								"#a05195",
+								"#d45087",
+								"#f95d6a",
+								"#ff7c43",
+								"#ffa600",
+							],
 						},
 					],
 				},
+				plugins: [ChartDataLabels],
 				options: {
 					responsive: true,
 					hoverOffset: 4,
 					cutout: 40,
+					plugins: {
+						tooltips: {
+							enabled: true,
+						},
+						datalabels: {
+							formatter: (value, ctx) => {
+								let sum = 0;
+								let dataArr = ctx.chart.data.datasets[0].data;
+								dataArr.map((data) => {
+									sum += data;
+								});
+								let percentage = ((value * 100) / sum).toFixed(2) + "%";
+								return percentage;
+							},
+							color: "#fff",
+						},
+					},
 				},
 			};
 			const ctx = document.getElementById("pie-chart");
 			new Chart(ctx, chartData);
 		},
+		drawChart1() {
+			let chartData = {
+				responsive: true,
+				type: "pie",
+				data: {
+					labels:
+						this.$store.getters["ADMIN_DASHBOARD/GET_ALUMNI_COUNT_BY_BATCH"]
+							.labels,
+					datasets: [
+						{
+							data: this.$store.getters[
+								"ADMIN_DASHBOARD/GET_ALUMNI_COUNT_BY_BATCH"
+							]?.data,
+							backgroundColor: [
+								"#003f5c",
+								"#2f4b7c",
+								"#665191",
+								"#a05195",
+								"#d45087",
+								"#f95d6a",
+								"#ff7c43",
+								"#ffa600",
+							],
+						},
+					],
+				},
+				plugins: [ChartDataLabels],
+				options: {
+					responsive: true,
+					hoverOffset: 4,
+					cutout: 40,
+					plugins: {
+						tooltips: {
+							enabled: true,
+						},
+						datalabels: {
+							formatter: (value, context) => {
+								const datapoints = context.chart.data.datasets[0].data;
+								function sum(total, datapoint) {
+									return total + datapoint;
+								}
+								const total = datapoints.reduce(sum, 0);
+								const percentage = (value / total) * 100;
+								return `${percentage}%`;
+							},
+							color: "#fff",
+						},
+					},
+				},
+			};
+			const ctx = document.getElementById("pie-chart1").getContext("2d");
+			new Chart(ctx, chartData);
+		},
 	},
+
 	async mounted() {
 		await this.getData();
 		await this.$store.dispatch("ADMIN_DASHBOARD/TOTAL_ALUMNI_RECORDS");
@@ -319,6 +418,7 @@ export default {
 		await this.$store.dispatch("ADMIN_DASHBOARD/TOTAL_BATCHES");
 		await this.$store.dispatch("UTILS_BATCH/FETCH_BATCHES");
 		this.drawChart();
+		this.drawChart1();
 	},
 };
 </script>
