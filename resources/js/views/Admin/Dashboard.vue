@@ -92,7 +92,7 @@
 											drawChart();
 										"
 									>
-										<option :value="null">-- Select an Option --</option>
+										<option value="" selected>-- Select an Option --</option>
 										<option
 											:value="program.name"
 											v-for="(program, index) in programs"
@@ -115,7 +115,7 @@
 										"
 										v-model="filter.college"
 									>
-										<option :value="null">-- Select an Option --</option>
+										<option value="" selected>-- Select an Option --</option>
 										<option
 											:value="college.name"
 											v-for="(college, index) in colleges"
@@ -138,7 +138,7 @@
 										"
 										v-model="filter.batch"
 									>
-										<option :value="null">-- Select an Option --</option>
+										<option value="" selected>-- Select an Option --</option>
 										<option
 											:value="batch.id"
 											v-for="(batch, index) in batches"
@@ -186,9 +186,9 @@ export default {
 	data() {
 		return {
 			filter: {
-				batch: null,
-				college: null,
-				program: null,
+				batch: "",
+				college: "",
+				program: "",
 			},
 
 			colleges: [
@@ -347,8 +347,10 @@ export default {
 					},
 				},
 			};
-			const ctx = document.getElementById("pie-chart");
-			new Chart(ctx, chartData);
+			if (chartData) {
+				const ctx = document.getElementById("pie-chart");
+				new Chart(ctx, chartData);
+			}
 		},
 		drawChart1() {
 			let chartData = {
@@ -400,8 +402,10 @@ export default {
 					},
 				},
 			};
-			const ctx = document.getElementById("pie-chart1").getContext("2d");
-			new Chart(ctx, chartData);
+			if (chartData) {
+				const ctx = document.getElementById("pie-chart1").getContext("2d");
+				new Chart(ctx, chartData);
+			}
 		},
 	},
 
