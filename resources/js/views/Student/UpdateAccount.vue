@@ -152,7 +152,13 @@
 										{{ college.name }}
 									</option>
 								</select>
-                                <input :disabled="isEditing" class="form-control mt-2" v-if="userAccount.student_account_info.college == 'Others'" v-model="college_others" type="text">
+								<input
+									:disabled="isEditing"
+									class="form-control mt-2"
+									v-if="userAccount.student_account_info.college == 'Others'"
+									v-model="college_others"
+									type="text"
+								/>
 							</div>
 						</div>
 						<div class="col-4 mb-2">
@@ -373,7 +379,180 @@
 			</div>
 			<div class="col-12 mb-2" v-if="userAccount.student_employee_info">
 				<h4 class="text-uppercase fw-bold">Employee Information</h4>
-				<div class="row">
+				<div class="row mt-3">
+					<h6 class="text-uppercase fw-bold">Companies</h6>
+					<div class="col-12 d-flex align-items-center justify-content-end">
+						<button
+							v-if="!isEditing"
+							@click="addCompany()"
+							class="btn btn-success"
+						>
+							<i class="bi bi-plus"></i> New Company
+						</button>
+					</div>
+					<table class="table mt-2">
+						<tbody>
+							<tr v-for="(company, index) in companies" :key="index">
+								<td>
+									<div class="form-group">
+										<label for="designation">Company Name</label>
+										<input
+											:disabled="isEditing"
+											class="form-control"
+											id="designation"
+											type="text"
+											v-model="companies[index].company"
+										/>
+									</div>
+								</td>
+								<td>
+									<div class="form-group">
+										<label for="designation">Designation</label>
+										<input
+											:disabled="isEditing"
+											class="form-control"
+											id="designation"
+											type="text"
+											v-model="companies[index].designation"
+										/>
+									</div>
+								</td>
+								<td>
+									<div class="form-group">
+										<label for="designation">Address</label>
+										<input
+											:disabled="isEditing"
+											class="form-control"
+											id="designation"
+											type="text"
+											v-model="companies[index].address"
+										/>
+									</div>
+								</td>
+								<td>
+									<button
+										@click="removeCompany(index)"
+										v-if="companies[0] !== companies[index] && !isEditing"
+										class="btn btn-danger mt-4"
+									>
+										<i class="bi bi-trash"></i> Delete
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="row d-flex">
+					<div class="col-6 mt-3 border">
+						<div
+							class="
+								col-12
+								d-flex
+								align-items-center
+								justify-content-between
+								mt-3
+							"
+						>
+							<h6 class="text-uppercase fw-bold">Seminar/Trainings</h6>
+							<button
+								v-if="!isEditing"
+								@click="addSeminar()"
+								class="btn btn-success"
+							>
+								<i class="bi bi-plus"></i> New Seminar
+							</button>
+						</div>
+						<table class="table mt-2">
+							<tbody>
+								<tr v-for="(seminar, index) in seminars" :key="index">
+									<td>
+										<div class="form-group">
+											<label for="designation">Seminar</label>
+											<input
+												:disabled="isEditing"
+												class="form-control"
+												id="designation"
+												type="text"
+												v-model="seminars[index].seminar"
+											/>
+										</div>
+									</td>
+									<td>
+										<button
+											@click="removeSeminar(index)"
+											v-if="seminars[0] !== seminars[index] && !isEditing"
+											class="btn btn-danger mt-4"
+										>
+											<i class="bi bi-trash"></i> Delete
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-6 mt-3 border">
+						<div
+							class="
+								col-12
+								d-flex
+								align-items-center
+								justify-content-between
+								mt-3
+							"
+						>
+							<h6 class="text-uppercase fw-bold">Eligibility</h6>
+							<button
+								v-if="!isEditing"
+								@click="addElegibility()"
+								class="btn btn-success"
+							>
+								<i class="bi bi-plus"></i> New Elgibility
+							</button>
+						</div>
+						<table class="table mt-2">
+							<tbody>
+								<tr v-for="(elegibility, index) in elegibilities" :key="index">
+									<td>
+										<div class="form-group">
+											<label for="designation">Eligibility</label>
+											<input
+												:disabled="isEditing"
+												class="form-control"
+												id="designation"
+												type="text"
+												v-model="elegibilities[index].elegibilitiy"
+											/>
+										</div>
+									</td>
+									<td>
+										<div class="form-group">
+											<label for="designation">Category</label>
+											<input
+												:disabled="isEditing"
+												class="form-control"
+												id="designation"
+												type="text"
+												v-model="elegibilities[index].category"
+											/>
+										</div>
+									</td>
+									<td>
+										<button
+											@click="removeElegibility(index)"
+											v-if="
+												elegibilities[0] !== elegibilities[index] && !isEditing
+											"
+											class="btn btn-danger mt-4"
+										>
+											<i class="bi bi-trash"></i> Delete
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!--  <div class="row">
 					<div class="col-4">
 						<div class="form-group">
 							<label for="company">Company</label>
@@ -543,6 +722,7 @@
 						</div>
 					</div>
 				</div>
+                -->
 			</div>
 			<div class="col-12" v-if="userAccount.student_education_info">
 				<h4 class="text-uppercase fw-bold">Education Information</h4>
@@ -752,6 +932,7 @@
 </template>
 
 <script>
+import axios from "../../axios";
 export default {
 	props: ["id"],
 	data() {
@@ -765,7 +946,14 @@ export default {
 			oldImage: "",
 			image: "",
 			attainmentKey: "",
-            college_others: "",
+			college_others: "",
+
+			company_ids: [],
+			companies: [],
+			seminar_ids: [],
+			seminars: [],
+			elegibility_ids: [],
+			elegibilities: [],
 
 			attainments: [
 				{ name: "College Graduate", key: "bachelors" },
@@ -875,22 +1063,174 @@ export default {
 		},
 	},
 	methods: {
+		async getCompanies() {
+			await axios
+				.get(`student/companies?token=${localStorage.getItem("access_token")}`)
+				.then((response) => {
+					if (response.data.length === 0) {
+						this.companies = [];
+						this.addCompany();
+					} else {
+						this.companies = response.data;
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+		async updateCompanies() {
+			await axios
+				.post(
+					`student/companies?token=${localStorage.getItem("access_token")}`,
+					{ companies: this.companies, company_ids: this.company_ids }
+				)
+				.then((response) => {
+					this.getCompanies();
+					this.company_ids = [];
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+		addCompany() {
+			this.companies.push({
+				id: 0,
+				student_id: 0,
+				company: "",
+				designation: "",
+				address: "",
+			});
+		},
+		removeCompany(index) {
+			let company_id = this.companies[index].id;
+			if (company_id != 0) {
+				this.company_ids.push(company_id);
+			}
+			this.companies.splice(index, 1);
+			console.log(this.company_ids);
+		},
+        async getSeminars() {
+			await axios
+				.get(
+					`student/seminars?token=${localStorage.getItem("access_token")}`
+				)
+				.then((response) => {
+					if (response.data.length === 0) {
+						this.seminars = [];
+						this.addSeminar();
+					} else {
+						this.seminars = response.data;
+                        console.log(this.seminars)
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+		async updateSeminars() {
+			await axios
+				.post(
+					`student/seminars?token=${localStorage.getItem("access_token")}`,
+					{
+						seminars: this.seminars,
+						seminar_ids: this.seminar_ids,
+					}
+				)
+				.then((response) => {
+					this.getSeminars();
+					this.seminar_ids = [];
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+		addSeminar() {
+			this.seminars.push({
+                id: 0,
+				student_id: 0,
+				seminar: '',
+			});
+		},
+		removeSeminar(index) {
+            let seminar_id = this.seminars[index].id;
+			if (seminar_id != 0) {
+				this.seminar_ids.push(seminar_id);
+			}
+			this.seminars.splice(index, 1);
+		},
+		async getElegibilities() {
+			await axios
+				.get(
+					`student/elegibilities?token=${localStorage.getItem("access_token")}`
+				)
+				.then((response) => {
+					if (response.data.length === 0) {
+						this.elegibilities = [];
+						this.addElegibility();
+					} else {
+						this.elegibilities = response.data;
+                        console.log(this.elegibilities)
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+		async updateElegibilities() {
+			await axios
+				.post(
+					`student/elegibilities?token=${localStorage.getItem("access_token")}`,
+					{
+						elegibilities: this.elegibilities,
+						elegibility_ids: this.elegibility_ids,
+					}
+				)
+				.then((response) => {
+					this.getElegibilities();
+					this.elegibility_ids = [];
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+		addElegibility() {
+			this.elegibilities.push({
+				id: 0,
+				student_id: 0,
+				elegibilitiy: "",
+				category: "",
+			});
+		},
+		removeElegibility(index) {
+			let elegibility_id = this.elegibilities[index].id;
+			if (elegibility_id != 0) {
+				this.elegibility_ids.push(elegibility_id);
+			}
+			this.elegibilities.splice(index, 1);
+			console.log(this.elegibility_ids);
+		},
 		setEdit() {
 			this.isEditing = !this.isEditing;
 		},
-		cancelEdit() {
+		async cancelEdit() {
 			this.isEditing = !this.isEditing;
 			this.userAccount = { ...this.user };
+            await this.getCompanies();
+            await this.getSeminars()
+            await this.getElegibilities()
 		},
 		async updateAccount() {
-            if(this.userAccount.student_account_info.college == 'Others') {
-                this.userAccount.student_account_info.college = this.college_others
-            }
+			if (this.userAccount.student_account_info.college == "Others") {
+				this.userAccount.student_account_info.college = this.college_others;
+			}
 			const response = await this.$store.dispatch(
 				"STUDENT_ID_REQUEST/UPDATE_STUDENT_ACCOUNT",
 				this.userAccount
 			);
 			if (response.status == 200) {
+				await this.updateCompanies();
+                await this.updateSeminars();
+                await this.updateElegibilities();
 				this.$toast.success(response.data.message ?? "Message");
 				this.setEdit();
 			}
@@ -979,16 +1319,23 @@ export default {
 		},
 	},
 	async mounted() {
+		await this.getCompanies();
+		await this.getSeminars();
+		await this.getElegibilities();
 		await this.$store.dispatch("UTILS_BATCH/FETCH_BATCHES");
 		await this.$store.dispatch(
 			"STUDENT_ID_REQUEST/FETCH_STUDENT_ACCOUNT",
 			this.id
 		);
 		this.userAccount = { ...this.user };
-        if(this.colleges.filter((college) =>  college.name === this.user.student_account_info.college).length === 0) {
-            this.college_others = this.user.student_account_info.college;
-            this.userAccount.student_account_info.college = 'Others'
-        }
+		if (
+			this.colleges.filter(
+				(college) => college.name === this.user.student_account_info.college
+			).length === 0
+		) {
+			this.college_others = this.user.student_account_info.college;
+			this.userAccount.student_account_info.college = "Others";
+		}
 		this.previewImage = `http://localhost:8000${this.userAccount?.id_image}`;
 		this.previewSignature = `http://localhost:8000${this.userAccount?.signature}`;
 	},

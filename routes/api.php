@@ -19,7 +19,12 @@ use App\Http\Controllers\v1\Student\ {
     IDRequestController as StudentIDRequestController,
     AuthController as StudentAuthController,
     EventController as StudentEventController,
-    FeedbackController as StudentFeedbackController
+    FeedbackController as StudentFeedbackController,
+    CompanyController,
+    ElegibilityController,
+    Employee\ElegibilityController as EmployeeElegibilityController,
+    Employee\SeminarController as EmployeeSeminarController,
+    SeminarController,
 };
 
 /*
@@ -99,6 +104,13 @@ Route::group(['middleware' => 'api'], function (){
         Route::post('send-feedback', [StudentFeedbackController::class, 'sendFeedback']);
         Route::get('get-feedback/{id}', [StudentFeedbackController::class, 'getFeedback']);
         Route::post('send-message/{id}', [StudentFeedbackController::class, 'sendMessage']);
+
+        Route::post('companies', [CompanyController::class, 'store']);
+        Route::get('companies', [CompanyController::class, 'index']);
+        Route::post('elegibilities', [ElegibilityController::class, 'store']);
+        Route::get('elegibilities', [ElegibilityController::class, 'index']);
+        Route::post('seminars', [SeminarController::class, 'store']);
+        Route::get('seminars', [SeminarController::class, 'index']);
     });
 });
 
