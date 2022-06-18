@@ -18048,10 +18048,11 @@ textarea.form-control-lg {
 .landing {
   position: relative;
   width: 100%;
-  height: 100vh;
-  background-image: linear-gradient(rgba(252, 255, 91, 0.5), rgba(72, 115, 255, 0.5)), url(/images/lnu.jpg?0df8973b37da2965d01bd1aff2f585e6);
+  height: 100%;
+  background-image: linear-gradient(rgba(223, 143, 22, 0.651), rgba(20, 59, 187, 0.877)), url(/images/lnu.jpg?0df8973b37da2965d01bd1aff2f585e6);
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 .landing .navbar {
   position: relative;
@@ -18114,7 +18115,7 @@ textarea.form-control-lg {
   font-size: 24px;
 }
 .landing .landing-content .title-header h1, .landing .landing-content .title-header .h1 {
-  font-size: 64px;
+  font-size: 60px;
 }
 .landing .landing-content .title-header h3, .landing .landing-content .title-header .h3 {
   font-size: 32px;
@@ -18159,12 +18160,13 @@ textarea.form-control-lg {
 }
 
 .signin {
-  position: relative;
+  position: fixed;
   width: 100%;
-  height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(/images/lnu3.jpg?94d60ca5c7e116337a2dde74da2e20c3);
+  height: 100%;
+  background-image: linear-gradient(rgba(9, 32, 94, 0.404), rgba(9, 54, 90, 0.377)), url(/images/lnu3.jpg?94d60ca5c7e116337a2dde74da2e20c3);
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 .signin .navbar {
   position: relative;
@@ -18176,7 +18178,7 @@ textarea.form-control-lg {
   align-items: center;
 }
 .signin .navbar .nav-item {
-  font-size: 20px;
+  font-size: 18px;
   margin: 0 1rem;
   color: #fff;
   font-weight: bold;
@@ -18194,7 +18196,7 @@ textarea.form-control-lg {
   left: 0;
   background-color: #fff;
   transform-origin: bottom right;
-  transition: transform 0.5s ease-out;
+  transition: transform 250ms ease-in-out;
 }
 .signin .navbar .nav-item:hover::after {
   transform: scaleX(1);
@@ -18240,15 +18242,7 @@ textarea.form-control-lg {
   font-size: 18px;
 }
 
-.signup {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(/images/lnu2.jpg?93bf26535948f38df08bc000ef577bb7);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.signup .navbar {
+.navbar {
   position: relative;
   width: 100%;
   height: 7vh;
@@ -18257,7 +18251,7 @@ textarea.form-control-lg {
   justify-content: flex-end;
   align-items: center;
 }
-.signup .navbar .nav-item {
+.navbar .nav-item {
   font-size: 20px;
   margin: 0 1rem;
   color: #fff;
@@ -18266,7 +18260,7 @@ textarea.form-control-lg {
   display: inline-block;
   position: relative;
 }
-.signup .navbar .nav-item::after {
+.navbar .nav-item::after {
   content: "";
   position: absolute;
   width: 100%;
@@ -18278,119 +18272,104 @@ textarea.form-control-lg {
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
-.signup .navbar .nav-item:hover::after {
+.navbar .nav-item:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
-.signup .signup-content {
+
+.signup {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(/images/lnu2.jpg?93bf26535948f38df08bc000ef577bb7);
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 100%;
-  height: 93vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.signup .signup-content .signup-main {
+  height: 100vh;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 70%;
-  height: 83vh;
-  background: #fff;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  border-radius: 5px;
 }
-.signup .signup-content .signup-main .alumni-type {
-  width: 50%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.signup .form {
+  width: 40%;
+  height: 90vh;
+  margin: 0 auto;
+  overflow-y: auto;
 }
-.signup .signup-content .signup-main .signup-form {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  .signup .form {
+    width: 80%;
+  }
 }
-.signup .btn-signup {
-  letter-spacing: 2px;
-  font-size: 18px;
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .signup .form {
+    width: 70%;
+  }
 }
 
-.admin {
-  position: relative;
-  margin: 0;
-  padding: 0;
-}
-.admin .sidebar {
+.sidebar {
   position: fixed;
-  width: 350px;
+  width: 250px;
   height: 100vh;
   padding: 0;
   margin: 0;
-  background: #1b16b8;
+  background-image: linear-gradient(to top, #257bdd, #264db8);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.admin .sidebar .logo {
+.sidebar .logo {
   height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.admin .sidebar .logo .logo-text {
+.sidebar .logo .logo-text {
   font-size: 24px;
   font-weight: 600;
-  letter-spacing: 2px;
+  letter-spacing: -1px;
   color: #fff;
 }
-.admin .sidebar .nav-links {
+.sidebar .nav-links {
   height: 100%;
   width: 100%;
-  padding: 20px 0 0 0;
+  padding: 10px 0 0 0;
   list-style: none;
 }
-.admin .sidebar .nav-links .nav-item {
-  padding: 10px;
+.sidebar .nav-links .nav-item {
+  padding: 8px;
   margin: 2px 0;
   cursor: pointer;
 }
-.admin .sidebar .nav-links .nav-item:hover {
-  background: #0f0a91;
-  transition: all 0.2s ease-in;
+.sidebar .nav-links .nav-item:hover {
+  background: #193ea3;
+  transition: all 250ms ease-in;
 }
-.admin .sidebar .nav-links .nav-item .main {
+.sidebar .nav-links .nav-item .main {
   display: flex;
   align-items: center;
 }
-.admin .sidebar .nav-links .nav-item .main .nav-link {
+.sidebar .nav-links .nav-item .main .nav-link {
   text-decoration: none;
   display: flex;
   justify-content: center;
   align-items: center;
+  line-height: 0.92;
 }
-.admin .sidebar .nav-links .nav-item .main .nav-link #icon {
+.sidebar .nav-links .nav-item .main .nav-link #icon {
   color: #fff !important;
   font-size: 20px;
 }
-.admin .sidebar .nav-links .nav-item .main .nav-link span {
-  margin-left: 1rem;
+.sidebar .nav-links .nav-item .main .nav-link span {
+  margin-left: 0.6rem;
   color: #fff;
   font-size: 18px;
 }
-.admin .sidebar .nav-links .nav-item .sub-menu {
+.sidebar .nav-links .nav-item .sub-menu {
   padding: 6px 6px 14px 50px;
   list-style: none;
   transition: all 1.2s ease;
 }
-.admin .sidebar .nav-links .nav-item .sub-menu .sub-item {
+.sidebar .nav-links .nav-item .sub-menu .sub-item {
   margin: 10px 0;
 }
-.admin .sidebar .nav-links .nav-item .sub-menu .sub-item .sub-link {
+.sidebar .nav-links .nav-item .sub-menu .sub-item .sub-link {
   display: flex;
   align-items: center;
   color: #fff;
@@ -18398,34 +18377,38 @@ textarea.form-control-lg {
   font-size: 14px;
   padding: 5px 0;
 }
-.admin .sidebar .nav-links .nav-item .sub-menu .sub-item .sub-link span {
+.sidebar .nav-links .nav-item .sub-menu .sub-item .sub-link span {
   margin-left: 10px;
 }
-.admin .header {
-  height: 7vh;
-  width: calc(100% - 350px);
-  margin-left: 350px;
+
+.header {
+  position: -webkit-sticky;
+  /* Safari */
+  position: sticky;
+  top: 0;
+  background: #fff;
+  padding: 5px 20px;
+  height: 60px;
+  width: calc(100% - 250px);
+  margin-left: 250px;
   display: flex;
   justify-content: space-between;
-  padding: 0 10px;
   align-items: center;
+  z-index: 9;
 }
-.admin .header .user-info {
+.header .user-info {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.admin .header .user-info span {
+.header .user-info span {
   font-size: 18px;
   margin-right: 5px;
 }
-.admin .router-container {
-  margin-left: 350px;
-  background: #ffed19;
-  background: linear-gradient(339deg, #ffed19 29%, white 80%);
-  margin-top: 20px;
-  height: 90vh;
-  width: calc(100% - 350px);
+
+.router-container {
+  margin-left: 260px;
+  margin-top: 50px;
 }
 
 .card-container {
@@ -18536,4 +18519,47 @@ textarea.form-control-lg {
   background: linear-gradient(0deg, #ffed19 0%, white 55%);
   height: 83vh;
   width: 100%;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p {
+  margin-bottom: 0;
+}
+
+.heading {
+  font-size: 3.2rem;
+  line-height: 0.98;
+}
+
+.ls-sm {
+  letter-spacing: -1px;
+}
+
+.ls-md {
+  letter-spacing: 1.2px;
+}
+
+.lh-sm {
+  line-height: 0.85 !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  border-radius: 5px;
 }

@@ -28,4 +28,24 @@ class Student extends Model
         return $this->belongsTo(StudentEmployeeInfo::class, 'student_employee_info_id', 'id');
     }
 
+    public function alumniRequest()
+    {
+        return $this->hasMany(AlumniIdRequest::class, 'student_id', 'id');
+    }
+
+    public function companies()
+    {
+        return $this->hasMany('App\Employee\Company', 'student_id');
+    }
+
+    public function seminars()
+    {
+        return $this->hasMany('App\Employee\Seminar', 'student_id');
+    }
+
+    public function elegibilities()
+    {
+        return $this->hasMany('App\Employee\Elegibilitiy', 'student_id');
+    }
+
 }

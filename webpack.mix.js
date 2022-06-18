@@ -15,7 +15,7 @@ const mix = require('laravel-mix');
     devServer: {
         proxy: {
             '*': 'http://localhost:8000'
-        }
+        },
     }
 });
 

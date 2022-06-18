@@ -17,7 +17,7 @@ export default {
     },
     actions: {
         FETCH_FEEDBACKS: async ({ commit }) => {
-            const res = await axios.get(`${ADMIN}/feedbacks?token=${localStorage.getItem('access_token')}`)
+            const res = await axios.get(`${ADMIN}/get-feedbacks?token=${localStorage.getItem('access_token')}`)
                 .then((response) => {
                     commit("SET_FEEDBACKS", response.data);
                     return response;
@@ -28,7 +28,7 @@ export default {
 
             return res;
         },
-        STORE_BATCH: async ({ commit }) => {
+        STORE_FEEDBACK: async ({ commit }) => {
             const res = await axios.post(`${ADMIN}/feedbacks?token=${localStorage.getItem('access_token')}`)
                 .then((response) => {
                     return response;
