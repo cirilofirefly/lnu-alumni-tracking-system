@@ -12,23 +12,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+
 class AuthController extends Controller
 {
     //
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth:student', ['except' => ['login', 'signup']]);
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
 
-        if (! $token = auth()->guard('student')->attempt(['username' => $request->username, 'password' => $request->password])) {
+        if (!$token = auth()->guard('student')->attempt(['username' => $request->username, 'password' => $request->password])) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
         return auth('student')->user()->account_status ?  $this->respondWithToken($token) : response()->json(['message' => 'Your account did not approved by Admin. Please wait for the approval.']);
     }
 
-    // 
+    //
     public function logout()
     {
         auth('student')->logout();
@@ -36,7 +39,8 @@ class AuthController extends Controller
     }
 
 
-    public function signup(Request $request) {
+    public function signup(Request $request)
+    {
 
         $this->validate($request, [
             'username' => 'required',
@@ -61,7 +65,7 @@ class AuthController extends Controller
                 'program' => 'NO DATA',
                 'degree_level' => 'NO DATA'
             ]);
-    
+
             $student_basic_info = StudentBasicInfo::create([
                 'student_number' => $request->student_number,
                 'first_name' => $request->first_name,
@@ -77,7 +81,7 @@ class AuthController extends Controller
                 'gender' => 'NO DATA',
                 'civil_status' => 'NO DATA',
             ]);
-    
+
             $student_education_info = StudentEducationInfo::create();
             $student_employee_info = StudentEmployeeInfo::create();
 
@@ -91,11 +95,11 @@ class AuthController extends Controller
                 'accept_term' => $request->accept_term ? 1 : 0
             ]);
 
+
+
             DB::commit();
             return response()->json(['message' => "You successfully registered. Wait for admin's approval"]);
-        
-        }
-        catch(\Throwable $th) {
+        } catch (\Throwable $th) {
             DB::rollBack();
             return response()->json(['message' => $th], 500);
         }
@@ -120,7 +124,8 @@ class AuthController extends Controller
         ]);
     }
 
-    public function changePassword(Request $request) {
+    public function changePassword(Request $request)
+    {
 
         $this->validate($request, [
             'oldPassword' => 'required',
@@ -128,8 +133,8 @@ class AuthController extends Controller
         ]);
 
         $student_account_info = StudentAccountInfo::where('id', auth('student')->user()->id)->first();
-        if($student_account_info) {
-            if(Hash::check($request->oldPassword, $student_account_info->password)) {
+        if ($student_account_info) {
+            if (Hash::check($request->oldPassword, $student_account_info->password)) {
                 $student_account_info->password = bcrypt($request->password);
                 $student_account_info->save();
             }

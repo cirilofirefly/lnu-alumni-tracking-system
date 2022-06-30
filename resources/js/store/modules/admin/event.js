@@ -23,8 +23,8 @@ export default {
 
     },
     actions: {
-        FETCH_EVENTS: async ({ commit }) => {
-            const res = await axios.get(`${ADMIN}/events?token=${localStorage.getItem('access_token')}`)
+        FETCH_EVENTS: async ({ commit }, search) => {
+            const res = await axios.get(`${ADMIN}/events?search=${search}&token=${localStorage.getItem('access_token')}`)
                 .then((response) => {
                     commit("SET_EVENTS", response.data);
                     return response;

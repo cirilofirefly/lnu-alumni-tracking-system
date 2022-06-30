@@ -99,6 +99,16 @@ export default {
 
     },
     actions: {
+        EXPORT_DB: async () => {
+            const res = await axios.get(`${AUTH}/download`)
+            .then((response) => {
+                return response;
+            }).catch((error) => {
+                return error.response;
+            });
+            return res;
+        },
+
         TOTAL_ALUMNI_BY_BATCH: async ({ commit }, filter) => {
             let query = `?program=${filter.program}&college=${filter.college}&batch=${filter.batch}&token=${localStorage.getItem('access_token')}`
             const res = await axios.get(`${AUTH}/total-alumni-by-batch${query}`)

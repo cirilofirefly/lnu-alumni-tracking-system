@@ -63,8 +63,8 @@ export default {
 
             return res;
         },
-        FETCH_ALUMNAE: async ({ commit }) => {
-            const res = await axios.get(`${ADMIN}/alumnae?token=${localStorage.getItem('access_token')}`)
+        FETCH_ALUMNAE: async ({ commit }, search) => {
+            const res = await axios.get(`${ADMIN}/alumnae?search=${search}&token=${localStorage.getItem('access_token')}`)
                 .then((response) => {
                     commit('SET_ALUMNAE', response.data)
                     commit('SET_ALUMNAE_COUNT', response.data.length)

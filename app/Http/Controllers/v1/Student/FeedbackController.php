@@ -21,11 +21,13 @@ class FeedbackController extends Controller
         $this->middleware('auth:student');
     }
 
-    public function index() {
+    public function index()
+    {
         return response()->json(Feedback::all());
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $this->validate($request, [
             'thread' => 'required'
         ]);
@@ -41,22 +43,25 @@ class FeedbackController extends Controller
 
     public function getFeedbacks()
     {
-        return response()->json(Feedback::where('student_id', auth('student')->user()->id)
-            ->with(['admin', 'student.student_basic_info'])
-            ->orderBy('created_at', 'desc')
-            ->get()
+        return response()->json(
+            Feedback::where('student_id', auth('student')->user()->id)
+                ->with(['admin', 'student.student_basic_info'])
+                ->orderBy('created_at', 'desc')
+                ->get()
         );
     }
 
     public function getFeedback($id)
     {
-        return response()->json(Feedback::where('id', $id)
-            ->with(['messages'])
-            ->first()
+        return response()->json(
+            Feedback::where('id', $id)
+                ->with(['messages'])
+                ->first()
         );
     }
 
-    public function sendFeedback(Request $request) {
+    public function sendFeedback(Request $request)
+    {
 
         return response()->json(Feedback::create([
             'student_id' => auth('student')->user()->student->id,
@@ -65,7 +70,8 @@ class FeedbackController extends Controller
         ]));
     }
 
-    public function sendMessage($id, Request $request) {
+    public function sendMessage(Request $request, $id)
+    {
 
         $this->validate($request, [
             'message' => 'required'

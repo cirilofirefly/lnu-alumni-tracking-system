@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\v1\Admin\ {
+use App\Http\Controllers\v1\Admin\{
     AlumniAccountController,
     AlumniIdRequestController,
     AuthController as AdminAuthController,
@@ -11,11 +11,13 @@ use App\Http\Controllers\v1\Admin\ {
     CategoryController as AdminCategoryController,
     EventController as AdminEventController,
     DashboardController as AdminDashboardContainer,
-    RecordController as AdminRecordController
+    RecordController as AdminRecordController,
+    AdminNotificationController
 };
 use App\Http\Controllers\v1\BatchController;
+use App\Http\Controllers\v1\DownloadController;
 
-use App\Http\Controllers\v1\Student\ {
+use App\Http\Controllers\v1\Student\{
     IDRequestController as StudentIDRequestController,
     AuthController as StudentAuthController,
     EventController as StudentEventController,
@@ -42,24 +44,23 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
-    Route::group(['prefix' => 'admin'], function (){
+    Route::group(['prefix' => 'admin'], function () {
         Route::post('login', [AdminAuthController::class, 'login']);
         Route::post('logout', [AdminAuthController::class, 'logout']);
         Route::put('change-password', [AdminAuthController::class, 'changePassword']);
         Route::put('update-account', [AdminAuthController::class, 'updateAccount']);
         Route::post('me', [AdminAuthController::class, 'me']);
     });
-    Route::group(['prefix' => 'student'], function (){
+    Route::group(['prefix' => 'student'], function () {
         Route::post('signup', [StudentAuthController::class, 'signup']);
         Route::post('login', [StudentAuthController::class, 'login']);
         Route::post('logout', [StudentAuthController::class, 'logout']);
         Route::post('me', [StudentAuthController::class, 'me']);
         Route::put('change-password', [StudentAuthController::class, 'changePassword']);
-
     });
 });
 
-Route::group(['middleware' => 'api'], function (){
+Route::group(['middleware' => 'api'], function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::put('approve-alumni/{id}', [AlumniAccountController::class, 'approveAccount']);
         Route::put('disapprove-alumni/{id}', [AlumniAccountController::class, 'disapproveAccount']);
@@ -78,6 +79,10 @@ Route::group(['middleware' => 'api'], function (){
         Route::get('record/{id}', [AdminRecordController::class, 'show']);
         Route::get('get-feedbacks', [AdminFeedbackController::class, 'index']);
         Route::get('send-feedback/{id}', [AdminFeedbackController::class, 'store']);
+        Route::get('get-notification', [AdminNotificationController::class, 'index']);
+        Route::put('update-notification', [AdminNotificationController::class, 'update']);
+        Route::post('notification', [AdminNotificationController::class, 'store']);
+        Route::get('get-count-notif', [AdminNotificationController::class, 'countNotification']);
         Route::get('get-student-id-requests/{type}', [AlumniIdRequestController::class, 'getStudentIDRequests']);
         Route::get('get-student-id-request/{id}', [AlumniIdRequestController::class, 'getStudentIDRequest']);
         Route::post('approve-student-id-request/{id}', [AlumniIdRequestController::class, 'approveStudentIDRequest']);
@@ -85,7 +90,7 @@ Route::group(['middleware' => 'api'], function (){
         Route::post('send-message/{id}', [AdminFeedbackController::class, 'sendMessage']);
         Route::get('get-feedback/{id}', [AdminFeedbackController::class, 'getFeedback']);
         Route::post('send-message/{id}', [AdminFeedbackController::class, 'sendMessage']);
-
+        Route::get('/download', [DownloadController::class, 'download']);
     });
     Route::group(['prefix' => 'student'], function () {
         Route::get('event/{slug}', [StudentEventController::class, 'show']);

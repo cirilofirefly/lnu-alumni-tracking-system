@@ -8,6 +8,10 @@ use App\Models\StudentAccountInfo;
 use App\Models\StudentBasicInfo;
 use App\Models\StudentEducationInfo;
 use App\Models\StudentEmployeeInfo;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\v1\MailController;
+
 
 class AlumniAccountController extends Controller
 {
@@ -16,40 +20,57 @@ class AlumniAccountController extends Controller
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth:admin');
     }
-    
-    public function index() {
-        return response()->json(Student::whereHas('student_account_info', function($query) {
+
+    public function index(Request $request)
+    {
+
+        $search = $request->search;
+        $students = DB::table('students')
+            ->join('student_account_infos', 'student_account_infos.id', '=', 'students.student_account_info_id')
+            ->join('student_basic_infos', 'student_basic_infos.id', '=', 'students.student_basic_info_id');
+
+        $student_info = $students->where(function ($query) use ($search) {
+            if ($search) {
+                $query->where('first_name', 'like', "%$search%");
+            }
             $query->where('account_status', false);
-        })->with('student_basic_info')->get());
+        })->get();
+
+        return response()->json($student_info);
     }
 
-    public function approveAccount($id) {
+    public function approveAccount($id)
+    {
         $student_account_info = StudentAccountInfo::where('id', $id)->where('account_status', false)->first();
-        if(!empty($student_account_info)) {
+        if (!empty($student_account_info)) {
             $student_account_info->account_status = true;
             $student_account_info->save();
-        }else {
+        } else {
             return response()->json(['message' => 'Account not found'], 404);
         }
+        $student = Student::where('student_account_info_id', $id)->first();
+        $student_basic_info = StudentBasicInfo::where('id', $student->student_basic_info_id)->first();
+        MailController::sendSignupEmail($student_basic_info->first_name, $student_basic_info->email);
         return response()->json(['message' => 'Account approved']);
     }
 
-    public function disapproveAccount($id) {
+    public function disapproveAccount($id)
+    {
 
         $student_account_info = StudentAccountInfo::where('id', $id)->where('account_status', false)->first();
-        if(!empty($student_account_info)) {
+        if (!empty($student_account_info)) {
             StudentAccountInfo::destroy($id);
             StudentBasicInfo::destroy($id);
             StudentEmployeeInfo::destroy($id);
             StudentEducationInfo::destroy($id);
             Student::destroy($id);
-        }else {
+        } else {
             return response()->json(['message' => 'Account not found'], 404);
         }
         return response()->json(['message' => 'Account disapproved']);
     }
-
 }

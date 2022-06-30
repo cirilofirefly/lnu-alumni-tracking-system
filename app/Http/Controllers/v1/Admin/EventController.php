@@ -12,17 +12,24 @@ use Illuminate\Support\Str;
 class EventController extends Controller
 {
 
-    //
-
-    public function index() {
-        return response()->json(Event::with('category')->get());
+    public function index(Request $request)
+    {
+        $search = $request->search;
+        $event = Event::with('category')->where(function ($query) use ($search) {
+            if ($search) {
+                $query->where('name', 'like', "%$search%");
+            }
+        })->get();
+        return response()->json($event);
     }
 
-    public function show($slug) {
+    public function show($slug)
+    {
         return response()->json(Event::with('category')->where('slug', $slug)->first());
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         $this->validate($request, [
             'name' => 'required',
@@ -43,14 +50,14 @@ class EventController extends Controller
 
             DB::commit();
             return response()->json(['message' => 'New event successfully added.']);
-
-        }catch(\Throwable $th) {
+        } catch (\Throwable $th) {
             DB::rollBack();
             return response()->json(['error' => $th], 500);
         }
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
 
         $this->validate($request, [
             'name' => 'required',
@@ -66,9 +73,9 @@ class EventController extends Controller
         return response()->json(['message' => 'Event successfully deleted.']);
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         Event::destroy($id);
         return response()->json(['message' => 'Event successfully deleted.']);
-
     }
 }

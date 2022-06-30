@@ -6,6 +6,7 @@ import ADMIN_FEEDBACK from './modules/admin/feedback';
 import ADMIN_CATEGORIES from './modules/admin/category';
 import ADMIN_DASHBOARD from './modules/admin/dashboard';
 import ADMIN_EVENT from './modules/admin/event';
+import ADMIN_NOTIF from './modules/admin/notification';
 import ADMIN_ID_MANAGEMENT from './modules/admin/id';
 import ALUMNAE_APPROVAL from './modules/admin/approval';
 import STUDENT_AUTH from './modules/student/auth';
@@ -30,5 +31,6 @@ export default new Vuex.Store({
         STUDENT_EVENT,
         STUDENT_ID_REQUEST,
         UTILS_BATCH,
+        ADMIN_NOTIF
     }
 })
