@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import Signin from '../views/Auth/Signin.vue'
 import Signup from '../views/Auth/Signup.vue'
 import AdminSignin from '../views/Auth/AdminSignin.vue'
+import ForgotPassword from '../views/Auth/ForgotPassword.vue'
+import ChangePassword from '../views/Auth/ChangePassword.vue'
+
 // Student
 import Student from '../views/Student/Student.vue'
 import StudentHome from '../views/Student/Home.vue'
@@ -52,6 +55,16 @@ const ROUTES = [
         path: '/signup',
         name: 'signup',
         component: Signup
+    },
+    {
+        path: '/forgot-password',
+        name: 'forgot-password',
+        component: ForgotPassword
+    },
+    {
+        path: '/change-password',
+        name: 'change-password',
+        component: ChangePassword
     },
     {
         path: '/',

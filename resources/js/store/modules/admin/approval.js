@@ -52,6 +52,18 @@ export default {
 
             return res;
         },
+        FETCH_APPROVE_ALUMNI: async () => {
+            const res = await axios.put(`${ADMIN}/get-approved-ID?token=${localStorage.getItem('access_token')}`)
+                .then((response) => {
+                    return response;
+                })
+                .catch((error) => {
+                    return error.response;
+                });
+
+            return res;
+        },
+
         DISAPPROVE_ALUMNI: async ({ commit }, id) => {
             const res = await axios.put(`${ADMIN}/disapprove-alumni/${id}?token=${localStorage.getItem('access_token')}`)
                 .then((response) => {

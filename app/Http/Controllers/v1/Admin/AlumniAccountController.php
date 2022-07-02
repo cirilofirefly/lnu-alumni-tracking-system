@@ -43,6 +43,18 @@ class AlumniAccountController extends Controller
         return response()->json($student_info);
     }
 
+    public function getApprovedID()
+    {
+
+        $students = DB::table('students')
+            ->join('student_account_infos', 'student_account_infos.id', '=', 'students.student_account_info_id')
+            ->join('student_basic_infos', 'student_basic_infos.id', '=', 'students.student_basic_info_id');
+
+        $student_info = $students->where('account_status', true)->get();
+
+        return response()->json($student_info);
+    }
+
     public function approveAccount($id)
     {
         $student_account_info = StudentAccountInfo::where('id', $id)->where('account_status', false)->first();

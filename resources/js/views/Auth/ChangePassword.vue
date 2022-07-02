@@ -22,43 +22,44 @@
                             <p class="mb-2">
                                 Please enter credentials to proceed.
                             </p>
-                            <p class="mt-2 mb-3 text-muted align-self-end">
+                            <!-- <p class="mt-2 mb-3 text-muted align-self-end">
                                 Forgot password? Click
                                 <router-link
                                     to="/forgot-password"
                                     class="text-decoration-none"
                                     >here</router-link
                                 >
-                            </p>
+                            </p> -->
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-6">
-                            <h2 class="mb-2 fw-bold">Log-in</h2>
+                            <h2 class="mb-2 fw-bold">Forgot Password</h2>
                             <p class="mb-2">
-                                Enter your <strong> username</strong> and
-                                <strong>password</strong><br />
-                                to proceed to your account.
+                                Enter your <strong> new password</strong>
+                                to proceed.
                             </p>
                             <form class="pe-4" @submit.prevent="signinUser">
                                 <div class="form-floating mb-3">
                                     <input
-                                        v-model="credentials.username"
-                                        type="text"
-                                        class="form-control"
-                                        id="floatingInput"
-                                        placeholder="Username"
-                                    />
-                                    <label for="floatingInput">Username</label>
-                                </div>
-                                <div class="form-floating mb-2">
-                                    <input
                                         v-model="credentials.password"
                                         type="password"
                                         class="form-control"
-                                        id="floatingPassword"
-                                        placeholder="Password"
+                                        id="floatingInput"
+                                        placeholder="Email Address"
                                     />
-                                    <label for="floatingPassword"
-                                        >Password</label
+                                    <label for="floatingInput"
+                                        >Enter New Password</label
+                                    >
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input
+                                        v-model="credentials.confirm_password"
+                                        type="password"
+                                        class="form-control"
+                                        id="floatingInput"
+                                        placeholder="Email Address"
+                                    />
+                                    <label for="floatingInput"
+                                        >Re-enter Password</label
                                     >
                                 </div>
                                 <button
@@ -67,18 +68,10 @@
                                 >
                                     <span>
                                         <i class="bi bi-box-arrow-in-left"></i>
-                                        SIGN-IN
+                                        SUBMIT
                                     </span>
                                 </button>
                             </form>
-                            <p class="mt-3 text-muted">
-                                You don't have an account?
-                                <router-link
-                                    to="/signup"
-                                    class="text-decoration-none"
-                                    >Sign up</router-link
-                                >
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -88,30 +81,32 @@
 </template>
 
 <script>
+import axios from "../../axios";
 export default {
     data() {
         return {
             credentials: {
-                username: "",
                 password: "",
+                confirm_password: "",
             },
         };
     },
     methods: {
         async signin() {
-            const response = await this.$store.dispatch(
-                "STUDENT_AUTH/LOGIN",
-                this.credentials
-            );
-            if (response.status == 200) {
-                if (response.data?.access_token) {
-                    this.$toast.success("Successfully logged in.");
-                    this.$router.push("/student");
-                } else {
-                    this.$toast.info(response.data.message);
-                }
-            } else {
-                this.$toast.error(response.data.error);
+            const userID = localStorage.getItem("userID");
+            if (this.password === this.confirm_password) {
+                var data = {
+                    id: userID,
+                    password: this.credentials.password,
+                };
+
+                const res = axios
+                    .post(`student/resetPassword`, data)
+                    .then((res) => {
+                        if (res.status == 200) {
+                            this.$router.replace("/");
+                        }
+                    });
             }
         },
     },

@@ -197,10 +197,7 @@ export default {
             this.toggled = !this.toggled;
         },
         async backupDatabase() {
-            await this.$store.dispatch(
-                "ADMIN_DASHBOARD/EXPORT_DB",
-                this.filter
-            );
+            await this.$store.dispatch("ADMIN_DASHBOARD/EXPORT_DB");
         },
         async updateNotification() {
             var notification_id = [];

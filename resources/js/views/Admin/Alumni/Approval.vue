@@ -1,10 +1,25 @@
 <template>
     <div class="container-fluid">
         <div class="row p-5">
-            <div class="col-12">
+            <div class="col-10">
                 <h1 class="text-uppercase fw-bold" style="letter-spacing: 3px">
                     Alumni Request
                 </h1>
+            </div>
+            <div class="col">
+                <button
+                    class="btn btn-success"
+                    style="width: 100px"
+                    @click="print"
+                >
+                    <!-- <box-icon
+                        style="margin-top: 5px"
+                        color="#fff"
+                        type="solid"
+                        name="printer"
+                    ></box-icon> -->
+                    <span style="font-size: 16pt">Print</span>
+                </button>
             </div>
 
             <div class="col-12 mt-3 shadow p-3 bg-light">
@@ -223,11 +238,63 @@
                 </div>
             </div>
         </div>
+        <div hidden id="printMe">
+            <div style="text-align: center; font-family: sans-serif">
+                <h5>Republic of the Philippines</h5>
+                <h4>LEYTE NORMAL UNIVERSITY</h4>
+                <h5>Tacloban City, 6500</h5>
+            </div>
+            <br /><br />
+            <div class="row p-5">
+                <div class="col-10">
+                    <h1
+                        class="text-uppercase fw-bold"
+                        style="letter-spacing: 3px"
+                    >
+                        Alumni Request
+                    </h1>
+                </div>
+                <table class="table table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div v-if="loading" class="mt-2 float-center mx-auto">
+                            <span>Loading Data...</span>
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                        <tr
+                            v-else
+                            v-for="alumni in approvedData"
+                            :key="alumni.id"
+                        >
+                            <th scope="row">{{ alumni.id }}</th>
+                            <td>
+                                {{
+                                    `${alumni.first_name} ${
+                                        alumni.middle_name == null
+                                            ? ""
+                                            : alumni.middle_name
+                                    } ${alumni.last_name}`
+                                }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><strong>Total Entries: </strong> {{ alumnae.length }}</p>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import moment from "moment";
+import axios from "../../../axios";
 export default {
     data() {
         return {
@@ -235,6 +302,7 @@ export default {
             alumni: null,
             loading: false,
             search: "",
+            approvedData: "",
         };
     },
     filters: {
@@ -248,6 +316,10 @@ export default {
         },
     },
     methods: {
+        async print() {
+            await this.$htmlToPaper("printMe");
+        },
+
         async approveAlumni() {
             const response = await this.$store.dispatch(
                 "ALUMNAE_APPROVAL/APPROVE_ALUMNI",
@@ -287,11 +359,24 @@ export default {
         setLoading() {
             this.loading = !this.loading;
         },
+
+        async getApprovedID() {
+            await axios
+                .get(
+                    `admin/get-approved-ID?token=${localStorage.getItem(
+                        "access_token"
+                    )}`
+                )
+                .then((res) => {
+                    this.approvedData = res.data;
+                });
+        },
     },
     async mounted() {
         this.setLoading();
         this.getData();
         this.setLoading();
+        this.getApprovedID();
     },
 };
 </script>

@@ -100,7 +100,7 @@ export default {
     },
     actions: {
         EXPORT_DB: async () => {
-            const res = await axios.get(`${AUTH}/download`)
+            const res = await axios.post(`${AUTH}/download`)
             .then((response) => {
                 return response;
             }).catch((error) => {

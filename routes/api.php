@@ -27,7 +27,9 @@ use App\Http\Controllers\v1\Student\{
     Employee\ElegibilityController as EmployeeElegibilityController,
     Employee\SeminarController as EmployeeSeminarController,
     SeminarController,
+    ForgotPasswordController
 };
+use App\Mail\ForgotPassword;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +64,7 @@ Route::group([
 
 Route::group(['middleware' => 'api'], function () {
     Route::group(['prefix' => 'admin'], function () {
+        Route::get('get-approved-ID', [AlumniAccountController::class, 'getApprovedID']);
         Route::put('approve-alumni/{id}', [AlumniAccountController::class, 'approveAccount']);
         Route::put('disapprove-alumni/{id}', [AlumniAccountController::class, 'disapproveAccount']);
         Route::get('alumnae', [AlumniAccountController::class, 'index']);
@@ -90,10 +93,12 @@ Route::group(['middleware' => 'api'], function () {
         Route::post('send-message/{id}', [AdminFeedbackController::class, 'sendMessage']);
         Route::get('get-feedback/{id}', [AdminFeedbackController::class, 'getFeedback']);
         Route::post('send-message/{id}', [AdminFeedbackController::class, 'sendMessage']);
-        Route::get('/download', [DownloadController::class, 'download']);
+        Route::post('download', [DownloadController::class, 'store']);
     });
     Route::group(['prefix' => 'student'], function () {
         Route::get('event/{slug}', [StudentEventController::class, 'show']);
+        Route::post('sendForgotPassword', [ForgotPasswordController::class, 'sendForgotPassword']);
+        Route::post('resetPassword', [ForgotPasswordController::class, 'resetPassword']);
         Route::get('events', [StudentEventController::class, 'index']);
         Route::get('latest-event', [StudentEventController::class, 'latestEvent']);
         Route::get('id-student-account/{id}', [StudentIDRequestController::class, 'show']);

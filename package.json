@@ -33,6 +33,7 @@
         "moment": "^2.29.3",
         "toastr": "^2.1.4",
         "vue-file-agent": "^1.7.3",
+        "vue-html-to-paper": "^1.4.4",
         "vue-router": "^3.5.3",
         "vue-toastification": "^1.7.11",
         "vue2-editor": "^2.10.3",
