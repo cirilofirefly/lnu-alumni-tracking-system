@@ -232,10 +232,10 @@ export default {
 </script>
 
 <style>
-img,
+.contents img,
 svg {
     vertical-align: middle;
-    width: 100% !important;
+    width: 100%;
 }
 #comment-container {
     height: 40vh;

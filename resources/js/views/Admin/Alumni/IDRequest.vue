@@ -1,10 +1,26 @@
 <template>
     <div class="container-fluid">
         <div class="row p-5">
-            <div class="col-12">
+            <div class="col-10">
                 <h1 class="text-uppercase fw-bold" style="letter-spacing: 3px">
                     Alumni ID Request
                 </h1>
+            </div>
+            <div class="col-2">
+                <button
+                    v-if="requestType == 1"
+                    class="btn btn-success"
+                    style="width: 100px"
+                    @click="print"
+                >
+                    <!-- <box-icon
+                        style="margin-top: 5px"
+                        color="#fff"
+                        type="solid"
+                        name="printer"
+                    ></box-icon> -->
+                    <span style="font-size: 16pt">Print</span>
+                </button>
             </div>
             <div class="col-12 mt-3 shadow p-3 bg-light">
                 <div class="row">
@@ -24,14 +40,14 @@
                     </div>
                     <div class="col-5 mt-4 ms-5">
                         <div class="input-group">
-                            <input
+                            <!-- <input
                                 type="text"
                                 class="form-control"
                                 placeholder="Search"
                                 aria-label="Search"
                                 aria-describedby="search"
                                 v-model="search"
-                            />
+                            /> -->
                             <!-- <div class="input-group-append">
                                 <button
                                     @click.prevent="getData"
@@ -62,11 +78,7 @@
                                 <span class="sr-only"></span>
                             </div>
                         </div>
-                        <tr
-                            v-else
-                            v-for="alumni in alumnae"
-                            :key="alumni.id"
-                        >
+                        <tr v-else v-for="alumni in alumnae" :key="alumni.id">
                             <th scope="row">{{ alumni.id }}</th>
                             <td>
                                 {{
@@ -278,6 +290,60 @@
                 </div>
             </div>
         </div>
+        <div hidden id="printMe">
+            <div style="text-align: center; font-family: sans-serif">
+                <h5>Republic of the Philippines</h5>
+                <h4>LEYTE NORMAL UNIVERSITY</h4>
+                <h5>Tacloban City, 6500</h5>
+            </div>
+            <br /><br />
+            <div class="row p-5">
+                <div class="col-10">
+                    <h1
+                        class="text-uppercase fw-bold"
+                        style="letter-spacing: 3px"
+                    >
+                        Approved Alumni ID Request
+                    </h1>
+                </div>
+                <table class="table table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div v-if="loading" class="mt-2 float-center mx-auto">
+                            <span>Loading Data...</span>
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                        <tr v-else v-for="alumni in alumnae" :key="alumni.id">
+                            <th scope="row">{{ alumni.id }}</th>
+                            <td>
+                                {{
+                                    `${
+                                        alumni.student.student_basic_info
+                                            .first_name
+                                    } ${
+                                        alumni.student.student_basic_info
+                                            .middle_name == null
+                                            ? ""
+                                            : alumni.student.student_basic_info
+                                                  .middle_name
+                                    } ${
+                                        alumni.student.student_basic_info
+                                            .last_name
+                                    }`
+                                }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -304,24 +370,12 @@ export default {
                 "ADMIN_ID_MANAGEMENT/GET_STUDENT_ID_REQUESTS"
             ];
         },
-
-        // filteredAlumnae() {
-        //     return this.alumnae.filter((data) => {
-        //         return (
-        //             data.student.student_basic_info.first_name
-        //                 .toLowerCase()
-        //                 .includes(this.search) ||
-        //             data.student.student_basic_info.middle_name
-        //                 .toLowerCase()
-        //                 .includes(this.search) ||
-        //             data.student.student_basic_info.last_name
-        //                 .toLowerCase()
-        //                 .includes(this.search)
-        //         );
-        //     });
-        // },
     },
     methods: {
+        async print() {
+            await this.$htmlToPaper("printMe");
+        },
+
         async approveAlumniIDRequest() {
             const response = await this.$store.dispatch(
                 "ADMIN_ID_MANAGEMENT/APPROVE_ID_REQUEST",

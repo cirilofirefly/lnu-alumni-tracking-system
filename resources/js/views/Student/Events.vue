@@ -15,6 +15,16 @@
                         aria-describedby="search"
                         v-model="search"
                     />
+                    <div class="input-group-append">
+                        <button
+                            @click.prevent="getData"
+                            class="btn btn-outline-secondary"
+                            type="button"
+                        >
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+
                     <!-- <div class="input-group-append">
                         <button
                             @click.prevent="getData"
@@ -39,7 +49,7 @@
                         <h6 class="mb-2 text-muted">
                             {{ event.category.category }}
                         </h6>
-                        <div class="mb-2" v-html="event.content"></div>
+                        <div class="contents mb-2" v-html="event.content"></div>
                         <button
                             class="btn btn-primary rounded"
                             @click="
@@ -61,21 +71,12 @@ export default {
     },
     computed: {
         events() {
-            return this.$store.getters["STUDENT_EVENT/GET_EVENTS"];
+            return this.$store.getters["ADMIN_EVENT/GET_EVENTS"];
         },
-
-        // filteredEvents() {
-        //     return this.events.filter((data) => {
-        //         return data.name.toLowerCase().includes(this.search);
-        //     });
-        // },
     },
     methods: {
         async getData() {
-            await this.$store.dispatch(
-                "STUDENT_EVENT/FETCH_EVENTS",
-                this.search
-            );
+            await this.$store.dispatch("ADMIN_EVENT/FETCH_EVENTS", this.search);
         },
     },
     async mounted() {
@@ -85,4 +86,9 @@ export default {
 </script>
 
 <style>
+.contents img,
+svg {
+    vertical-align: middle;
+    width: 100%;
+}
 </style>
