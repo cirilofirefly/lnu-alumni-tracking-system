@@ -307,7 +307,7 @@ export default {
 			"STUDENT_ID_REQUEST/FETCH_STUDENT_ACCOUNT",
 			this.user[0]?.id
 		);
-		this.previewImage = `http://localhost:8000${this.user[0]?.student?.id_image}`;
+		this.previewImage = `http://localhost:8000${this.user[0].student.id_image}`;
 	},
 };
 </script>

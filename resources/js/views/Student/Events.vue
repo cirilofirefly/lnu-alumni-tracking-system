@@ -29,7 +29,7 @@
         </div>
         <div class="col-12 mt-5">
             <div
-                v-for="(event, index) in filteredEvents"
+                v-for="(event, index) in events"
                 :key="index"
                 class="col-12 p-3 bg-light shadow-lg rounded"
             >
@@ -64,11 +64,11 @@ export default {
             return this.$store.getters["STUDENT_EVENT/GET_EVENTS"];
         },
 
-        filteredEvents() {
-            return this.events.filter((data) => {
-                return data.name.toLowerCase().includes(this.search);
-            });
-        },
+        // filteredEvents() {
+        //     return this.events.filter((data) => {
+        //         return data.name.toLowerCase().includes(this.search);
+        //     });
+        // },
     },
     methods: {
         async getData() {

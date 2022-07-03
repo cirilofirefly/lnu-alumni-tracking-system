@@ -1548,7 +1548,7 @@ export default {
         await this.$store.dispatch("UTILS_BATCH/FETCH_BATCHES");
         await this.$store.dispatch(
             "STUDENT_ID_REQUEST/FETCH_STUDENT_ACCOUNT",
-            this.id
+            this.users[0].student.id
         );
         this.userAccount = { ...this.user };
         if (

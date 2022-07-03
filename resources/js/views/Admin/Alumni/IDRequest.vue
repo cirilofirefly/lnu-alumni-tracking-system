@@ -64,7 +64,7 @@
                         </div>
                         <tr
                             v-else
-                            v-for="alumni in filteredAlumnae"
+                            v-for="alumni in alumnae"
                             :key="alumni.id"
                         >
                             <th scope="row">{{ alumni.id }}</th>
@@ -305,21 +305,21 @@ export default {
             ];
         },
 
-        filteredAlumnae() {
-            return this.alumnae.filter((data) => {
-                return (
-                    data.student.student_basic_info.first_name
-                        .toLowerCase()
-                        .includes(this.search) ||
-                    data.student.student_basic_info.middle_name
-                        .toLowerCase()
-                        .includes(this.search) ||
-                    data.student.student_basic_info.last_name
-                        .toLowerCase()
-                        .includes(this.search)
-                );
-            });
-        },
+        // filteredAlumnae() {
+        //     return this.alumnae.filter((data) => {
+        //         return (
+        //             data.student.student_basic_info.first_name
+        //                 .toLowerCase()
+        //                 .includes(this.search) ||
+        //             data.student.student_basic_info.middle_name
+        //                 .toLowerCase()
+        //                 .includes(this.search) ||
+        //             data.student.student_basic_info.last_name
+        //                 .toLowerCase()
+        //                 .includes(this.search)
+        //         );
+        //     });
+        // },
     },
     methods: {
         async approveAlumniIDRequest() {

@@ -20,9 +20,10 @@
                         }}
                     </h6>
                 </div>
-                <div>
-                    <span v-html="event.content"></span>
-                </div>
+                <div
+                    class="contents img-fluid col-6"
+                    v-html="event.content"
+                ></div>
             </div>
             <div class="col-8 p-5 shadow">
                 <div id="comment-container" class="mt-2 mb-5">
@@ -102,9 +103,13 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
 import axios from "../../axios";
 export default {
     props: ["slug"],
+    components: {
+        VueEditor,
+    },
     data() {
         return {
             comment_id: 0,
@@ -161,7 +166,7 @@ export default {
                     this.user[0].student.student_basic_info.last_name;
 
                 var data = {
-                    student_id: this.user[0].id,
+                    student_id: this.user[0].student.id,
                     action: full_name + " posted a comment on an event.",
                     notification_status: false,
                 };
@@ -227,6 +232,11 @@ export default {
 </script>
 
 <style>
+img,
+svg {
+    vertical-align: middle;
+    width: 100% !important;
+}
 #comment-container {
     height: 40vh;
     overflow-y: scroll !important;
