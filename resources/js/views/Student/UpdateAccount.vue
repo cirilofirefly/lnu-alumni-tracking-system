@@ -1444,7 +1444,7 @@ export default {
                     this.users[0].student.student_basic_info.last_name;
 
                 var data = {
-                    student_id: this.id,
+                    student_id: this.users[0].student.id,
                     action:
                         full_name + " made a recent update to their account.",
                     notification_status: false,

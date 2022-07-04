@@ -9,15 +9,17 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $student_id = Student::where('student_account_info_id', auth('student')->user()->id)->first()->id;
         return response()->json(Company::where('student_id', $student_id)->get());
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $student_id = Student::where('student_account_info_id', auth('student')->user()->id)->first()->id;
         Company::destroy($request['company_ids']);
-        foreach($request['companies'] as $company) {
+        foreach ($request['companies'] as $company) {
             $employee_company = Company::where('id', $company['id'])->first();
 
             $data = [
@@ -32,7 +34,8 @@ class CompanyController extends Controller
         return response()->json(['message' => 'Company Saved.'], 200);
     }
 
-    public function destroy(Request $request) {
+    public function destroy(Request $request)
+    {
         return Company::destroy($request['company_ids']);
     }
 }

@@ -95,8 +95,6 @@ class AuthController extends Controller
                 'accept_term' => $request->accept_term ? 1 : 0
             ]);
 
-
-
             DB::commit();
             return response()->json(['message' => "You successfully registered. Wait for admin's approval"]);
         } catch (\Throwable $th) {
