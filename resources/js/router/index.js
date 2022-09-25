@@ -39,6 +39,8 @@ import AdminIDPrintable from '../views/Admin/Alumni/IDLayout.vue'
 
 import Landing from '../views/Landing.vue'
 
+import store from '../store/index'
+
 
 const ROUTES = [
     {
@@ -74,6 +76,16 @@ const ROUTES = [
     {
         path: '/student',
         component: Student,
+        beforeEnter:( to, from, next)=>{
+           //redirect to student sign-in if no access_token found
+           if(!store.getters["STUDENT_AUTH/GET_STUDENT_TOKEN"] && !localStorage.getItem("access_token")) {
+                next({ path: "/signin"})
+                return;
+           } 
+
+           next();
+
+        },
         children: [
             { path: 'home', name: 'student.home', component: StudentHome },
             { path: 'account-setting', name: 'student.account-setting', component: StudentAccountSetting },
@@ -89,6 +101,15 @@ const ROUTES = [
     {
         path: '/admin',
         component: Admin,
+        beforeEnter:( to, from, next)=>{
+            //redirect to admin sign-in if no access_token found
+           if(!store.getters["ADMIN_AUTH/GET_ADMIN_TOKEN"] && !localStorage.getItem("access_token")) {
+                next({ path: "/admin-signin"})
+                return;
+           } 
+
+            next();
+        },
         children: [
             { path: 'dashboard', name: 'admin.dashboard', component: AdminDashboard },
             { path: 'approval', name: 'admin.alumni.approval', component: AdminAlumniApproval },
